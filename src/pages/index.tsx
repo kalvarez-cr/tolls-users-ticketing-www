@@ -35,6 +35,7 @@ const Index = () => {
   const [enabled, setEnabled] = useState(true);
   console.log(enabled);
   const [rows, setRows] = useState([]);
+
   const name = useSelector(
     (state: any) => state.loginUser?.user_info?.first_name
   );
@@ -157,23 +158,23 @@ const Index = () => {
             tag_serial: tag_id.tag_serial,
             enabled: true,
             active: active ? (
-              <div className="rounded-full bg-green-500 text-center">
+              <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
                 {' '}
                 Activo{' '}
               </div>
             ) : (
-              <div className=" rounded-full bg-red-500 text-center">
+              <div className=" rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
                 {' '}
                 Inactivo{' '}
               </div>
             ),
 
             actions: (
-              <div className="flex items-center space-x-3">
+              <div className="flex space-x-3">
                 <button onClick={handleDisabled} data-id={id}>
                   <MinusCircleIcon
                     className={`h-6 ${
-                      active ? 'text-green-500' : 'text-red-400'
+                      active ? 'text-emerald-500/60' : 'text-red-500/60'
                     } `}
                   />
                 </button>
@@ -269,7 +270,8 @@ const Index = () => {
           <h2 className="text-2xl tracking-wide text-gray-800">
             Vehículos Asociados
           </h2>
-          {isLoading ? null : <Table headers={headers} data={rows} />}
+          {/* {isLoading ? <h2>Cargando</h2> : <Table headers={headers} data={rows} isLoading={isLoading} />} */}
+          <Table headers={headers} data={rows} isLoading={isLoading} />
         </div>
       </div>
     </>

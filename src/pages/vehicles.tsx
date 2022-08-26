@@ -24,7 +24,7 @@ const Vehicles = () => {
   const dispatch = useAppDispatch();
 
   const [rows, setRows] = useState([]);
-  const { data } = useFetchData();
+  const { data, isLoading } = useFetchData();
   const vehicle = useSelector(
     (state: any) => state.loginUser?.user_info?.vehicles
   );
@@ -127,12 +127,12 @@ const Vehicles = () => {
             tag_serial: tag_id.tag_serial,
             enabled: true,
             active: active ? (
-              <div className="rounded-full bg-green-500 text-center">
+              <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
                 {' '}
                 Activo{' '}
               </div>
             ) : (
-              <div className=" rounded-full bg-red-500 text-center">
+              <div className=" rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
                 {' '}
                 Inactivo{' '}
               </div>
@@ -143,7 +143,7 @@ const Vehicles = () => {
                 <button onClick={handleDisabled} data-id={id}>
                   <MinusCircleIcon
                     className={`h-6 ${
-                      active ? 'text-green-500' : 'text-red-400'
+                      active ? 'text-emerald-500/60' : 'text-red-500/60'
                     } `}
                   />
                 </button>
@@ -202,7 +202,7 @@ const Vehicles = () => {
             </div>
           </div>
         </div>
-        <Table headers={headers} data={rows} />
+        <Table headers={headers} data={rows} isLoading={isLoading} />
       </div>
     </>
   );

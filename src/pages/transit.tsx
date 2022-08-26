@@ -11,7 +11,10 @@ import { useGuard } from 'hooks/useGuard';
 
 const Transit = () => {
   useGuard();
-  // const [loading, setLoading] = useState<boolean>(false);
+
+  // DELETE THE NEXT LINE AFTER INTEGRATION
+  const isLoading = false
+  
   const [rows, setRows] = useState([]);
 
   const headers = [
@@ -217,7 +220,7 @@ const Transit = () => {
           </div>
         </div>
       </div>
-      <Table headers={headers} data={rows} />
+      <Table headers={headers} data={rows} isLoading={isLoading} />
     </div>
   );
 };

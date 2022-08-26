@@ -30,7 +30,7 @@ const Recharges = () => {
   const balance = useSelector(
     (state: any) => state.loginUser?.account_info?.nominal_balance
   );
-  const { mutate, data: response } = useMutation(
+  const { mutate, data: response, isLoading } = useMutation(
     (account: any) => {
       return requester({
         method: 'POST',
@@ -75,12 +75,12 @@ const Recharges = () => {
             facial_amount,
             status:
               status === 'created' ? (
-                <div className="w-32 rounded-full bg-green-500 text-center">
+                <div className="w-32 rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
                   {' '}
                   Exitosa{' '}
                 </div>
               ) : status === 'cancelled' ? (
-                <div className=" w-32 rounded-full bg-red-500 text-center">
+                <div className=" w-32 rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
                   {' '}
                   Cancelada{' '}
                 </div>
@@ -152,7 +152,7 @@ const Recharges = () => {
             </div>
           </div>
         </div>
-        <Table headers={headers} data={rows} />
+        <Table headers={headers} data={rows} isLoading={isLoading} />
       </div>
     </>
   );

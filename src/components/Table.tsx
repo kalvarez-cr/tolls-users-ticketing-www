@@ -5,10 +5,11 @@ import React from 'react';
 interface TableProps {
   headers: any;
   data: any;
+  isLoading: any;
   children?: React.ReactNode;
 }
 
-const Table = ({ headers, data }: TableProps) => {
+const Table = ({ headers, data, isLoading }: TableProps) => {
   const headerKeys: any[] = [];
   for (const header of headers) {
     headerKeys.push(header.key);
@@ -46,7 +47,125 @@ const Table = ({ headers, data }: TableProps) => {
               })}
             </div>
           </div>
-          <div className="table-row-group  text-black antialiased">
+          <div className="table-row-group text-black antialiased">
+            {isLoading ? (
+              <>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="table-row">
+                  {headerKeys.map((headerKey) => {
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              data.map((row) => {
+                return (
+                  <div className="table-row" key={row.id}>
+                    {headerKeys.map((headerKey) => {
+                      const value = row[headerKey];
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          {value}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })
+            )}
             {data.map((row) => {
               return (
                 <div className="table-row" key={row.id}>
@@ -54,7 +173,7 @@ const Table = ({ headers, data }: TableProps) => {
                     const value = row[headerKey];
                     return (
                       <div
-                        className="table-cell border-t py-4 pl-10"
+                        className="table-cell border-t py-4 pl-10 align-middle"
                         key={headerKey}
                       >
                         {value}
