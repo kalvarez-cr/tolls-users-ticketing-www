@@ -2,14 +2,12 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import Link from 'next/link';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { Switch } from '@headlessui/react';
 import {
   TruckIcon,
   CashIcon,
   SupportIcon,
   ChevronRightIcon,
   XIcon,
-  XCircleIcon,
 } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from 'react-query';
@@ -20,7 +18,7 @@ import { useAxios } from 'hooks/useAxios';
 import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
-import { CheckCircleIcon } from '@heroicons/react/solid';
+import { MinusCircleIcon } from '@heroicons/react/solid';
 
 const Index = () => {
   useGuard();
@@ -34,7 +32,7 @@ const Index = () => {
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [modal, setModal] = useState('');
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
   console.log(enabled);
   const [rows, setRows] = useState([]);
   const name = useSelector(
@@ -137,7 +135,7 @@ const Index = () => {
     },
     {
       id: '6',
-      key: 'status',
+      key: 'active',
       header: 'Habilitado',
     },
     {
@@ -150,16 +148,7 @@ const Index = () => {
   useEffect(() => {
     if (data) {
       const rows = data.map(
-        ({
-          id,
-          make,
-          model,
-          license_plate,
-          category,
-          tag_id,
-          enabled,
-          active,
-        }) => {
+        ({ id, make, model, license_plate, category, tag_id, active }) => {
           return {
             make,
             model,
@@ -168,28 +157,26 @@ const Index = () => {
             tag_serial: tag_id.tag_serial,
             enabled: true,
             active: active ? (
-              <CheckCircleIcon className="h-6 text-green-500" />
+              <div className="rounded-full bg-green-500 text-center">
+                {' '}
+                Activo{' '}
+              </div>
             ) : (
-              <XCircleIcon className="h-6 text-red-500" />
+              <div className=" rounded-full bg-red-500 text-center">
+                {' '}
+                Inactivo{' '}
+              </div>
             ),
+
             actions: (
               <div className="flex items-center space-x-3">
-                <Switch
-                  checked={enabled}
-                  onChange={setEnabled}
-                  onClick={handleDisabled}
-                  data-id={id}
-                  className={`${
-                    enabled ? 'bg-blue-600' : 'bg-gray-200'
-                  } relative inline-flex h-6 w-11 items-center rounded-full`}
-                >
-                  <span className="sr-only">Enable notifications</span>
-                  <span
-                    className={`${
-                      enabled ? 'translate-x-6' : 'translate-x-1'
-                    } inline-block h-4 w-4 transform rounded-full bg-white`}
+                <button onClick={handleDisabled} data-id={id}>
+                  <MinusCircleIcon
+                    className={`h-6 ${
+                      active ? 'text-green-500' : 'text-red-400'
+                    } `}
                   />
-                </Switch>
+                </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
                   <XIcon className="h-6 text-rose-400" />
                 </button>

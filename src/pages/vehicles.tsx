@@ -1,11 +1,15 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { Switch } from '@headlessui/react';
 import { XIcon, TruckIcon, CalendarIcon } from '@heroicons/react/outline';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+import { useAppDispatch } from '@store/hooks';
+import { open } from '@store/counter/snackbarReducer';
+import { MinusCircleIcon } from '@heroicons/react/solid';
+import { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
 
 const { requester } = useAxios();
 
@@ -17,10 +21,61 @@ const useFetchData = () =>
 
 const Vehicles = () => {
   useGuard();
-  // const [loading, setLoading] = useState<boolean>(false);
-  const [enabled, setEnabled] = useState(false);
+  const dispatch = useAppDispatch();
+
   const [rows, setRows] = useState([]);
   const { data } = useFetchData();
+  const vehicle = useSelector(
+    (state: any) => state.loginUser?.user_info?.vehicles
+  );
+
+  const { mutate } = useMutation(
+    (id: any) => {
+      return requester({
+        method: 'POST',
+        data: id,
+        url: '/registered-vehicle/cancel/',
+      });
+    },
+    {
+      onSuccess: (response) => {
+        const { data } = response;
+        return data.data;
+      },
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
+
+  const { mutate: mutate2 } = useMutation(
+    (id: any) => {
+      return requester({
+        method: 'POST',
+        data: id,
+        url: '/registered-vehicle/block/',
+      });
+    },
+    {
+      onSuccess: (response) => {
+        const { data } = response;
+        return data.data;
+      },
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
+
+  const handleCancel = (e) => {
+    const id = e.currentTarget.dataset.tag;
+    mutate({ id: id });
+  };
+
+  const handleDisabled = (e) => {
+    const id = e.currentTarget.dataset.id;
+    mutate2({ id: id });
+  };
 
   const headers = [
     {
@@ -50,38 +105,51 @@ const Vehicles = () => {
     },
     {
       id: '6',
+      key: 'active',
+      header: 'Habilitado',
+    },
+    {
+      id: '7',
       key: 'actions',
-      header: '',
+      header: 'Acciones',
     },
   ];
 
   useEffect(() => {
     if (data) {
       const rows = data.map(
-        ({ make, model, license_plate, category, tag_id }) => {
+        ({ id, make, model, license_plate, category, tag_id, active }) => {
           return {
             make,
             model,
             license_plate,
             category_title: category.title,
             tag_serial: tag_id.tag_serial,
+            enabled: true,
+            active: active ? (
+              <div className="rounded-full bg-green-500 text-center">
+                {' '}
+                Activo{' '}
+              </div>
+            ) : (
+              <div className=" rounded-full bg-red-500 text-center">
+                {' '}
+                Inactivo{' '}
+              </div>
+            ),
+
             actions: (
               <div className="flex items-center space-x-3">
-                <Switch
-                  checked={enabled}
-                  onChange={setEnabled}
-                  className={`${
-                    enabled ? 'bg-emerald-700/50' : 'bg-gray-200'
-                  } relative inline-flex h-6 w-11 items-center rounded-full`}
-                >
-                  <span className="sr-only">Deshabilitar vehículo</span>
-                  <span
-                    className={`transform transition duration-200 ease-in-out ${
-                      enabled ? 'translate-x-6' : 'translate-x-1'
-                    } inline-block h-4 w-4 transform rounded-full bg-white`}
+                <button onClick={handleDisabled} data-id={id}>
+                  <MinusCircleIcon
+                    className={`h-6 ${
+                      active ? 'text-green-500' : 'text-red-400'
+                    } `}
                   />
-                </Switch>
-                <XIcon className="h-6 text-rose-400" />
+                </button>
+                <button onClick={handleCancel} data-tag={tag_id.id}>
+                  <XIcon className="h-6 text-rose-400" />
+                </button>
               </div>
             ),
           };
@@ -106,7 +174,7 @@ const Vehicles = () => {
                 </div>
                 <div>
                   <h2 className="text-lg text-gray-600">Vehículos</h2>
-                  <h2 className="text-2xl font-medium">3</h2>
+                  <h2 className="text-2xl font-medium">{vehicle}</h2>
                 </div>
               </div>
             </div>

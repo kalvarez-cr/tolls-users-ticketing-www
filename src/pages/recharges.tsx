@@ -1,12 +1,7 @@
 import React, { ReactElement } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import {
-  CashIcon,
-  CalendarIcon,
-  TicketIcon,
-  XCircleIcon,
-} from '@heroicons/react/outline';
+import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';
@@ -14,7 +9,6 @@ import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
-import { CheckCircleIcon } from '@heroicons/react/solid';
 import RechargueForm from '@components/modalForms/RechargueForm';
 
 const Recharges = () => {
@@ -81,9 +75,15 @@ const Recharges = () => {
             facial_amount,
             status:
               status === 'created' ? (
-                <CheckCircleIcon className="h-6 text-green-500" />
+                <div className="w-32 rounded-full bg-green-500 text-center">
+                  {' '}
+                  Exitosa{' '}
+                </div>
               ) : status === 'cancelled' ? (
-                <XCircleIcon className="h-6 text-red-500" />
+                <div className=" w-32 rounded-full bg-red-500 text-center">
+                  {' '}
+                  Cancelada{' '}
+                </div>
               ) : null,
           };
         }
