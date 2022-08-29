@@ -199,7 +199,7 @@ const Index = () => {
           accountNumber={accountNumber}
         />
       ) : null}
-      <div className="mt-8 w-full">
+      <div className="mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-4xl capitalize tracking-wide text-gray-800">

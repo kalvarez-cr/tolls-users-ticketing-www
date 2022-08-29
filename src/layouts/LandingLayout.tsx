@@ -58,8 +58,11 @@ const LandingLayout = ({ children }: TLandingLayout) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-200">
-      <Disclosure as="nav" className="bg-emerald-700/90 bg-gradient-to-l">
+    <div className=" min-h-screen bg-gray-200">
+      <Disclosure
+        as="nav"
+        className="fixed w-full bg-emerald-700/90 bg-gradient-to-l"
+      >
         {({ open }) => (
           <>
             <div className="px-2 sm:px-20">

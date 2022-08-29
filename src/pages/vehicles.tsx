@@ -161,7 +161,7 @@ const Vehicles = () => {
 
   return (
     <>
-      <div className="mt-8  w-full ">
+      <div className="mt-24  w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="text-3xl tracking-wide text-gray-800">
             Vehículos Asociados

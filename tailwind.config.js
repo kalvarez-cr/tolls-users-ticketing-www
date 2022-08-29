@@ -1,5 +1,5 @@
 // const colors = require('tailwindcss/colors');
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   mode: 'jit',
@@ -20,6 +20,7 @@ module.exports = {
       backgroundImage: {
         'card-background-1': "url('/back1.svg')",
         'card-background-2': "url('/back2.svg')",
+        bdv: "url('/bdv.jpg')",
       },
       colors: {
         'bg-primary-light': '#fff',
