@@ -51,21 +51,31 @@ const Recharges = () => {
   const headers = [
     {
       id: '1',
+      key: 'created_on',
+      header: 'Fecha',
+    },
+
+    {
+      id: '2',
       key: 'external_reference_id',
       header: 'Referencia',
     },
     {
-      id: '2',
+      id: '3',
       key: 'facial_amount',
       header: 'Monto',
     },
     {
-      id: '3',
+      id: '4',
+      key: 'payment_method',
+      header: 'Método de pago',
+    },
+    {
+      id: '5',
       key: 'status',
       header: 'Estado',
     },
   ];
-
   React.useEffect(() => {
     mutate({ account_number: accountNumber });
   }, [accountNumber, mutate]);
@@ -73,10 +83,18 @@ const Recharges = () => {
   React.useEffect(() => {
     if (response) {
       const table = response.data.data.map(
-        ({ external_reference_id, facial_amount, status }) => {
+        ({
+          external_reference_id,
+          facial_amount,
+          status,
+          payment_method,
+          created_on,
+        }) => {
           return {
             external_reference_id,
             facial_amount,
+            payment_method,
+            created_on: new Date(created_on).toLocaleDateString('es-VE'),
             status:
               status === 'created' ? (
                 <div className="w-32 rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
@@ -117,7 +135,7 @@ const Recharges = () => {
             </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <div className="h-36 rounded-xl shadow-md">
+            <div className="h-36 cursor-pointer rounded-xl shadow-md">
               <div className="flex h-full  items-center space-x-6 rounded-xl bg-bdv px-6">
                 {/* <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                    <CashIcon className="h-9 w-9 text-emerald-600" /> 
@@ -128,28 +146,28 @@ const Recharges = () => {
                 </div> */}
               </div>
             </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
+            <div className="h-36 cursor-pointer rounded-xl shadow-md">
+              <div className="flex h-full items-center space-x-6 rounded-xl bg-petro px-6">
+                {/* <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
                   <CalendarIcon className="h-9 w-9 text-amber-600" />
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <h2 className="text-lg text-gray-600">Última recarga</h2>
                   <h2 className="text-2xl font-medium">10/07/2022</h2>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
+            <div className="h-36 cursor-pointer rounded-xl shadow-md">
+              <div className="flex h-full items-center space-x-6 rounded-xl bg-banesco px-6">
+                {/* <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                   <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <h2 className="text-lg text-gray-600">
                     Monto de última recarga
                   </h2>
                   <h2 className="text-2xl font-medium">Bs 10</h2>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
