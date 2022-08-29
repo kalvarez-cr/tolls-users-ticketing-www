@@ -10,6 +10,7 @@ import { open } from '@store/counter/snackbarReducer';
 import { MinusCircleIcon } from '@heroicons/react/solid';
 import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
+import Card from '@components/Card';
 
 const { requester } = useAxios();
 
@@ -167,7 +168,37 @@ const Vehicles = () => {
             Vehículos Asociados
           </h2>
           <div className="grid grid-cols-3 gap-4">
-            <div className="h-36 rounded-xl shadow-md">
+            <Card
+              title={'Vehículos'}
+              data={vehicle}
+              icon={
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
+                  <TruckIcon className="h-9 w-9 text-emerald-600" />
+                </div>
+              }
+              moreInfo={false}
+            />
+            <Card
+              title={'Tag activos'}
+              data={'3'}
+              icon={
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
+                  <img className="h-9 w-9" src="/nfc.svg" alt="tag" />
+                </div>
+              }
+              moreInfo={false}
+            />
+            <Card
+              title={'Último uso'}
+              data={'10/07/2022'}
+              icon={
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
+                  <CalendarIcon className="h-9 w-9 text-indigo-600" />
+                </div>
+              }
+              moreInfo={false}
+            />
+            {/* <div className="h-36 rounded-xl shadow-md">
               <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                   <TruckIcon className="h-9 w-9 text-emerald-600" />
@@ -199,7 +230,7 @@ const Vehicles = () => {
                   <h2 className="text-2xl font-medium">10/07/2022</h2>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <Table headers={headers} data={rows} isLoading={isLoading} />

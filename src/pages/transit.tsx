@@ -8,6 +8,7 @@ import {
   TicketIcon,
 } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
+import Card from '@components/Card';
 
 const Transit = () => {
   useGuard();
@@ -185,7 +186,37 @@ const Transit = () => {
           Historial de Transítos
         </h2>
         <div className="grid grid-cols-3 gap-4">
-          <div className="h-36 rounded-xl shadow-md">
+          <Card
+            title={'Tránsitos'}
+            data={'1270'}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
+                <SupportIcon className="h-9 w-9 text-emerald-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          <Card
+            title={'Última uso'}
+            data={'10/07/2022'}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
+                <CalendarIcon className="h-9 w-9 text-amber-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          <Card
+            title={'Último peaje'}
+            data={'Punta Piedra'}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
+                <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          {/* <div className="h-36 rounded-xl shadow-md">
             <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                 <SupportIcon className="h-9 w-9 text-emerald-600" />
@@ -217,7 +248,7 @@ const Transit = () => {
                 <h2 className="text-2xl font-medium">Punta Piedra</h2>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Table headers={headers} data={rows} isLoading={isLoading} />

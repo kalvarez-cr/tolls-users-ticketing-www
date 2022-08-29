@@ -19,6 +19,7 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
 import { MinusCircleIcon } from '@heroicons/react/solid';
+import Card from '@components/Card';
 
 const Index = () => {
   useGuard();
@@ -213,7 +214,37 @@ const Index = () => {
             </button>
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <div className="h-36 rounded-xl shadow-md">
+            <Card
+              title={'Saldo actual'}
+              data={`Bs ${balance}`}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
+                  <CashIcon className="h-7 w-7 text-emerald-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            <Card
+              title={'Vehículos'}
+              data={vehicle}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
+                  <TruckIcon className="h-7 w-7 text-amber-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            <Card
+              title={'Tránsitos'}
+              data={'12750'}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
+                  <SupportIcon className="h-7 w-7 text-indigo-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            {/* <div className="h-36 rounded-xl shadow-md">
               <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
                   <CashIcon className="h-7 w-7 text-emerald-600" />
@@ -263,7 +294,7 @@ const Index = () => {
                   <ChevronRightIcon className="h-4 w-4" />
                 </div>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="space-y-8">
