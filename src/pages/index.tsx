@@ -37,17 +37,8 @@ const Index = () => {
   console.log(enabled);
   const [rows, setRows] = useState([]);
 
-  const name = useSelector(
-    (state: any) => state.loginUser?.user_info?.first_name
-  );
-  const lastName = useSelector(
-    (state: any) => state.loginUser?.user_info?.last_name
-  );
-  const vehicle = useSelector(
-    (state: any) => state.loginUser?.user_info?.vehicles
-  );
-  const accountNumber = useSelector(
-    (state: any) => state.loginUser?.user_info?.account_number
+  const userInfo = useSelector(
+    (state: any) => state.loginUser?.user_info
   );
   const balance = useSelector(
     (state: any) => state.loginUser?.account_info?.nominal_balance
@@ -197,14 +188,14 @@ const Index = () => {
         <RechargueForm
           open={openModal}
           setOpen={setOpenModal}
-          accountNumber={accountNumber}
+          accountNumber={userInfo?.account_number}
         />
       ) : null}
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-4xl capitalize tracking-wide text-gray-800">
-              Bienvenido, {name} {''} {lastName}
+              Bienvenido, {userInfo.first_name} {''} {userInfo.last_name}
             </h2>
             <button
               onClick={handleRecharge}
@@ -226,7 +217,7 @@ const Index = () => {
             />
             <Card
               title={'Vehículos'}
-              data={vehicle}
+              data={userInfo?.vehicles}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
                   <TruckIcon className="h-7 w-7 text-amber-600" />
