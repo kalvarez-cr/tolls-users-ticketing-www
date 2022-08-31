@@ -37,9 +37,7 @@ const Index = () => {
   console.log(enabled);
   const [rows, setRows] = useState([]);
 
-  const userInfo = useSelector(
-    (state: any) => state.loginUser?.user_info
-  );
+  const userInfo = useSelector((state: any) => state.loginUser?.user_info);
   const balance = useSelector(
     (state: any) => state.loginUser?.account_info?.nominal_balance
   );
@@ -197,12 +195,12 @@ const Index = () => {
             <h2 className="text-4xl capitalize tracking-wide text-gray-800">
               Bienvenido, {userInfo.first_name} {''} {userInfo.last_name}
             </h2>
-            <button
+            {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
             >
               Recargar
-            </button>
+            </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
             <Card

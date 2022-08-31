@@ -12,6 +12,7 @@ import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
+import Link from 'next/link';
 
 const Recharges = () => {
   useGuard();
@@ -128,7 +129,7 @@ const Recharges = () => {
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-4">
           <div className="flex justify-between">
-            <h2 className="text-3xl tracking-wide text-gray-800">Recargar</h2>
+            <h2 className="text-3xl tracking-wide text-gray-800">Recargas</h2>
             {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
@@ -137,9 +138,13 @@ const Recharges = () => {
             </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <PaymentMethodCard image={'/metodos-de-pago-01.svg'} />
-            <PaymentMethodCard image={'/metodos-de-pago-02.svg'} />
-            <PaymentMethodCard image={'/metodos-de-pago-03.svg'} />
+            <PaymentMethodCard image={'/metodos-de-pago-01.svg'} href="" />
+            <PaymentMethodCard image={'/metodos-de-pago-02.svg'} href="" />
+            <PaymentMethodCard
+              image={'/metodos-de-pago-03.svg'}
+              href="/mobilePay"
+            />
+
             <Card
               title={'Saldo actual'}
               data={`Bs ${balance}`}
