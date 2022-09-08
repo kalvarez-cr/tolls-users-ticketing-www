@@ -138,7 +138,10 @@ const Recharges = () => {
             </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <PaymentMethodCard image={'/metodos-de-pago-01.svg'} href="" />
+            <PaymentMethodCard
+              image={'/metodos-de-pago-01.svg'}
+              href="/bankdv"
+            />
             <PaymentMethodCard image={'/metodos-de-pago-02.svg'} href="" />
             <PaymentMethodCard
               image={'/metodos-de-pago-03.svg'}

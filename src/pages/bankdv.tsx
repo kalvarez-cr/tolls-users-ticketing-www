@@ -5,6 +5,11 @@ import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Select from '@components/inputs/Select';
+import { useAxiosExternal } from 'hooks/useAxiosExternal';
+import { useMutation } from 'react-query';
+import { AxiosError } from 'axios';
+import { useAppDispatch } from '@store/hooks';
+import { open } from '@store/counter/snackbarReducer';
 
 const methods = [
   {
@@ -52,9 +57,42 @@ const MobilePay = () => {
   } = useForm<any>({
     // resolver: yupResolver(),
   });
+  const { requester } = useAxiosExternal();
+  const dispatch = useAppDispatch();
+  const { mutate } = useMutation(
+    (formData: any) => {
+      return requester({
+        method: 'POST',
+        data: formData,
+        url: 'https://biopago.banvenez.com/ipg/api/Payment',
+      });
+    },
+    {
+      onSuccess: (response) => {
+        const { data } = response;
+
+        console.log(data);
+      },
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     console.log(data);
+    mutate({
+      currency: 1,
+      amount: 50,
+      title: 'Pago de Planillas',
+      description: 'Liquidaciones.',
+      reference: '18921842-FAC',
+      letter: 'V',
+      number: '21149009',
+      cellphone: '04122741219',
+      email: 'i.alvarez@rsegrp.com',
+      urlToReturn: 'http://www.user-toll-qa.local:4000/',
+    });
   };
 
   return (
@@ -64,7 +102,7 @@ const MobilePay = () => {
           <CreditCardIcon className="mr-16 h-20 pr-10 text-emerald-600/70" />
         </div>
         <h1 className="ml-16 w-full border-grey text-center text-4xl font-bold tracking-wide text-emerald-600/70">
-          Pago móvil
+          Banco de Venezuela
         </h1>
       </div>
       <div className=" mt-12 flex  place-content-center">
@@ -75,7 +113,7 @@ const MobilePay = () => {
         <div className="">
           <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center">
-              <div className=" w-1/3 pr-4">
+              <div className="w-1/3 pr-4">
                 <Select
                   label="V"
                   name="nif_type"
@@ -94,7 +132,7 @@ const MobilePay = () => {
                 />
               </div>
             </div>
-            <div className=" flex items-center">
+            <div className=" flex items-center ">
               <div className="w-1/3 pr-4">
                 <Select
                   label="Código"
@@ -139,7 +177,7 @@ const MobilePay = () => {
             <input
               type="submit"
               value="Confirmar"
-              className="mt-14  block cursor-pointer  rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              className="  mt-14 cursor-pointer   rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
             />
           </form>
 
