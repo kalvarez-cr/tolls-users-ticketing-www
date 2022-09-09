@@ -5,11 +5,42 @@ import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Select from '@components/inputs/Select';
-import { useAxiosExternal } from 'hooks/useAxiosExternal';
+import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
+import * as yup from 'yup';
+
+interface Inputs {
+  letter: string;
+  number: string;
+  amount: string;
+  reference: string;
+  title: string;
+  description: string;
+  code?: string;
+  phone?: string;
+  currency: string;
+  email: string;
+  urlToReturn: string;
+  cellphone: string;
+}
+
+const Schema = yup.object().shape({
+  letter: yup.string().required('Este campo es requerido'),
+  number: yup
+    .string()
+    .min(7, 'Mínimo 7 caracteres')
+    .max(8, 'Máximo 8 caracteres')
+    .required('Este campo es requerido'),
+  amount: yup.string().required('Este campo es requerido'),
+  reference: yup.string().required('Este campo es requerido'),
+  title: yup.string().required('Este campo es requerido'),
+  description: yup.string().required('Este campo es requerido'),
+  code: yup.string().required('Este campo es obligatorio'),
+  phone: yup.string().required('Este campo es obligatorio'),
+});
 
 const methods = [
   {
@@ -23,6 +54,10 @@ const methods = [
   {
     value: 'J',
     label: 'J',
+  },
+  {
+    value: 'E',
+    label: 'E',
   },
 ];
 
@@ -54,17 +89,17 @@ const MobilePay = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<any>({
-    // resolver: yupResolver(),
+  } = useForm<Inputs>({
+    resolver: yupResolver(Schema),
   });
-  const { requester } = useAxiosExternal();
+  const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const { mutate } = useMutation(
-    (formData: any) => {
+  const { mutate, data: response } = useMutation(
+    (formData: Inputs) => {
       return requester({
         method: 'POST',
         data: formData,
-        url: 'https://biopago.banvenez.com/ipg/api/Payment',
+        url: 'recharge-module/payment_bdv_external/',
       });
     },
     {
@@ -72,6 +107,7 @@ const MobilePay = () => {
         const { data } = response;
 
         console.log(data);
+        return (window.open = data.urlPayment);
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -80,18 +116,29 @@ const MobilePay = () => {
   );
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
+    const {
+      letter,
+      number,
+      amount,
+      reference,
+      description,
+      code,
+      phone,
+      title,
+      email,
+    } = data;
+
     mutate({
-      currency: 1,
-      amount: 50,
-      title: 'Pago de Planillas',
-      description: 'Liquidaciones.',
-      reference: '18921842-FAC',
-      letter: 'V',
-      number: '21149009',
-      cellphone: '04122741219',
-      email: 'i.alvarez@rsegrp.com',
-      urlToReturn: 'http://www.user-toll-qa.local:4000/',
+      letter,
+      number,
+      amount,
+      currency: '1',
+      reference,
+      title,
+      description,
+      email,
+      cellphone: `${code}${phone}`,
+      urlToReturn: 'http://www.user-toll-qa.local:4000/bankdv',
     });
   };
 
@@ -116,18 +163,18 @@ const MobilePay = () => {
               <div className="w-1/3 pr-4">
                 <Select
                   label="V"
-                  name="nif_type"
+                  name="letter"
                   options={methods}
-                  // errorMessage={errors.nif_type?.message}
+                  // errorMessage={errors.nif?.message}
                   register={register}
                 />
               </div>
               <div className="w-2/3">
                 <InputV2
                   label="Cédula"
-                  name="nif"
+                  name="number"
                   type="text"
-                  errorMessage={errors.nif?.message}
+                  errorMessage={errors.number?.message}
                   register={register}
                 />
               </div>
@@ -154,21 +201,45 @@ const MobilePay = () => {
             </div>
             <div className="mt-10 ">
               <InputV2
-                label="Bancos"
-                name="password"
+                label="correo"
+                name="email"
                 type="text"
-                errorMessage={errors.password?.message}
+                errorMessage={errors.email?.message}
                 register={register}
               />
               <div className="mt-10">
                 <InputV2
                   label="Monto"
-                  name="confirm_password"
+                  name="amount"
                   type="text"
-                  errorMessage={
-                    // @ts-ignore
-                    errors.confirm_password && 'Las contraseñas deben coincidir'
-                  }
+                  errorMessage={errors.amount?.message}
+                  register={register}
+                />
+              </div>
+              <div className="mt-10">
+                <InputV2
+                  label="Referencia"
+                  name="reference"
+                  type="text"
+                  errorMessage={errors.reference?.message}
+                  register={register}
+                />
+              </div>
+              <div className="mt-10">
+                <InputV2
+                  label="Titulo"
+                  name="title"
+                  type="text"
+                  errorMessage={errors.title?.message}
+                  register={register}
+                />
+              </div>
+              <div className="mt-10">
+                <InputV2
+                  label="Descripción"
+                  name="description"
+                  type="text"
+                  errorMessage={errors.description?.message}
                   register={register}
                 />
               </div>
