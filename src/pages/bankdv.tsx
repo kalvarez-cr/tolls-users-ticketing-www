@@ -94,7 +94,7 @@ const MobilePay = () => {
   });
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const { mutate, data: response } = useMutation(
+  const { mutate, data } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
