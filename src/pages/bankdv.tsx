@@ -1,5 +1,5 @@
 import InputV2 from '@components/inputs/InputV2';
-import { CreditCardIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { CreditCardIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
@@ -11,6 +11,7 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
 import * as yup from 'yup';
+import { useRouter } from 'next/router';
 
 interface Inputs {
   letter: string;
@@ -94,7 +95,8 @@ const MobilePay = () => {
   });
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const { mutate, data } = useMutation(
+  const router = useRouter();
+  const { mutate } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
@@ -105,9 +107,9 @@ const MobilePay = () => {
     {
       onSuccess: (response) => {
         const { data } = response;
-
-        console.log(data);
-        return (window.open = data.urlPayment);
+        if (data) {
+          router.push(`/bdv-payment/${data.data.paymentId}`);
+        }
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -116,6 +118,7 @@ const MobilePay = () => {
   );
 
   const onSubmit: SubmitHandler<any> = async (data) => {
+    console.log('sadas');
     const {
       letter,
       number,

@@ -1,8 +1,14 @@
 module.exports = {
   reactStrictMode: true,
-  images: {
-    domains: ['rickandmortyapi.com'],
-    loader: 'akamai',
-    path: '',
+  async redirects() {
+    return [
+      {
+        source: '/bdv-payment/:id',
+        destination:
+          'https://biodemo.ex-cle.com:4443/ipg/Web/PaymentProcess/Token/:id',
+        permanent: false,
+        basePath: false,
+      },
+    ];
   },
 };
