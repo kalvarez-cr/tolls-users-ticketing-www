@@ -3,10 +3,10 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import {
   TruckIcon,
-  CashIcon,
-  SupportIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+  BanknotesIcon,
+  LifebuoyIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from 'react-query';
 
@@ -159,12 +159,12 @@ const Index = () => {
                 <button onClick={handleDisabled} data-id={id}>
                   <MinusCircleIcon
                     className={`h-6 ${
-                      active ? 'text-emerald-500/60' : 'text-red-500/60'
+                      active ? 'text-emerald-500/60 hover:text-emerald-500/90' : 'text-red-500/60'
                     } `}
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XIcon className="h-6 text-rose-400" />
+                  <XMarkIcon className="h-6 text-rose-400 hover:text-rose-500" />
                 </button>
               </div>
             ),
@@ -203,7 +203,7 @@ const Index = () => {
               data={`Bs ${balance}`}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
+                  <BanknotesIcon className="h-7 w-7 text-emerald-600" />
                 </div>
               }
               moreInfo={true}
@@ -223,7 +223,7 @@ const Index = () => {
               data={'12750'}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <SupportIcon className="h-7 w-7 text-indigo-600" />
+                  <LifebuoyIcon className="h-7 w-7 text-indigo-600" />
                 </div>
               }
               moreInfo={true}

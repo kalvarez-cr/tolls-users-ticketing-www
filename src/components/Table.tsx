@@ -1,4 +1,4 @@
-import { EyeOffIcon, XIcon } from '@heroicons/react/solid';
+import { EyeSlashIcon, XMarkIcon, ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,7 +18,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
   return (
     <div className=" w-full">
       <div className="hidden md:block">
-        <div className="text-md mb-6 table w-full rounded-lg bg-white shadow-md">
+        <div className="text-md table w-full rounded-t-lg bg-white shadow-md">
           <div className="table-header-group font-medium uppercase text-gray-800 antialiased">
             <div className="table-row">
               {headers.map((header) => {
@@ -31,7 +31,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   </div>
                 ) : header.id == headers.length ? (
                   <div
-                    className="table-cell rounded-tr-lg bg-emerald-600/30 px-10 py-4"
+                    className="table-cell rounded-tr-lg bg-emerald-600/30 pl-10 py-4"
                     key={header.id}
                   >
                     {header.header}
@@ -185,6 +185,32 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
             })}
           </div>
         </div>
+        <nav
+          className="shadow-md mb-10 rounded-b-lg flex items-center justify-between border-t border-gray-200 bg-white px-4 py-4 sm:px-6"
+          aria-label="Pagination"
+        >
+          <div className="hidden sm:block ml-3">
+            <p className="text-sm text-gray-700">
+              Mostrando{' '}
+              <span className="font-medium">5</span> de{' '}
+              <span className="font-medium">20</span> resultados
+            </p>
+          </div>
+          <div className="flex flex-1 justify-between sm:justify-end mr-3">
+            <a
+              href="#"
+              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowLongLeftIcon className="h-5 w-5" />
+            </a>
+            <a
+              href="#"
+              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowLongRightIcon className="h-5 w-5" />
+            </a>
+          </div>
+        </nav>
       </div>
       <div className="grid grid-cols-1 gap-4 md:hidden">
         <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
@@ -200,13 +226,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeSlashIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XIcon className="h-5 w-5" />
+                <XMarkIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -228,13 +254,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeSlashIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XIcon className="h-5 w-5" />
+                <XMarkIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -256,13 +282,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeSlashIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XIcon className="h-5 w-5" />
+                <XMarkIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>

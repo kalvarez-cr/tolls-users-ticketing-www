@@ -1,13 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { XIcon, TruckIcon, CalendarIcon } from '@heroicons/react/outline';
+import { XMarkIcon, TruckIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
-import { MinusCircleIcon } from '@heroicons/react/solid';
+import { MinusCircleIcon } from '@heroicons/react/24/solid';
 import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
@@ -148,7 +148,7 @@ const Vehicles = () => {
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XIcon className="h-6 text-rose-400" />
+                  <XMarkIcon className="h-6 text-rose-400" />
                 </button>
               </div>
             ),

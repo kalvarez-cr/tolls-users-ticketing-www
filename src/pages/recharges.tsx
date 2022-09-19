@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
+import { BanknotesIcon, CalendarIcon, TicketIcon } from '@heroicons/react/24/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';
@@ -152,7 +152,7 @@ const Recharges = () => {
               data={`Bs ${balance}`}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-9 w-9 text-emerald-600" />
+                  <BanknotesIcon className="h-9 w-9 text-emerald-600" />
                 </div>
               }
               moreInfo={false}
@@ -186,7 +186,7 @@ const Recharges = () => {
               data={`Bs ${balance}`}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-9 w-9 text-emerald-600" />
+                  <BanknotesIcon className="h-9 w-9 text-emerald-600" />
                 </div>
               }
               moreInfo={false}

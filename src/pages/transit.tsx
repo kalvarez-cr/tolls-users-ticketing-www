@@ -1,12 +1,12 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { EyeIcon } from '@heroicons/react/solid';
+import { EyeIcon } from '@heroicons/react/24/solid';
 import {
   TruckIcon,
   CreditCardIcon,
   TicketIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { useGuard } from 'hooks/useGuard';
 import Card from '@components/Card';
 import { useMutation } from 'react-query';
