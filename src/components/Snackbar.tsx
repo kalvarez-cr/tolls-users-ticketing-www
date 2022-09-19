@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 const Snackbar = () => {
   const dispatch = useAppDispatch();
   const { open, text, type } = useAppSelector(snackbar);
-  console.log(type);
 
   const handleClose = () => {
     dispatch(close());

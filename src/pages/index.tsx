@@ -1,12 +1,10 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import Link from 'next/link';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import {
   TruckIcon,
   CashIcon,
   SupportIcon,
-  ChevronRightIcon,
   XIcon,
 } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
@@ -27,13 +25,12 @@ const Index = () => {
   const useFetchData = () =>
     useQuery('vehicles', async () => {
       const { data } = await requester.get('/registered-vehicle/get/');
-      console.log(data);
       return data.data;
     });
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [modal, setModal] = useState('');
-  const [enabled, setEnabled] = useState(true);
+  const [modal] = useState('');
+  const [enabled] = useState(true);
   console.log(enabled);
   const [rows, setRows] = useState([]);
 
@@ -42,8 +39,6 @@ const Index = () => {
     (state: any) => state.loginUser?.account_info?.nominal_balance
   );
   const { data, isLoading } = useFetchData();
-
-  console.log(data);
 
   const { mutate } = useMutation(
     (id: any) => {
@@ -83,10 +78,10 @@ const Index = () => {
     }
   );
 
-  const handleRecharge = () => {
-    setOpenModal(true);
-    setModal('recharge');
-  };
+  // const handleRecharge = () => {
+  //   setOpenModal(true);
+  //   setModal('recharge');
+  // };
 
   const handleCancel = (e) => {
     const id = e.currentTarget.dataset.tag;

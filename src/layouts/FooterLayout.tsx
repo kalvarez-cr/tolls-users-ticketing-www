@@ -1,6 +1,4 @@
 import React from 'react';
-import { CheckCircleIcon, XIcon } from '@heroicons/react/outline';
-import LogoDark from '@components/icons/LogoDark';
 
 const FooterLayout = ({ children }) => {
   return (

@@ -12,17 +12,16 @@ import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
 
-const { requester } = useAxios();
-
-const useFetchData = () =>
-  useQuery('vehicles', async () => {
-    const { data } = await requester.get('/registered-vehicle/get/');
-    return data.data;
-  });
-
 const Vehicles = () => {
   useGuard();
   const dispatch = useAppDispatch();
+  const { requester } = useAxios();
+
+  const useFetchData = () =>
+    useQuery('vehicles', async () => {
+      const { data } = await requester.get('/registered-vehicle/get/');
+      return data.data;
+    });
 
   const [rows, setRows] = useState([]);
   const { data, isLoading } = useFetchData();

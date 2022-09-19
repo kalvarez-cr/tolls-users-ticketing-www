@@ -52,7 +52,7 @@ export const counterSlice = createSlice({
     login: (state, action: PayloadAction<TLoginPayload>) => {
       return { loggedIn: true, ...action.payload };
     },
-    logout: (state) => {
+    logout: () => {
       return { loggedIn: false };
     },
   },

@@ -7,7 +7,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
 
-const responseBdv = () => {
+const ResponseBdv = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { id } = router.query;
@@ -58,7 +58,7 @@ const responseBdv = () => {
   );
 };
 
-export default responseBdv;
-responseBdv.getLayout = function getLayout(page: ReactElement) {
+export default ResponseBdv;
+ResponseBdv.getLayout = function getLayout(page: ReactElement) {
   return <LandingLayout>{page}</LandingLayout>;
 };

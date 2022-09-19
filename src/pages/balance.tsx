@@ -197,7 +197,7 @@ const Vehicles = () => {
 
   return (
     <div className="h-full w-full">
-      <Table headers={headers} data={data} />
+      <Table headers={headers} data={data} isLoading={false} />
     </div>
   );
 };

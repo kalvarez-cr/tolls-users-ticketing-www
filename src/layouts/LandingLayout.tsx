@@ -11,7 +11,7 @@ import { useAxios } from 'hooks/useAxios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -25,7 +25,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { requester } = useAxios();
-  const { mutate, isLoading } = useMutation(
+  const { mutate } = useMutation(
     () => {
       return requester({
         method: 'POST',
@@ -40,7 +40,6 @@ const LandingLayout = ({ children }: TLandingLayout) => {
         router.push('/login');
       },
       onError: (error: AxiosError) => {
-        console.log(error.response);
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
     }

@@ -1,8 +1,4 @@
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import counterReducer from '@store/counter/counterReducer';
 import loginReducer from './counter/loginReducer';
 import storage from 'redux-persist/lib/storage';

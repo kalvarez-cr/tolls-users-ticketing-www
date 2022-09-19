@@ -1,6 +1,5 @@
 import InputV2 from '@components/inputs/InputV2';
-import { CreditCardIcon, UserCircleIcon } from '@heroicons/react/outline';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { CreditCardIcon } from '@heroicons/react/outline';
 import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

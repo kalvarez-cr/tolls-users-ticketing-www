@@ -1,6 +1,5 @@
 import React from 'react';
 import FooterLayout from '@layouts/FooterLayout';
-import LogoDark from '@components/icons/LogoDark';
 import InputV2 from '@components/inputs/InputV2';
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';

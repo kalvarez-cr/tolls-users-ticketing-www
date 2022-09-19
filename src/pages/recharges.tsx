@@ -12,7 +12,6 @@ import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
-import Link from 'next/link';
 
 const Recharges = () => {
   useGuard();
@@ -20,12 +19,12 @@ const Recharges = () => {
   const { requester } = useAxios();
   const [rows, setRows] = React.useState([]);
   const [openModal, setOpenModal] = React.useState(false);
-  const [modal, setModal] = React.useState('');
+  const [modal] = React.useState('');
 
-  const handleRecharge = () => {
-    setOpenModal(true);
-    setModal('recharge');
-  };
+  // const handleRecharge = () => {
+  //   setOpenModal(true);
+  //   setModal('recharge');
+  // };
 
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number

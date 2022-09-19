@@ -67,7 +67,6 @@ const User = () => {
         console.log('response data', data);
       },
       onError: (error: AxiosError) => {
-        console.log(error.response.data);
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
     }

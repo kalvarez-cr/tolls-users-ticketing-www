@@ -2,7 +2,6 @@ import {
   Action,
   combineReducers,
   configureStore,
-  getDefaultMiddleware,
   ThunkAction,
 } from '@reduxjs/toolkit';
 import counterReducer from '@store/counter/counterReducer';

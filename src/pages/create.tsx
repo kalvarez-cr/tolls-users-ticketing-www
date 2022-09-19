@@ -30,12 +30,10 @@ const Create = () => {
     {
       onSuccess: (response) => {
         const { data } = response;
-        console.log('response data', data);
         dispatch(login(data));
         router.push('/');
       },
       onError: (error: AxiosError) => {
-        console.log(error.response.data);
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
     }
