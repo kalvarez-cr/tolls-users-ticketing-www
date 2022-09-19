@@ -1,31 +1,43 @@
-import { useRouter } from 'next/router';
 import React from 'react';
+import Link from 'next/link';
+import { ChevronRightIcon } from '@heroicons/react/outline';
 
 interface TCardProps {
   title: string;
   data: string;
   icon: React.ReactNode;
-  href: string;
+  moreInfo: boolean;
 }
 
-const Card = ({ title, data, icon, href }: TCardProps) => {
-  const { push } = useRouter();
-  const handleClick = () => {
-    push(href);
-  };
+const Card = ({ title, data, icon, moreInfo }: TCardProps) => {
   return (
-    <button
-      onClick={handleClick}
-      className="flex aspect-[7/3] w-full rounded-lg  bg-gradient-to-l from-emerald-700 to-emerald-600 text-black shadow-lg transition-all delay-100 duration-200 hover:from-emerald-600 hover:to-emerald-600 hover:shadow-xl"
-    >
-      <div className="flex w-1/3 items-center justify-center self-center p-2 text-white">
+    <div className="h-36 rounded-xl shadow-md">
+      <div
+        className={`flex items-center space-x-6  bg-white px-6 ${
+          moreInfo ? 'h-4/6 rounded-t-xl' : 'h-full rounded-xl'
+        }`}
+      >
         {icon}
+        <div>
+          <h2 className={`text-gray-600 ${moreInfo ? 'text-md' : 'text-lg'}`}>
+            {title}
+          </h2>
+          <h2 className={`font-medium ${moreInfo ? 'text-xl' : 'text-2xl'}`}>
+            {data}
+          </h2>
+        </div>
       </div>
-      <div className="flex h-full w-2/3 flex-col justify-center p-2 text-left">
-        <h1 className="text-2xl font-bold text-white lg:text-3xl">{title}</h1>
-        <h2 className="text-4xl text-white lg:text-4xl">{data}</h2>
-      </div>
-    </button>
+      {moreInfo ? (
+        <Link href="/recharges">
+          <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
+            <h4 className="text-sm font-normal">Más información</h4>
+            <ChevronRightIcon className="h-4 w-4" />
+          </div>
+        </Link>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 

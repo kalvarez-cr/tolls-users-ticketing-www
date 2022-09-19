@@ -19,7 +19,7 @@ const Select = ({
   initialLabelAndValue,
 }: TSelectProps) => {
   return (
-    <div className="my-4 flex flex-col">
+    <div className="relative my-4 flex flex-col">
       <label className="absolute left-0 -top-3.5 cursor-text text-sm text-gray-900 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600">
         {label}{' '}
       </label>

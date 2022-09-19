@@ -19,6 +19,7 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
 import { MinusCircleIcon } from '@heroicons/react/solid';
+import Card from '@components/Card';
 
 const Index = () => {
   useGuard();
@@ -36,18 +37,7 @@ const Index = () => {
   console.log(enabled);
   const [rows, setRows] = useState([]);
 
-  const name = useSelector(
-    (state: any) => state.loginUser?.user_info?.first_name
-  );
-  const lastName = useSelector(
-    (state: any) => state.loginUser?.user_info?.last_name
-  );
-  const vehicle = useSelector(
-    (state: any) => state.loginUser?.user_info?.vehicles
-  );
-  const accountNumber = useSelector(
-    (state: any) => state.loginUser?.user_info?.account_number
-  );
+  const userInfo = useSelector((state: any) => state.loginUser?.user_info);
   const balance = useSelector(
     (state: any) => state.loginUser?.account_info?.nominal_balance
   );
@@ -196,24 +186,54 @@ const Index = () => {
         <RechargueForm
           open={openModal}
           setOpen={setOpenModal}
-          accountNumber={accountNumber}
+          accountNumber={userInfo?.account_number}
         />
       ) : null}
-      <div className="mt-8 w-full">
+      <div className="mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-4xl capitalize tracking-wide text-gray-800">
-              Bienvenido, {name} {''} {lastName}
+              Bienvenido, {userInfo.first_name} {''} {userInfo.last_name}
             </h2>
-            <button
+            {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
             >
               Recargar
-            </button>
+            </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <div className="h-36 rounded-xl shadow-md">
+            <Card
+              title={'Saldo actual'}
+              data={`Bs ${balance}`}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
+                  <CashIcon className="h-7 w-7 text-emerald-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            <Card
+              title={'Vehículos'}
+              data={userInfo?.vehicles}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
+                  <TruckIcon className="h-7 w-7 text-amber-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            <Card
+              title={'Tránsitos'}
+              data={'12750'}
+              icon={
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
+                  <SupportIcon className="h-7 w-7 text-indigo-600" />
+                </div>
+              }
+              moreInfo={true}
+            />
+            {/* <div className="h-36 rounded-xl shadow-md">
               <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
                   <CashIcon className="h-7 w-7 text-emerald-600" />
@@ -263,7 +283,7 @@ const Index = () => {
                   <ChevronRightIcon className="h-4 w-4" />
                 </div>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="space-y-8">

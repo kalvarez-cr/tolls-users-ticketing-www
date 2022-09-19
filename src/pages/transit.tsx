@@ -3,189 +3,183 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { EyeIcon } from '@heroicons/react/solid';
 import {
-  SupportIcon,
-  CalendarIcon,
+  TruckIcon,
+  CreditCardIcon,
   TicketIcon,
 } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
+import Card from '@components/Card';
+import { useMutation } from 'react-query';
+import { useAppDispatch } from '@store/hooks';
+import { requester } from 'utils/requester';
+import { AxiosError } from 'axios';
+import { open } from '@store/counter/snackbarReducer';
+import { useSelector } from 'react-redux';
 
 const Transit = () => {
   useGuard();
+  const dispatch = useAppDispatch();
+  const accountNumber = useSelector(
+    (state: any) => state.loginUser?.user_info?.account_number
+  );
 
-  // DELETE THE NEXT LINE AFTER INTEGRATION
-  const isLoading = false
-  
+  const {
+    mutate,
+    data: response,
+    isLoading,
+  } = useMutation(
+    (account: any) => {
+      return requester({
+        method: 'POST',
+        data: account,
+        url: '/transit-detail/get/',
+      });
+    },
+    {
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
+
   const [rows, setRows] = useState([]);
 
   const headers = [
     {
       id: '1',
-      key: 'date',
+      key: 'moment',
       header: 'Fecha',
     },
     {
       id: '2',
-      key: 'vehicle',
-      header: 'Vehículo',
-    },
-    {
-      id: '3',
-      key: 'license_plate',
-      header: 'Placa',
-    },
-    {
-      id: '4',
-      key: 'toll',
-      header: 'Peaje',
-    },
-    {
-      id: '5',
-      key: 'lane',
-      header: 'Canal',
-    },
-    {
-      id: '6',
-      key: 'ticket',
-      header: 'Ticket',
-    },
-    {
-      id: '7',
-      key: 'amount',
+      key: 'collected_amount',
       header: 'Monto',
     },
     {
-      id: '8',
-      key: 'actions',
-      header: 'Detalles',
-    },
-  ];
-
-  const data = [
-    {
-      id: '1',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
-    },
-    {
-      id: '2',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
-    },
-    {
       id: '3',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
+      key: 'vehicle_category',
+      header: 'Vehículo',
     },
     {
       id: '4',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
+      key: 'registered_vehicle',
+      header: 'Placa',
     },
     {
       id: '5',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
+      key: 'tag_id',
+      header: 'Tag',
     },
     {
       id: '6',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
+      key: 'site',
+      header: 'Peaje',
     },
-    {
-      id: '7',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
-    },
-    {
-      id: '8',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
-    },
-    {
-      id: '9',
-      date: 'DD/MM/AA',
-      vehicle: 'Fiesta',
-      license_plate: 'AA4-B44',
-      toll: 'Punta Piedra',
-      lane: 'Canal 6',
-      ticket: '#129009',
-      amount: 'Bs 26',
-    },
+    // {
+    //   id: '7',
+    //   key: 'movements',
+    //   header: 'Movimientos',
+    // },
+    // {
+    //   id: '6',
+    //   key: 'ticket',
+    //   header: 'Ticket',
+    // },
+    // {
+    //   id: '6',
+    //   key: 'amount',
+    //   header: 'Monto',
+    // },
+    // {
+    //   id: '7',
+    //   key: 'actions',
+    //   header: 'Detalles',
+    // },
   ];
 
+  React.useEffect(() => {
+    mutate({ account_number: accountNumber, per_page: 200 });
+  }, [accountNumber, mutate]);
+
   useEffect(() => {
-    const rows = data.map(
-      ({ id, date, vehicle, license_plate, toll, lane, ticket, amount }) => {
-        return {
+    if (response) {
+      const rows = response.data.data.map(
+        ({
           id,
-          date,
-          vehicle,
-          license_plate,
-          toll,
-          lane,
-          ticket,
-          amount,
-          actions: (
-            <div className="ml-8">
-              <EyeIcon
-                className={`h-6 cursor-pointer text-emerald-700/50 transition-all duration-150 hover:text-emerald-500`}
-              />
-            </div>
-          ),
-        };
-      }
-    );
-    setRows(rows);
-  }, []);
+          moment,
+          collected_amount,
+          vehicle_category,
+          tag_id,
+          registered_vehicle,
+          site,
+        }) => {
+          return {
+            collected_amount,
+            vehicle_category: vehicle_category.title,
+            tag_id: tag_id.tag_serial,
+            registered_vehicle: registered_vehicle.license_plate,
+            site: site.name,
+            moment: new Date(moment).toLocaleDateString('es-VE'),
+            actions: (
+              <button className="ml-8" tag-id={id}>
+                <EyeIcon
+                  className={`h-6 cursor-pointer text-emerald-700/50 transition-all duration-150 hover:text-emerald-500`}
+                />
+              </button>
+            ),
+          };
+        }
+      );
+      setRows(rows);
+    }
+  }, [response]);
+
+  const total = rows.map((amount) => Number(amount.collected_amount));
+
+  const initialValue = 0;
+  const transitAmount = total.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    initialValue
+  );
 
   return (
-    <div className="mt-8 w-full">
+    <div className="mt-24 w-full">
       <div className="mb-10 space-y-8">
         <h2 className="text-3xl tracking-wide text-gray-800">
-          Historial de Transítos
+          Historial de Tránsitos
         </h2>
         <div className="grid grid-cols-3 gap-4">
-          <div className="h-36 rounded-xl shadow-md">
+          <Card
+            title={'Tránsitos'}
+            data={'1270'}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
+                <TruckIcon className="h-9 w-9 text-amber-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          <Card
+            title={'Total consumido'}
+            data={transitAmount.toString()}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
+                <CreditCardIcon className="h-9 w-9 text-emerald-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          <Card
+            title={'Último peaje'}
+            data={'Punta Piedra'}
+            icon={
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
+                <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
+              </div>
+            }
+            moreInfo={false}
+          />
+          {/* <div className="h-36 rounded-xl shadow-md">
             <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                 <SupportIcon className="h-9 w-9 text-emerald-600" />
@@ -217,7 +211,7 @@ const Transit = () => {
                 <h2 className="text-2xl font-medium">Punta Piedra</h2>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Table headers={headers} data={rows} isLoading={isLoading} />
