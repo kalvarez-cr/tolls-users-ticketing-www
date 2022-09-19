@@ -17,14 +17,14 @@ interface Inputs {
   letter: string;
   number: string;
   amount: string;
-  reference: string;
+
   title: string;
   description: string;
   code?: string;
   phone?: string;
-  currency: string;
+
   email: string;
-  urlToReturn: string;
+
   cellphone: string;
 }
 
@@ -36,7 +36,6 @@ const Schema = yup.object().shape({
     .max(8, 'Máximo 8 caracteres')
     .required('Este campo es requerido'),
   amount: yup.string().required('Este campo es requerido'),
-  reference: yup.string().required('Este campo es requerido'),
   title: yup.string().required('Este campo es requerido'),
   description: yup.string().required('Este campo es requerido'),
   code: yup.string().required('Este campo es obligatorio'),
@@ -118,30 +117,18 @@ const MobilePay = () => {
   );
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log('sadas');
-    const {
-      letter,
-      number,
-      amount,
-      reference,
-      description,
-      code,
-      phone,
-      title,
-      email,
-    } = data;
+    const { letter, number, amount, description, code, phone, title, email } =
+      data;
 
     mutate({
       letter,
       number,
       amount,
-      currency: '1',
-      reference,
+
       title,
       description,
       email,
       cellphone: `${code}${phone}`,
-      urlToReturn: 'http://www.user-toll-qa.local:4000/bankdv',
     });
   };
 
@@ -219,15 +206,7 @@ const MobilePay = () => {
                   register={register}
                 />
               </div>
-              <div className="mt-10">
-                <InputV2
-                  label="Referencia"
-                  name="reference"
-                  type="text"
-                  errorMessage={errors.reference?.message}
-                  register={register}
-                />
-              </div>
+
               <div className="mt-10">
                 <InputV2
                   label="Titulo"
