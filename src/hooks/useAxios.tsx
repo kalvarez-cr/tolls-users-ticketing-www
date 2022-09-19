@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const baseUrl = 'http://api.user-toll-qa.local:10088/api/';
-
 export const useAxios = () => {
   const requester = axios.create({
-    baseURL: baseUrl,
+    baseURL: process.env.REACT_APP_BASE_URL,
     withCredentials: true,
     headers: {
       'content-type': 'application/json',
