@@ -188,7 +188,7 @@ const Index = () => {
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-4xl capitalize tracking-wide text-gray-800">
-              Bienvenido, {userInfo.first_name} {''} {userInfo.last_name}
+              Bienvenido, {userInfo?.first_name} {''} {userInfo?.last_name}
             </h2>
             {/* <button
               onClick={handleRecharge}
