@@ -93,11 +93,12 @@ const User = () => {
         <h1 className=" text-center text-4xl font-bold tracking-wide">
           {user_info?.first_name} {''} {user_info?.last_name}
         </h1>
+        <h3 className="mt-4 text-center text-lg">{user_info?.email}</h3>
       </div>
       <div className="mt-16 flex justify-between">
-        <CreditCardIcon className=" h-9  text-teal-400 " />
-        <TruckIcon className="h-9 text-gray-400" />
-        <CalendarIcon className="h-9 text-red-400" />
+        <CreditCardIcon className=" h-12  text-teal-400 " />
+        <TruckIcon className="h-12 text-gray-400" />
+        <CalendarIcon className="h-12 text-red-400" />
       </div>
       <div className="mt-6 flex justify-between">
         <h3 className="text-lg">
@@ -109,12 +110,9 @@ const User = () => {
           {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}
         </h3>
       </div>
-      <div className="mt-12 flex items-center">
-        <h3 className="mr-4 text-lg  font-bold">Correo:</h3>
-        <h3 className="mr-auto text-lg">{user_info?.email}</h3>
-      </div>
+
       <div className="flex flex-col">
-        <div className="mt-4 flex items-start">
+        <div className="mt-12 flex items-start">
           {isEditable ? (
             <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col items-start">
