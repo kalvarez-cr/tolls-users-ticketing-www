@@ -60,7 +60,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
     <div className=" min-h-screen bg-gray-200">
       <Disclosure
         as="nav"
-        className="fixed w-full bg-emerald-700/90 bg-gradient-to-l"
+        className="fixed z-10 w-full bg-emerald-700/90 bg-gradient-to-l"
       >
         {({ open }) => (
           <>

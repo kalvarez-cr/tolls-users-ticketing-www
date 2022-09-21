@@ -1,6 +1,11 @@
-import { EyeSlashIcon, XMarkIcon, ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import {
+  EyeSlashIcon,
+  XMarkIcon,
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+} from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface TableProps {
   headers: any;
@@ -10,10 +15,20 @@ interface TableProps {
 }
 
 const Table = ({ headers, data, isLoading }: TableProps) => {
+  const [page, setPage] = useState(1);
+  const [countPage, setCountPage] = useState(10);
   const headerKeys: any[] = [];
   for (const header of headers) {
     headerKeys.push(header.key);
   }
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setPage(page - 1);
+  };
 
   return (
     <div className=" w-full">
@@ -31,7 +46,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   </div>
                 ) : header.id == headers.length ? (
                   <div
-                    className="table-cell rounded-tr-lg bg-emerald-600/30 pl-10 py-4"
+                    className="table-cell rounded-tr-lg bg-emerald-600/30 px-10 py-4"
                     key={header.id}
                   >
                     {header.header}
@@ -166,7 +181,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 );
               })
             )}
-            {data.map((row) => {
+            {/* {data.map((row) => {
               return (
                 <div className="table-row" key={row.id}>
                   {headerKeys.map((headerKey) => {
@@ -182,33 +197,34 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   })}
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
         <nav
-          className="shadow-md mb-10 rounded-b-lg flex items-center justify-between border-t border-gray-200 bg-white px-4 py-4 sm:px-6"
+          className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
           aria-label="Pagination"
         >
-          <div className="hidden sm:block ml-3">
+          <div className="ml-3 hidden sm:block">
             <p className="text-sm text-gray-700">
-              Mostrando{' '}
-              <span className="font-medium">5</span> de{' '}
-              <span className="font-medium">20</span> resultados
+              Página <span className="font-medium">{page}</span> de{' '}
+              <span className="font-medium">{countPage}</span>
             </p>
           </div>
-          <div className="flex flex-1 justify-between sm:justify-end mr-3">
-            <a
-              href="#"
+          <div className="mr-3 flex flex-1 justify-between sm:justify-end">
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
               className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               <ArrowLongLeftIcon className="h-5 w-5" />
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              onClick={handleNextPage}
+              disabled={page === countPage}
               className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               <ArrowLongRightIcon className="h-5 w-5" />
-            </a>
+            </button>
           </div>
         </nav>
       </div>
