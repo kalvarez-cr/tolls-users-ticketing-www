@@ -10,11 +10,11 @@ import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
 import {
   UserCircleIcon,
-  PencilAltIcon,
+  PencilSquareIcon,
   CreditCardIcon,
   TruckIcon,
   CalendarIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
@@ -165,7 +165,7 @@ const User = () => {
               isEditable ? setIsEditable(false) : setIsEditable(true)
             }
           >
-            <PencilAltIcon className="h-5 text-gray-600 hover:text-emerald-500" />
+            <PencilSquareIcon className="h-5 text-gray-600 hover:text-emerald-500" />
           </button>
         </div>
       </div>

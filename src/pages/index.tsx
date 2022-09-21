@@ -16,7 +16,7 @@ import { useAxios } from 'hooks/useAxios';
 import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
-import { MinusCircleIcon } from '@heroicons/react/solid';
+import { MinusCircleIcon } from '@heroicons/react/24/solid';
 import Card from '@components/Card';
 
 const Index = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '@components/Modal';
-import { CreditCardIcon } from '@heroicons/react/solid';
+import { CreditCardIcon } from '@heroicons/react/24/solid';
 import InputV2 from '@components/inputs/InputV2';
 import Select from '@components/inputs/Select';
 import { SubmitHandler, useForm } from 'react-hook-form';
