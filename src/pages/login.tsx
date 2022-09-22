@@ -11,6 +11,7 @@ import { AxiosError } from 'axios';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAxios } from 'hooks/useAxios';
+import Button from '@components/Button';
 
 interface Inputs {
   email: string;
@@ -38,7 +39,7 @@ const Register = () => {
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const [items] = React.useState(initialValues);
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
@@ -103,11 +104,9 @@ const Register = () => {
                   defaultValue={items.password}
                 />
               </div>
-              <input
-                type="submit"
-                value="Ingresar"
-                className="mt-20 block w-full cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-              />
+              <div className="mt-8">
+                <Button loading={isLoading} type="submit" text="Ingresar" />
+              </div>
             </form>
             {/* <Link href="register">
               <p className="mt-4 cursor-pointer text-center text-sm">
