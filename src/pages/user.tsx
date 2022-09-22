@@ -18,6 +18,7 @@ import {
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+import { useRouter } from 'next/router';
 
 interface Inputs {
   password: string;
@@ -49,7 +50,7 @@ const User = () => {
   const account_info = useSelector(
     (state: any) => state.loginUser?.account_info
   );
-
+  const router = useRouter();
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(
@@ -122,6 +123,7 @@ const User = () => {
                   type="text"
                   errorMessage={errors.phone_number?.message}
                   register={register}
+                  defaultValue={user_info?.phone_number}
                 />
                 <div className="mt-14 flex">
                   <InputV2
@@ -146,11 +148,20 @@ const User = () => {
                   </div>
                 </div>
               </div>
-              <input
-                type="submit"
-                value="Confirmar"
-                className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-              />
+              <div className="flex justify-between space-x-4">
+                <input
+                  type="submit"
+                  value="Confirmar"
+                  className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+                />
+                <input
+                  onClick={() =>
+                    isEditable ? setIsEditable(false) : setIsEditable(true)
+                  }
+                  value="Cancelar"
+                  className="mt-14 block w-32 cursor-pointer rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+                />
+              </div>
             </form>
           ) : (
             <>

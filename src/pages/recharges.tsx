@@ -29,8 +29,8 @@ const Recharges = () => {
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
-  const balance = useSelector(
-    (state: any) => state.loginUser?.account_info?.nominal_balance
+  const account_info = useSelector(
+    (state: any) => state.loginUser?.account_info
   );
   const {
     mutate,
@@ -113,6 +113,8 @@ const Recharges = () => {
         }
       );
       setRows(table);
+    } else {
+      <p>No tiene recargas registradas </p>;
     }
   }, [response]);
 
@@ -137,19 +139,13 @@ const Recharges = () => {
             </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <PaymentMethodCard
-              image={'/metodos-de-pago-01.svg'}
-              href="/bankdv"
-            />
+            <PaymentMethodCard image={'/metodos-de-pago-01.svg'} href="" />
             <PaymentMethodCard image={'/metodos-de-pago-02.svg'} href="" />
-            <PaymentMethodCard
-              image={'/metodos-de-pago-03.svg'}
-              href="/mobilePay"
-            />
+            <PaymentMethodCard image={'/metodos-de-pago-03.svg'} href="" />
 
             <Card
               title={'Saldo actual'}
-              data={`Bs ${balance}`}
+              data={`Bs ${account_info?.nominal_balance}`}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                   <CashIcon className="h-9 w-9 text-emerald-600" />
@@ -158,8 +154,10 @@ const Recharges = () => {
               moreInfo={false}
             />
             <Card
-              title={'Última recarga'}
-              data={'10/07/2022'}
+              title={'Última visita'}
+              data={new Date(account_info?.last_use_date).toLocaleDateString(
+                'es-VE'
+              )}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
                   <CalendarIcon className="h-9 w-9 text-amber-600" />

@@ -131,6 +131,8 @@ const Transit = () => {
         }
       );
       setRows(rows);
+    } else {
+      <p>No tiene tránsitos registrados </p>;
     }
   }, [response]);
 
