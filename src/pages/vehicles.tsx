@@ -1,20 +1,20 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { XMarkIcon, TruckIcon, CalendarIcon } from '@heroicons/react/24/outline';
-import { useMutation, useQuery } from 'react-query';
+import { TruckIcon, CalendarIcon, XIcon } from '@heroicons/react/outline';
+import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { useAppDispatch } from '@store/hooks';
-import { open } from '@store/counter/snackbarReducer';
-import { MinusCircleIcon } from '@heroicons/react/24/solid';
-import { AxiosError } from 'axios';
+import { MinusCircleIcon } from '@heroicons/react/solid';
+
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
+import CancelForm from '@components/modalForms/CancelForm';
+import BlockForm from '@components/modalForms/BlockForm';
 
 const Vehicles = () => {
   useGuard();
-  const dispatch = useAppDispatch();
+
   const { requester } = useAxios();
 
   const useFetchData = () =>
@@ -25,56 +25,27 @@ const Vehicles = () => {
 
   const [rows, setRows] = useState([]);
   const { data, isLoading } = useFetchData();
+  const [openModal, setOpenModal] = React.useState(false);
+  const [modal, setModal] = React.useState('');
+  const [idVehicle, setIdVehicle] = React.useState('');
+  const [idTag, setIdTag] = React.useState('');
   const vehicle = useSelector(
     (state: any) => state.loginUser?.user_info?.vehicles
   );
-
-  const { mutate } = useMutation(
-    (id: any) => {
-      return requester({
-        method: 'POST',
-        data: id,
-        url: '/registered-vehicle/cancel/',
-      });
-    },
-    {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
-      },
-    }
-  );
-
-  const { mutate: mutate2 } = useMutation(
-    (id: any) => {
-      return requester({
-        method: 'POST',
-        data: id,
-        url: '/registered-vehicle/block/',
-      });
-    },
-    {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
-      },
-    }
-  );
+  const account = useSelector((state: any) => state.loginUser?.account_info);
 
   const handleCancel = (e) => {
+    setOpenModal(true);
+    setModal('cancel');
     const id = e.currentTarget.dataset.tag;
-    mutate({ id: id });
+    setIdVehicle(id);
   };
 
   const handleDisabled = (e) => {
+    setOpenModal(true);
+    setModal('block');
     const id = e.currentTarget.dataset.id;
-    mutate2({ id: id });
+    setIdTag(id);
   };
 
   const headers = [
@@ -148,7 +119,7 @@ const Vehicles = () => {
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XMarkIcon className="h-6 text-rose-400" />
+                  <XIcon className="h-6 text-rose-400" />
                 </button>
               </div>
             ),
@@ -156,11 +127,25 @@ const Vehicles = () => {
         }
       );
       setRows(rows);
+    } else {
+      <p>No tiene vehículos registrados </p>;
     }
   }, [data]);
 
   return (
     <>
+      {modal === 'cancel' ? (
+        <CancelForm
+          open={openModal}
+          setOpen={setOpenModal}
+          idVehicle={idVehicle}
+        />
+      ) : null}
+
+      {modal === 'block' ? (
+        <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
+      ) : null}
+
       <div className="mt-24  w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="text-3xl tracking-wide text-gray-800">
@@ -188,8 +173,10 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Último uso'}
-              data={'10/07/2022'}
+              title={'Última visita'}
+              data={new Date(account?.last_use_date).toLocaleDateString(
+                'es-VE'
+              )}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                   <CalendarIcon className="h-9 w-9 text-indigo-600" />

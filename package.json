@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "next dev -p 4000 -H www.ticketing-local.com",
     "build": "next build && next export"
   },
   "dependencies": {
