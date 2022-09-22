@@ -3,9 +3,8 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import {
   TruckIcon,
-  CashIcon,
-  SupportIcon,
-  XIcon,
+  BanIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
@@ -13,13 +12,11 @@ import { useQuery } from 'react-query';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-
-import { useAppDispatch } from '@store/hooks';
-
 import { MinusCircleIcon } from '@heroicons/react/solid';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
+import { XIcon } from '@heroicons/react/outline';
 
 const Index = () => {
   useGuard();
@@ -128,12 +125,14 @@ const Index = () => {
                 <button onClick={handleDisabled} data-id={id}>
                   <MinusCircleIcon
                     className={`h-6 ${
-                      active ? 'text-emerald-500/60' : 'text-red-500/60'
+                      active
+                        ? 'text-emerald-500/60 hover:text-emerald-500/90'
+                        : 'text-red-500/60'
                     } `}
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XIcon className="h-6 text-rose-400" />
+                  <XIcon className="h-6 text-rose-400 hover:text-rose-500" />
                 </button>
               </div>
             ),
@@ -186,7 +185,7 @@ const Index = () => {
               data={`Bs ${balance}`}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
+                  <BanIcon className="h-7 w-7 text-emerald-600" />
                 </div>
               }
               moreInfo={true}
@@ -206,7 +205,7 @@ const Index = () => {
               data={transits}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <SupportIcon className="h-7 w-7 text-indigo-600" />
+                  <InformationCircleIcon className="h-7 w-7 text-indigo-600" />
                 </div>
               }
               moreInfo={true}

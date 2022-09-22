@@ -1,4 +1,4 @@
-import { CheckCircleIcon, XIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { close, snackbar } from '@store/counter/snackbarReducer';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { useEffect } from 'react';
@@ -33,7 +33,7 @@ const Snackbar = () => {
       </div>
       <h1 className="mx-2 w-10/12 text-lg text-white">{text}</h1>
       <button className="w-1/12">
-        <XIcon
+        <XMarkIcon
           className="block h-7 w-7 text-white"
           aria-hidden="true"
           onClick={handleClose}

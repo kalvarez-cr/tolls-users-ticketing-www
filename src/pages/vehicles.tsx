@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { XIcon, TruckIcon, CalendarIcon } from '@heroicons/react/outline';
+import { TruckIcon, CalendarIcon, XIcon } from '@heroicons/react/outline';
 import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
