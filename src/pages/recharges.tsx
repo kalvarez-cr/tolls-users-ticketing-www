@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { BanknotesIcon, CalendarIcon, TicketIcon } from '@heroicons/react/24/outline';
+import {
+  BanknotesIcon,
+  CalendarIcon,
+  TicketIcon,
+} from '@heroicons/react/24/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';

@@ -4,7 +4,7 @@ import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
-import { MinusCircleIcon } from '@heroicons/react/outline';
+import { MinusCircleIcon } from '@heroicons/react/24/outline';
 
 const CancelForm = ({ open, setOpen, idTag }) => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,10 @@
 import LogoDark from '@components/icons/LogoDark';
 import { Disclosure } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ArrowLeftOnRectangleIcon,
+} from '@heroicons/react/24/outline';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { logout } from '@store/counter/loginReducer';
 import { open } from '@store/counter/snackbarReducer';
@@ -34,10 +38,8 @@ const LandingLayout = ({ children }: TLandingLayout) => {
       });
     },
     {
-      onSuccess: (response) => {
-        console.log(response);
+      onSuccess: () => {
         dispatch(logout());
-        router.push('/login');
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -49,7 +51,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
     mutate();
   };
   const navigation = [
-    { name: 'Inicio', href: '/' },
+    { name: 'Inicio', href: '/home' },
     { name: 'Recargas', href: '/recharges' },
     { name: 'Vehículos', href: '/vehicles' },
     { name: 'Tránsitos', href: '/transit' },
@@ -111,11 +113,9 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                     </button>
                   </Link>
 
-                  <Link href="/login">
-                    <button className="p-2" onClick={handleLogout}>
-                      <ArrowLeftOnRectangleIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
-                    </button>
-                  </Link>
+                  <button className="p-2" onClick={handleLogout}>
+                    <ArrowLeftOnRectangleIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
+                  </button>
                 </div>
               </div>
             </div>

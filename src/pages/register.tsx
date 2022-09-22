@@ -46,7 +46,7 @@ const Register = () => {
         const { data } = response;
         dispatch(open({ text: 'operacion exitosa', type: 'success' }));
         console.log(data);
-        router.push('/login');
+        router.push('/');
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));

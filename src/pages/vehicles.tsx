@@ -1,11 +1,15 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { TruckIcon, CalendarIcon, XIcon } from '@heroicons/react/outline';
+import {
+  TruckIcon,
+  CalendarIcon,
+  XCircleIcon,
+} from '@heroicons/react/24/outline';
 import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { MinusCircleIcon } from '@heroicons/react/solid';
+import { MinusCircleIcon } from '@heroicons/react/24/solid';
 
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
@@ -119,7 +123,7 @@ const Vehicles = () => {
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XIcon className="h-6 text-rose-400" />
+                  <XCircleIcon className="h-6 text-rose-400" />
                 </button>
               </div>
             ),
