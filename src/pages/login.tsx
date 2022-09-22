@@ -12,13 +12,15 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAxios } from 'hooks/useAxios';
 
+const IS_PROD = process.env.NODE_ENV == 'production';
+
 interface Inputs {
   email: string;
   password: string;
 }
 const initialValues = {
-  name: 'dinojefe@mail.com',
-  password: 'm8ehbUmF',
+  name: IS_PROD ? '' : 'dinojefe@mail.com',
+  password: IS_PROD ? '' : 'm8ehbUmF',
 };
 
 const Schema = yup.object().shape({
