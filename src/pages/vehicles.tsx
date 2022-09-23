@@ -127,8 +127,6 @@ const Vehicles = () => {
         }
       );
       setRows(rows);
-    } else {
-      <p>No tiene vehículos registrados </p>;
     }
   }, [data]);
 
