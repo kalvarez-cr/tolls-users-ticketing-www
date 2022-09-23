@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronRightIcon } from '@heroicons/react/outline';
 
 interface TCardProps {
   title: string;
-  data: string;
+  data: string | any;
   icon: React.ReactNode;
   moreInfo: boolean;
 }

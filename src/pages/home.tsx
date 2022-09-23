@@ -3,20 +3,20 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import {
   TruckIcon,
-  BanknotesIcon,
+  CashIcon,
   InformationCircleIcon,
-} from '@heroicons/react/24/outline';
+} from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 
 import RechargueForm from '@components/modalForms/RechargueForm';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { MinusCircleIcon } from '@heroicons/react/24/solid';
+import { MinusCircleIcon } from '@heroicons/react/solid';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
-import { XCircleIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon } from '@heroicons/react/outline';
 
 const Home = () => {
   useGuard();
@@ -185,7 +185,7 @@ const Home = () => {
               data={`Bs ${balance}`}
               icon={
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <BanknotesIcon className="h-7 w-7 text-emerald-600" />
+                  <CashIcon className="h-7 w-7 text-emerald-600" />
                 </div>
               }
               moreInfo={true}

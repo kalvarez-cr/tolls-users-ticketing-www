@@ -1,15 +1,11 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import {
-  TruckIcon,
-  CalendarIcon,
-  XCircleIcon,
-} from '@heroicons/react/24/outline';
+import { TruckIcon, CalendarIcon, XCircleIcon } from '@heroicons/react/outline';
 import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { MinusCircleIcon } from '@heroicons/react/24/solid';
+import { MinusCircleIcon } from '@heroicons/react/solid';
 
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
@@ -136,6 +132,9 @@ const Vehicles = () => {
     }
   }, [data]);
 
+  const tags = rows.map((row) => row?.tag_serial);
+  let lastTags = tags[tags.length - 1];
+
   return (
     <>
       {modal === 'cancel' ? (
@@ -167,8 +166,8 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Tag activos'}
-              data={'3'}
+              title={'Tag'}
+              data={lastTags}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
                   <img className="h-9 w-9" src="/nfc.svg" alt="tag" />

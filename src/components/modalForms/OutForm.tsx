@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '@components/Modal';
-import { CreditCardIcon } from '@heroicons/react/24/solid';
+import { CreditCardIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { close, modal, open } from '@store/counter/modalReducer';

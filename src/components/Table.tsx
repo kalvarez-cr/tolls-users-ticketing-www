@@ -1,9 +1,9 @@
 import {
-  EyeSlashIcon,
-  XMarkIcon,
-  ArrowLongLeftIcon,
-  ArrowLongRightIcon,
-} from '@heroicons/react/24/solid';
+  EyeIcon,
+  XIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from '@heroicons/react/solid';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -216,14 +216,14 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
               disabled={page === 1}
               className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              <ArrowLongLeftIcon className="h-5 w-5" />
+              <ArrowLeftIcon className="h-5 w-5" />
             </button>
             <button
               onClick={handleNextPage}
               disabled={page === countPage}
               className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              <ArrowLongRightIcon className="h-5 w-5" />
+              <ArrowRightIcon className="h-5 w-5" />
             </button>
           </div>
         </nav>
@@ -242,13 +242,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeSlashIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <XIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -270,13 +270,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeSlashIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <XIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -298,13 +298,13 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeSlashIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
                 className="font-medium text-red-400 hover:text-red-500"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <XIcon className="h-5 w-5" />
               </Link>
             </div>
           </div>

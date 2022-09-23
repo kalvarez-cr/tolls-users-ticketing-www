@@ -1,11 +1,7 @@
 import LogoDark from '@components/icons/LogoDark';
 import { Disclosure } from '@headlessui/react';
-import {
-  Bars3Icon,
-  XMarkIcon,
-  ArrowLeftOnRectangleIcon,
-} from '@heroicons/react/24/outline';
-import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { MenuIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/outline';
+import { UserCircleIcon } from '@heroicons/react/solid';
 import { logout } from '@store/counter/loginReducer';
 import { open } from '@store/counter/snackbarReducer';
 import { useAppDispatch } from '@store/hooks';
@@ -74,9 +70,9 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
                     ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                     )}
                   </Disclosure.Button>
                 </div>
@@ -114,7 +110,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                   </Link>
 
                   <button className="p-2" onClick={handleLogout}>
-                    <ArrowLeftOnRectangleIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
+                    <ArrowLeftIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
                   </button>
                 </div>
               </div>

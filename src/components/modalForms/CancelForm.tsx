@@ -4,7 +4,7 @@ import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
-import { XIcon } from '@heroicons/react/24/outline';
+import { XIcon } from '@heroicons/react/outline';
 
 const CancelForm = ({ open, setOpen, idVehicle }) => {
   const dispatch = useAppDispatch();

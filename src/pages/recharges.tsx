@@ -1,11 +1,7 @@
 import React, { ReactElement } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import {
-  BanknotesIcon,
-  CalendarIcon,
-  TicketIcon,
-} from '@heroicons/react/24/outline';
+import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';
@@ -122,6 +118,9 @@ const Recharges = () => {
     }
   }, [response]);
 
+  const amounts = rows.map((row) => row?.facial_amount);
+  let lastAmount = amounts[amounts.length - 1];
+
   return (
     <>
       {modal === 'recharge' ? (
@@ -143,7 +142,10 @@ const Recharges = () => {
             </button> */}
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <PaymentMethodCard image={'/metodos-de-pago-01.svg'} href="" />
+            <PaymentMethodCard
+              image={'/metodos-de-pago-01.svg'}
+              href="/bankdv"
+            />
             <PaymentMethodCard image={'/metodos-de-pago-02.svg'} href="" />
             <PaymentMethodCard image={'/metodos-de-pago-03.svg'} href="" />
 
@@ -152,7 +154,7 @@ const Recharges = () => {
               data={`Bs ${account_info?.nominal_balance}`}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <BanknotesIcon className="h-9 w-9 text-emerald-600" />
+                  <CashIcon className="h-9 w-9 text-emerald-600" />
                 </div>
               }
               moreInfo={false}
@@ -171,7 +173,7 @@ const Recharges = () => {
             />
             <Card
               title={'Monto de última recarga'}
-              data={'Bs 10'}
+              data={` Bs ${lastAmount}`}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                   <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />

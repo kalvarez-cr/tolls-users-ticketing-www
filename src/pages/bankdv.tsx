@@ -1,5 +1,5 @@
 import InputV2 from '@components/inputs/InputV2';
-import { CreditCardIcon } from '@heroicons/react/24/outline';
+import { CreditCardIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
@@ -152,7 +152,7 @@ const MobilePay = () => {
             <div className="flex items-center">
               <div className="w-1/3 pr-4">
                 <Select
-                  label="V"
+                  label="Tipo"
                   name="letter"
                   options={methods}
                   // errorMessage={errors.nif?.message}
@@ -172,7 +172,7 @@ const MobilePay = () => {
             <div className=" flex items-center ">
               <div className="w-1/3 pr-4">
                 <Select
-                  label="Código"
+                  label="04XX"
                   name="code"
                   options={codes}
                   // errorMessage={errors.nif_type?.message}
@@ -191,7 +191,7 @@ const MobilePay = () => {
             </div>
             <div className="mt-10 ">
               <InputV2
-                label="correo"
+                label="Correo"
                 name="email"
                 type="text"
                 errorMessage={errors.email?.message}
@@ -209,7 +209,7 @@ const MobilePay = () => {
 
               <div className="mt-10">
                 <InputV2
-                  label="Titulo"
+                  label="Título"
                   name="title"
                   type="text"
                   errorMessage={errors.title?.message}
