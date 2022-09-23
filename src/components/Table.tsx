@@ -1,11 +1,6 @@
-import {
-  EyeIcon,
-  XIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from '@heroicons/react/solid';
+import { EyeIcon, XIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface TableProps {
   headers: any;
@@ -15,20 +10,20 @@ interface TableProps {
 }
 
 const Table = ({ headers, data, isLoading }: TableProps) => {
-  const [page, setPage] = useState(1);
-  const [countPage, setCountPage] = useState(10);
+  // const [page, setPage] = useState(1);
+  // const [countPage, setCountPage] = useState(10);
   const headerKeys: any[] = [];
   for (const header of headers) {
     headerKeys.push(header.key);
   }
 
-  const handleNextPage = () => {
-    setPage(page + 1);
-  };
+  // const handleNextPage = () => {
+  //   setPage(page + 1);
+  // };
 
-  const handlePreviousPage = () => {
-    setPage(page - 1);
-  };
+  // const handlePreviousPage = () => {
+  //   setPage(page - 1);
+  // };
 
   return (
     <div className=" w-full">
