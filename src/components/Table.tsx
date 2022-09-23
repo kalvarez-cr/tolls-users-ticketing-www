@@ -200,7 +200,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
             })} */}
           </div>
         </div>
-        <nav
+        {/* <nav
           className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
           aria-label="Pagination"
         >
@@ -226,7 +226,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
               <ArrowRightIcon className="h-5 w-5" />
             </button>
           </div>
-        </nav>
+        </nav> */}
       </div>
       <div className="grid grid-cols-1 gap-4 md:hidden">
         <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
