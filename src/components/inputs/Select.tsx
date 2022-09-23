@@ -16,7 +16,6 @@ const Select = ({
   errorMessage,
   register,
   options,
-  initialLabelAndValue,
 }: TSelectProps) => {
   return (
     <div className="relative my-4 flex flex-col">

@@ -173,7 +173,7 @@ const Recharges = () => {
             />
             <Card
               title={'Monto de última recarga'}
-              data={` Bs ${lastAmount}`}
+              data={` Bs ${lastAmount} `}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                   <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />

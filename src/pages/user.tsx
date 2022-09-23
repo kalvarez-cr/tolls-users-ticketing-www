@@ -18,8 +18,6 @@ import {
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { useRouter } from 'next/router';
-
 interface Inputs {
   password: string;
   phone_number: string;
@@ -50,7 +48,7 @@ const User = () => {
   const account_info = useSelector(
     (state: any) => state.loginUser?.account_info
   );
-  const router = useRouter();
+
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(

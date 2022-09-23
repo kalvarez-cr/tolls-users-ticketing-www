@@ -157,7 +157,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   })}
                 </div>
               </>
-            ) : (
+            ) : data ? (
               data.map((row) => {
                 return (
                   <div className="table-row" key={row.id}>
@@ -175,6 +175,8 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   </div>
                 );
               })
+            ) : (
+              <p className="text-black antialiased">No hay registros</p>
             )}
             {/* {data.map((row) => {
               return (
