@@ -8,10 +8,17 @@ import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
-import { UserCircleIcon, PencilAltIcon } from '@heroicons/react/solid';
+import {
+  UserCircleIcon,
+  PencilIcon,
+  CreditCardIcon,
+  TruckIcon,
+  CalendarIcon,
+} from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+import { useRouter } from 'next/router';
 
 interface Inputs {
   password: string;
@@ -39,18 +46,11 @@ const Schema = yup.object().shape({
 const User = () => {
   useGuard();
   const [isEditable, setIsEditable] = useState(false);
-  const name = useSelector(
-    (state: any) => state.loginUser?.user_info?.first_name
+  const user_info = useSelector((state: any) => state.loginUser?.user_info);
+  const account_info = useSelector(
+    (state: any) => state.loginUser?.account_info
   );
-  const lastName = useSelector(
-    (state: any) => state.loginUser?.user_info?.last_name
-  );
-  const email = useSelector((state: any) => state.loginUser?.user_info?.email);
-
-  const phoneNumber = useSelector(
-    (state: any) => state.loginUser?.user_info?.phone_number
-  );
-
+  const router = useRouter();
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(
@@ -87,20 +87,33 @@ const User = () => {
 
   return (
     <div className="mt-28 w-5/6 rounded-xl bg-gray-100 p-24 shadow-xl">
-      <div className="flex items-center justify-between">
-        <div className="border-r-2">
-          <UserCircleIcon className="mr-16 h-20 pr-10 text-gray-500" />
+      <div className="flex flex-col">
+        <div className="ml-72">
+          <UserCircleIcon className=" h-20 text-gray-500" />
         </div>
-        <h1 className="ml-16 w-full text-center text-4xl font-bold tracking-wide">
-          {name} {''} {lastName}
+        <h1 className=" text-center text-4xl font-bold tracking-wide">
+          {user_info?.first_name} {''} {user_info?.last_name}
         </h1>
+        <h3 className="mt-4 text-center text-lg">{user_info?.email}</h3>
       </div>
-      <div className="mt-16 flex flex-col">
-        <div className="mt-6 flex items-center">
-          <h3 className="mr-4 text-lg  font-bold">Correo:</h3>
-          <h3 className="mr-auto text-lg">{email}</h3>
-        </div>
-        <div className="mt-10 flex items-start">
+      <div className="mt-16 flex justify-between">
+        <CreditCardIcon className=" h-12  text-teal-400 " />
+        <TruckIcon className="h-12 text-gray-400" />
+        <CalendarIcon className="h-12 text-red-400" />
+      </div>
+      <div className="mt-6 flex justify-between">
+        <h3 className="text-lg">
+          Bs{''}
+          {account_info?.nominal_balance}
+        </h3>
+        <h3 className="text-lg">{user_info?.vehicles}</h3>
+        <h3 className="text-lg">
+          {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}
+        </h3>
+      </div>
+
+      <div className="flex flex-col">
+        <div className="mt-12 flex items-start">
           {isEditable ? (
             <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col items-start">
@@ -110,6 +123,7 @@ const User = () => {
                   type="text"
                   errorMessage={errors.phone_number?.message}
                   register={register}
+                  defaultValue={user_info?.phone_number}
                 />
                 <div className="mt-14 flex">
                   <InputV2
@@ -134,16 +148,25 @@ const User = () => {
                   </div>
                 </div>
               </div>
-              <input
-                type="submit"
-                value="Confirmar"
-                className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-              />
+              <div className="flex justify-between space-x-4">
+                <input
+                  type="submit"
+                  value="Confirmar"
+                  className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+                />
+                <input
+                  onClick={() =>
+                    isEditable ? setIsEditable(false) : setIsEditable(true)
+                  }
+                  value="Cancelar"
+                  className="mt-14 block w-32 cursor-pointer rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+                />
+              </div>
             </form>
           ) : (
             <>
               <h3 className="mr-4 text-lg font-bold">Teléfono:</h3>
-              <h3 className="mr-auto text-lg">{phoneNumber}</h3>
+              <h3 className="mr-auto text-lg">{user_info?.phone_number}</h3>
             </>
           )}
 
@@ -153,7 +176,7 @@ const User = () => {
               isEditable ? setIsEditable(false) : setIsEditable(true)
             }
           >
-            <PencilAltIcon className="h-5 text-gray-600 hover:text-emerald-500" />
+            <PencilIcon className="h-5 text-gray-600 hover:text-emerald-500" />
           </button>
         </div>
       </div>

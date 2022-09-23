@@ -1,4 +1,4 @@
-import { EyeOffIcon, XIcon } from '@heroicons/react/solid';
+import { EyeIcon, XIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,15 +10,25 @@ interface TableProps {
 }
 
 const Table = ({ headers, data, isLoading }: TableProps) => {
+  // const [page, setPage] = useState(1);
+  // const [countPage, setCountPage] = useState(10);
   const headerKeys: any[] = [];
   for (const header of headers) {
     headerKeys.push(header.key);
   }
 
+  // const handleNextPage = () => {
+  //   setPage(page + 1);
+  // };
+
+  // const handlePreviousPage = () => {
+  //   setPage(page - 1);
+  // };
+
   return (
     <div className=" w-full">
       <div className="hidden md:block">
-        <div className="text-md mb-6 table w-full rounded-lg bg-white shadow-md">
+        <div className="text-md table w-full rounded-t-lg bg-white shadow-md">
           <div className="table-header-group font-medium uppercase text-gray-800 antialiased">
             <div className="table-row">
               {headers.map((header) => {
@@ -166,7 +176,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 );
               })
             )}
-            {data.map((row) => {
+            {/* {data.map((row) => {
               return (
                 <div className="table-row" key={row.id}>
                   {headerKeys.map((headerKey) => {
@@ -182,9 +192,36 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   })}
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
+        <nav
+          className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
+          aria-label="Pagination"
+        >
+          {/* <div className="ml-3 hidden sm:block">
+            <p className="text-sm text-gray-700">
+              Página <span className="font-medium">{page}</span> de{' '}
+              <span className="font-medium">{countPage}</span>
+            </p>
+          </div>
+          <div className="mr-3 flex flex-1 justify-between sm:justify-end">
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowLeftIcon className="h-5 w-5" />
+            </button>
+            <button
+              onClick={handleNextPage}
+              disabled={page === countPage}
+              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowRightIcon className="h-5 w-5" />
+            </button>
+          </div> */}
+        </nav>
       </div>
       <div className="grid grid-cols-1 gap-4 md:hidden">
         <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
@@ -200,7 +237,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
@@ -228,7 +265,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"
@@ -256,7 +293,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                 href="#"
                 className="font-medium text-blue-400 hover:text-blue-500 "
               >
-                <EyeOffIcon className="h-5 w-5" />
+                <EyeIcon className="h-5 w-5" />
               </Link>
               <Link
                 href="#"

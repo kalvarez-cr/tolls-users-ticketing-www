@@ -4,7 +4,7 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 
 interface TCardProps {
   title: string;
-  data: string;
+  data: string | any;
   icon: React.ReactNode;
   moreInfo: boolean;
 }

@@ -152,7 +152,7 @@ const MobilePay = () => {
             <div className="flex items-center">
               <div className="w-1/3 pr-4">
                 <Select
-                  label="V"
+                  label="Tipo"
                   name="letter"
                   options={methods}
                   // errorMessage={errors.nif?.message}
@@ -172,7 +172,7 @@ const MobilePay = () => {
             <div className=" flex items-center ">
               <div className="w-1/3 pr-4">
                 <Select
-                  label="Código"
+                  label="04XX"
                   name="code"
                   options={codes}
                   // errorMessage={errors.nif_type?.message}
@@ -191,7 +191,7 @@ const MobilePay = () => {
             </div>
             <div className="mt-10 ">
               <InputV2
-                label="correo"
+                label="Correo"
                 name="email"
                 type="text"
                 errorMessage={errors.email?.message}
@@ -209,7 +209,7 @@ const MobilePay = () => {
 
               <div className="mt-10">
                 <InputV2
-                  label="Titulo"
+                  label="Título"
                   name="title"
                   type="text"
                   errorMessage={errors.title?.message}
@@ -226,12 +226,18 @@ const MobilePay = () => {
                 />
               </div>
             </div>
-
-            <input
-              type="submit"
-              value="Confirmar"
-              className="  mt-14 cursor-pointer   rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-            />
+            <div className="flex justify-between space-x-4">
+              <input
+                type="submit"
+                value="Confirmar"
+                className="  mt-14 cursor-pointer   rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+              <input
+                onClick={() => router.back()}
+                value="Volver"
+                className="  mt-14 w-32 cursor-pointer  rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-red-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+            </div>
           </form>
 
           <>

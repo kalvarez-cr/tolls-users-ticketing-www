@@ -13,7 +13,7 @@ const OutForm = () => {
   const handleAccept = () => {
     dispatch(close());
     dispatch(logout());
-    router.push('/login');
+    router.push('/');
   };
 
   return (
@@ -25,7 +25,7 @@ const OutForm = () => {
           handleAccept={() => handleAccept()}
           title="Advertencia"
           acceptButtonText="Aceptar"
-          cancelButtonText="Cancelar"
+          cancelButtonText={null}
           icon={<CreditCardIcon />}
         >
           <p>Usted será redirigido al login</p>

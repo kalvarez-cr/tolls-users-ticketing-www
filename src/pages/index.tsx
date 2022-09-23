@@ -1,300 +1,138 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import LandingLayout from '@layouts/LandingLayout';
-import Table from '@components/Table';
-import {
-  TruckIcon,
-  CashIcon,
-  SupportIcon,
-  XIcon,
-} from '@heroicons/react/outline';
-import { useSelector } from 'react-redux';
-import { useMutation, useQuery } from 'react-query';
-
-import RechargueForm from '@components/modalForms/RechargueForm';
-import { useGuard } from 'hooks/useGuard';
-import { useAxios } from 'hooks/useAxios';
-import { AxiosError } from 'axios';
-import { useAppDispatch } from '@store/hooks';
+import React, { useEffect } from 'react';
+import FooterLayout from '@layouts/FooterLayout';
+import InputV2 from '@components/inputs/InputV2';
+import { useRouter } from 'next/router';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { login, loginUser } from '@store/counter/loginReducer';
 import { open } from '@store/counter/snackbarReducer';
-import { MinusCircleIcon } from '@heroicons/react/solid';
-import Card from '@components/Card';
+import { AxiosError } from 'axios';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAxios } from 'hooks/useAxios';
+import Button from '@components/Button';
 
-const Index = () => {
-  useGuard();
-  const { requester } = useAxios();
-  const useFetchData = () =>
-    useQuery('vehicles', async () => {
-      const { data } = await requester.get('/registered-vehicle/get/');
-      return data.data;
-    });
-  const dispatch = useAppDispatch();
-  const [openModal, setOpenModal] = useState(false);
-  const [modal] = useState('');
-  const [enabled] = useState(true);
-  console.log(enabled);
-  const [rows, setRows] = useState([]);
+const IS_PROD = process.env.NODE_ENV == 'production';
 
-  const userInfo = useSelector((state: any) => state.loginUser?.user_info);
-  const balance = useSelector(
-    (state: any) => state.loginUser?.account_info?.nominal_balance
-  );
-  const { data, isLoading } = useFetchData();
-
-  const { mutate } = useMutation(
-    (id: any) => {
-      return requester({
-        method: 'POST',
-        data: id,
-        url: '/registered-vehicle/cancel/',
-      });
-    },
-    {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
-      },
-    }
-  );
-
-  const { mutate: mutate2 } = useMutation(
-    (id: any) => {
-      return requester({
-        method: 'POST',
-        data: id,
-        url: '/registered-vehicle/block/',
-      });
-    },
-    {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
-      },
-    }
-  );
-
-  // const handleRecharge = () => {
-  //   setOpenModal(true);
-  //   setModal('recharge');
-  // };
-
-  const handleCancel = (e) => {
-    const id = e.currentTarget.dataset.tag;
-    mutate({ id: id });
-  };
-
-  const handleDisabled = (e) => {
-    const id = e.currentTarget.dataset.id;
-    mutate2({ id: id });
-  };
-
-  const headers = [
-    {
-      id: '1',
-      key: 'make',
-      header: 'Marca',
-    },
-    {
-      id: '2',
-      key: 'model',
-      header: 'Modelo',
-    },
-    {
-      id: '3',
-      key: 'license_plate',
-      header: 'Placa',
-    },
-    {
-      id: '4',
-      key: 'category_title',
-      header: 'Categoría',
-    },
-    {
-      id: '5',
-      key: 'tag_serial',
-      header: 'Tag asociado',
-    },
-    {
-      id: '6',
-      key: 'active',
-      header: 'Habilitado',
-    },
-    {
-      id: '7',
-      key: 'actions',
-      header: 'Acciones',
-    },
-  ];
-
-  useEffect(() => {
-    if (data) {
-      const rows = data.map(
-        ({ id, make, model, license_plate, category, tag_id, active }) => {
-          return {
-            make,
-            model,
-            license_plate,
-            category_title: category.title,
-            tag_serial: tag_id.tag_serial,
-            enabled: true,
-            active: active ? (
-              <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
-                {' '}
-                Activo{' '}
-              </div>
-            ) : (
-              <div className=" rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
-                {' '}
-                Inactivo{' '}
-              </div>
-            ),
-
-            actions: (
-              <div className="flex space-x-3">
-                <button onClick={handleDisabled} data-id={id}>
-                  <MinusCircleIcon
-                    className={`h-6 ${
-                      active ? 'text-emerald-500/60' : 'text-red-500/60'
-                    } `}
-                  />
-                </button>
-                <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XIcon className="h-6 text-rose-400" />
-                </button>
-              </div>
-            ),
-          };
-        }
-      );
-      setRows(rows);
-    }
-  }, [data]);
-
-  return (
-    <>
-      {modal === 'recharge' ? (
-        <RechargueForm
-          open={openModal}
-          setOpen={setOpenModal}
-          accountNumber={userInfo?.account_number}
-        />
-      ) : null}
-      <div className="mt-24 w-full">
-        <div className="mb-10 space-y-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-4xl capitalize tracking-wide text-gray-800">
-              Bienvenido, {userInfo.first_name} {''} {userInfo.last_name}
-            </h2>
-            {/* <button
-              onClick={handleRecharge}
-              className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-            >
-              Recargar
-            </button> */}
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <Card
-              title={'Saldo actual'}
-              data={`Bs ${balance}`}
-              icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
-                </div>
-              }
-              moreInfo={true}
-            />
-            <Card
-              title={'Vehículos'}
-              data={userInfo?.vehicles}
-              icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
-                  <TruckIcon className="h-7 w-7 text-amber-600" />
-                </div>
-              }
-              moreInfo={true}
-            />
-            <Card
-              title={'Tránsitos'}
-              data={'12750'}
-              icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <SupportIcon className="h-7 w-7 text-indigo-600" />
-                </div>
-              }
-              moreInfo={true}
-            />
-            {/* <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Saldo actual</h2>
-                  <h2 className="text-xl font-medium">Bs {balance}</h2>
-                </div>
-              </div>
-              <Link href="/recharges">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
-                  <TruckIcon className="h-7 w-7 text-amber-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Vehículos</h2>
-                  <h2 className="text-xl font-medium">{vehicle}</h2>
-                </div>
-              </div>
-              <Link href="/vehicles">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <SupportIcon className="h-7 w-7 text-indigo-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Tránsitos</h2>
-                  <h2 className="text-xl font-medium">12750</h2>
-                </div>
-              </div>
-              <Link href="/transit">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div> */}
-          </div>
-        </div>
-        <div className="space-y-8">
-          <h2 className="text-2xl tracking-wide text-gray-800">
-            Vehículos Asociados
-          </h2>
-          {/* {isLoading ? <h2>Cargando</h2> : <Table headers={headers} data={rows} isLoading={isLoading} />} */}
-          <Table headers={headers} data={rows} isLoading={isLoading} />
-        </div>
-      </div>
-    </>
-  );
+interface Inputs {
+  email: string;
+  password: string;
+}
+const initialValues = {
+  name: IS_PROD ? '' : 'dinojefe@mail.com',
+  password: IS_PROD ? '' : 'm8ehbUmF',
 };
 
-Index.getLayout = function getLayout(page: ReactElement) {
-  return <LandingLayout>{page}</LandingLayout>;
+const Schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Debe ser un correo válido')
+    .required('Este campo es requerido'),
+  password: yup
+    .string()
+    .min(8, 'Mínimo 8 caracteres')
+    .max(12, 'Máximo 12 caracteres')
+    .required('Este campo es requerido'),
+});
+
+const Index = () => {
+  const router = useRouter();
+  const { requester } = useAxios();
+  const dispatch = useAppDispatch();
+  const [items] = React.useState(initialValues);
+  const { loggedIn } = useAppSelector(loginUser);
+
+  const { mutate, isLoading } = useMutation(
+    (formData: Inputs) => {
+      return requester({
+        method: 'POST',
+        data: formData,
+        url: '/login/',
+      });
+    },
+    {
+      onSuccess: (response) => {
+        const { data } = response;
+
+        dispatch(login(data));
+        router.push('/home');
+      },
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
+
+  useEffect(() => {
+    loggedIn ? router.push('/home') : null;
+  }, [loggedIn]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: yupResolver(Schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+    mutate({ email, password });
+  };
+
+  return (
+    <div className="flex items-center bg-gradient-to-l from-emerald-700 to-emerald-100">
+      <FooterLayout>
+        <div className="mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-white/75 p-10 shadow-2xl">
+          <div>
+            <div className=" w-full">
+              <img src="/logo.svg" alt="logo" className="h-15" />
+            </div>
+            <h1 className="my-4 w-full text-3xl font-bold text-emerald-900">
+              Bienvenido al sistema
+            </h1>
+            <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-16">
+                <InputV2
+                  label="Correo electrónico"
+                  name="email"
+                  type="text"
+                  errorMessage={errors.email?.message}
+                  register={register}
+                  defaultValue={items.name}
+                />
+              </div>
+              <div className="mt-16">
+                <InputV2
+                  label="Contraseña"
+                  name="password"
+                  type="password"
+                  errorMessage={errors.password?.message}
+                  register={register}
+                  defaultValue={items.password}
+                />
+              </div>
+              <div className="mt-8">
+                <Button loading={isLoading} type="submit" text="Ingresar" />
+              </div>
+            </form>
+            {/* <Link href="register">
+              <p className="mt-4 cursor-pointer text-center text-sm">
+                No tienes una cuenta?{' '}
+                <span className="underline decoration-emerald-600 decoration-2 hover:text-emerald-600">
+                  Regístrate
+                </span>
+              </p>
+            </Link> */}
+          </div>
+        </div>
+      </FooterLayout>
+      <div className=" hidden w-full lg:block">
+        <img className="aspect-1 max-h-screen" src="/login.svg" alt="login" />
+      </div>
+    </div>
+  );
 };
 
 export default Index;
