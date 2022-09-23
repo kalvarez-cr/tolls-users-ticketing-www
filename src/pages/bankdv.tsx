@@ -226,12 +226,18 @@ const MobilePay = () => {
                 />
               </div>
             </div>
-
-            <input
-              type="submit"
-              value="Confirmar"
-              className="  mt-14 cursor-pointer   rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-            />
+            <div className="flex justify-between space-x-4">
+              <input
+                type="submit"
+                value="Confirmar"
+                className="  mt-14 cursor-pointer   rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+              <input
+                onClick={() => router.back()}
+                value="Volver"
+                className="  mt-14 w-32 cursor-pointer  rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-red-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+            </div>
           </form>
 
           <>
