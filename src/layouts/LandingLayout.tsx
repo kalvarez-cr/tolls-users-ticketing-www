@@ -1,6 +1,6 @@
 import LogoDark from '@components/icons/LogoDark';
 import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
+import { MenuIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/outline';
 import { UserCircleIcon } from '@heroicons/react/solid';
 import { logout } from '@store/counter/loginReducer';
 import { open } from '@store/counter/snackbarReducer';
@@ -34,10 +34,8 @@ const LandingLayout = ({ children }: TLandingLayout) => {
       });
     },
     {
-      onSuccess: (response) => {
-        console.log(response);
+      onSuccess: () => {
         dispatch(logout());
-        router.push('/login');
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -49,7 +47,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
     mutate();
   };
   const navigation = [
-    { name: 'Inicio', href: '/' },
+    { name: 'Inicio', href: '/home' },
     { name: 'Recargas', href: '/recharges' },
     { name: 'Vehículos', href: '/vehicles' },
     { name: 'Tránsitos', href: '/transit' },
@@ -60,7 +58,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
     <div className=" min-h-screen bg-gray-200">
       <Disclosure
         as="nav"
-        className="fixed w-full bg-emerald-700/90 bg-gradient-to-l"
+        className="fixed z-10 w-full bg-emerald-700/90 bg-gradient-to-l"
       >
         {({ open }) => (
           <>
@@ -111,11 +109,9 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                     </button>
                   </Link>
 
-                  <Link href="/login">
-                    <button className="p-2" onClick={handleLogout}>
-                      <LogoutIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
-                    </button>
-                  </Link>
+                  <button className="p-2" onClick={handleLogout}>
+                    <ArrowLeftIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
+                  </button>
                 </div>
               </div>
             </div>

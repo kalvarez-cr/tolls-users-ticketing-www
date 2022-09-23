@@ -22,7 +22,7 @@ const Transit = () => {
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
-
+  const transits = useSelector((state: any) => state.loginUser?.transits);
   const {
     mutate,
     data: response,
@@ -131,6 +131,8 @@ const Transit = () => {
         }
       );
       setRows(rows);
+    } else {
+      <p>No tiene tránsitos registrados </p>;
     }
   }, [response]);
 
@@ -142,6 +144,9 @@ const Transit = () => {
     initialValue
   );
 
+  const sites = rows.map((row) => row.site);
+  let lastSite = sites[sites.length - 1];
+
   return (
     <div className="mt-24 w-full">
       <div className="mb-10 space-y-8">
@@ -151,7 +156,7 @@ const Transit = () => {
         <div className="grid grid-cols-3 gap-4">
           <Card
             title={'Tránsitos'}
-            data={'1270'}
+            data={transits}
             icon={
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
                 <TruckIcon className="h-9 w-9 text-amber-600" />
@@ -171,7 +176,7 @@ const Transit = () => {
           />
           <Card
             title={'Último peaje'}
-            data={'Punta Piedra'}
+            data={lastSite}
             icon={
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                 <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
