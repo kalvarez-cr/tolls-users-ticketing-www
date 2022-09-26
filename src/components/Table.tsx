@@ -9,9 +9,9 @@ interface TableProps {
   data: any;
   isLoading: any;
   children?: React.ReactNode;
-  countPage: any;
-  pageParam: any;
-  setPageParam: any;
+  countPage?: any;
+  pageParam?: any;
+  setPageParam?: any;
   // Tomar en cuenta que el mensaje se corta en '. '
   errorMessage?: string;
 }
