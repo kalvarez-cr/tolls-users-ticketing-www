@@ -115,9 +115,9 @@ const Transit = () => {
         }) => {
           return {
             collected_amount,
-            vehicle_category: vehicle_category.title,
-            tag_id: tag_id.tag_serial,
-            registered_vehicle: registered_vehicle.license_plate,
+            vehicle_category: vehicle_category?.title,
+            tag_id: tag_id?.tag_serial,
+            registered_vehicle: registered_vehicle?.license_plate,
             site: site.name,
             moment: new Date(moment).toLocaleDateString('es-VE'),
             actions: (

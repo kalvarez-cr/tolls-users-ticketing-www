@@ -105,7 +105,7 @@ const RechargueForm = ({ open, setOpen, accountNumber }) => {
         setOpen={setOpen}
         handleAccept={handleSubmit(onSubmit)}
         title="Recargar"
-        acceptButtonText="Aceptar"
+        acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<CreditCardIcon />}
       >

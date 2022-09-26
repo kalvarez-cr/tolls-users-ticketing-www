@@ -6,7 +6,6 @@ import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
 import { MinusCircleIcon } from '@heroicons/react/solid';
-
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
@@ -94,8 +93,8 @@ const Vehicles = () => {
             make,
             model,
             license_plate,
-            category_title: category.title,
-            tag_serial: tag_id.tag_serial,
+            category_title: category?.title,
+            tag_serial: tag_id?.tag_serial,
             enabled: true,
             active: active ? (
               <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
@@ -131,7 +130,7 @@ const Vehicles = () => {
   }, [data]);
 
   const tags = rows.map((row) => row?.tag_serial);
-  let lastTags = tags[tags.length - 1];
+  let lastTags = tags[tags.length - 1] || 0;
 
   return (
     <>

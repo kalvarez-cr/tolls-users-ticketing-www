@@ -39,12 +39,12 @@ const CancelForm = ({ open, setOpen, idVehicle }) => {
         open={open}
         setOpen={setOpen}
         handleAccept={() => handleAccept()}
-        title="Cancelar vehículo"
-        acceptButtonText="Aceptar"
+        title="Desasociar vehículo"
+        acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<XIcon className="h-6 text-rose-400" />}
       >
-        <p>¿Usted desea cancelar este vehículo?</p>
+        <p>¿Usted desea desasociar este vehículo?</p>
       </Modal>
     </>
   );

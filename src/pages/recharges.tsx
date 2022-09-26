@@ -119,7 +119,7 @@ const Recharges = () => {
   }, [response]);
 
   const amounts = rows.map((row) => row?.facial_amount);
-  let lastAmount = amounts[amounts.length - 1];
+  let lastAmount = amounts[amounts.length - 1] || 0;
 
   return (
     <>

@@ -157,7 +157,7 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   })}
                 </div>
               </>
-            ) : data ? (
+            ) : (
               data.map((row) => {
                 return (
                   <div className="table-row" key={row.id}>
@@ -175,8 +175,6 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
                   </div>
                 );
               })
-            ) : (
-              <p className="text-black antialiased">No hay registros</p>
             )}
             {/* {data.map((row) => {
               return (
@@ -228,86 +226,23 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
       <div className="grid grid-cols-1 gap-4 md:hidden">
         <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
           <div className="flex items-center justify-between space-x-2">
-            <div className="flex space-x-2">
-              <div>Ford</div>
-              <div>Fiesta</div>
-              <div>AA4-B44</div>
-              <div>QR</div>
-            </div>
-            <div className="flex space-x-2">
-              <Link
-                href="#"
-                className="font-medium text-blue-400 hover:text-blue-500 "
-              >
-                <EyeIcon className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="font-medium text-red-400 hover:text-red-500"
-              >
-                <XIcon className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div>Punta Piedra</div>
-            <div>DD/MM/AA</div>
-          </div>
-        </div>
-        <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
-          <div className="flex items-center justify-between space-x-2">
-            <div className="flex space-x-2">
-              <div>Ford</div>
-              <div>Fiesta</div>
-              <div>AA4-B44</div>
-              <div>QR</div>
-            </div>
-            <div className="flex space-x-2">
-              <Link
-                href="#"
-                className="font-medium text-blue-400 hover:text-blue-500 "
-              >
-                <EyeIcon className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="font-medium text-red-400 hover:text-red-500"
-              >
-                <XIcon className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div>Punta Piedra</div>
-            <div>DD/MM/AA</div>
-          </div>
-        </div>
-        <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
-          <div className="flex items-center justify-between space-x-2">
-            <div className="flex space-x-2">
-              <div>Ford</div>
-              <div>Fiesta</div>
-              <div>AA4-B44</div>
-              <div>QR</div>
-            </div>
-            <div className="flex space-x-2">
-              <Link
-                href="#"
-                className="font-medium text-blue-400 hover:text-blue-500 "
-              >
-                <EyeIcon className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="font-medium text-red-400 hover:text-red-500"
-              >
-                <XIcon className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div>Punta Piedra</div>
-            <div>DD/MM/AA</div>
+            {data.map((row) => {
+              return (
+                <div className="table-row" key={row.id}>
+                  {headerKeys.map((headerKey) => {
+                    const value = row[headerKey];
+                    return (
+                      <div
+                        className="table-cell border-t py-4 pl-10 align-middle"
+                        key={headerKey}
+                      >
+                        {value}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

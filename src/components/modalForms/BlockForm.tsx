@@ -39,7 +39,7 @@ const CancelForm = ({ open, setOpen, idTag }) => {
         setOpen={setOpen}
         handleAccept={() => handleAccept()}
         title="Bloquear vehículo"
-        acceptButtonText="Aceptar"
+        acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<MinusCircleIcon />}
       >
