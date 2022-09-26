@@ -114,7 +114,7 @@ const Recharges = () => {
     } else {
       <p>No tiene recargas registradas </p>;
     }
-  }, []);
+  }, [response]);
 
   const amounts = rows.map((row) => row?.facial_amount);
   let lastAmount = amounts[amounts.length - 1] || 0;
