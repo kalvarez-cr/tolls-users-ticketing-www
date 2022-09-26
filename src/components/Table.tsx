@@ -32,7 +32,7 @@ const Table = ({
   let centerIdx = 1;
   if (headers.length % 2 == 0) {
     centerIdx = headers.length / 2;
-    // console.log('Par: ' + centerIdx);
+    console.log(centerIdx);
   } else {
     centerIdx = (headers.length + 1) / 2;
     // console.log('Impar: ' + centerIdx );
