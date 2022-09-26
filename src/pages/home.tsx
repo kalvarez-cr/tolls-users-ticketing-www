@@ -7,7 +7,6 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
@@ -115,7 +114,7 @@ const Home = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page)
+      setCountPage(response.data.count_page);
       const rows = response.data.data.map(
         ({ id, make, model, license_plate, category, tag_id, active }) => {
           return {

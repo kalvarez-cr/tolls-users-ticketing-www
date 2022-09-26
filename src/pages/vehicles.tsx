@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { TruckIcon, CalendarIcon, XCircleIcon } from '@heroicons/react/outline';
-import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';

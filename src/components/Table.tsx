@@ -1,11 +1,8 @@
 import {
-  EyeIcon,
-  XIcon,
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface TableProps {
   headers: any;
