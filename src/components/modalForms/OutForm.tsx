@@ -5,14 +5,31 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { close, modal, open } from '@store/counter/modalReducer';
 import { logout } from '@store/counter/loginReducer';
+import { useAxios } from 'hooks/useAxios';
+import { useMutation } from 'react-query';
 
 const OutForm = () => {
   const dispatch = useAppDispatch();
   const modalState = useAppSelector(modal);
   const router = useRouter();
+  const { requester } = useAxios();
+  const { mutate } = useMutation(
+    () => {
+      return requester({
+        method: 'POST',
+        data: '',
+        url: '/logout/',
+      });
+    },
+    {
+      onSuccess: () => {
+        dispatch(close());
+      },
+    }
+  );
   const handleAccept = () => {
-    dispatch(close());
     dispatch(logout());
+    mutate();
     router.push('/');
   };
 

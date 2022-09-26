@@ -115,10 +115,14 @@ const Transit = () => {
         }) => {
           return {
             collected_amount,
-            vehicle_category: vehicle_category?.title,
-            tag_id: tag_id?.tag_serial,
-            registered_vehicle: registered_vehicle?.license_plate,
-            site: site.name,
+            vehicle_category: vehicle_category?.title
+              ? vehicle_category?.title
+              : {},
+            tag_id: tag_id?.tag_serial ? tag_id?.tag_serial : {},
+            registered_vehicle: registered_vehicle?.license_plate
+              ? registered_vehicle?.license_plate
+              : {},
+            site: site?.name ? site?.name : {},
             moment: new Date(moment).toLocaleDateString('es-VE'),
             actions: (
               <button className="ml-8" tag-id={id}>

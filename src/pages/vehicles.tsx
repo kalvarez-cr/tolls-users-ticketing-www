@@ -93,8 +93,8 @@ const Vehicles = () => {
             make,
             model,
             license_plate,
-            category_title: category?.title,
-            tag_serial: tag_id?.tag_serial,
+            category_title: category?.title ? category?.title : {},
+            tag_serial: tag_id?.tag_serial ? tag_id?.tag_serial : {},
             enabled: true,
             active: active ? (
               <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
@@ -163,7 +163,7 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Tag'}
+              title={'Último tag'}
               data={lastTags}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">

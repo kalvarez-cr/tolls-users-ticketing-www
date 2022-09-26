@@ -105,8 +105,8 @@ const Home = () => {
             make,
             model,
             license_plate,
-            category_title: category.title,
-            tag_serial: tag_id.tag_serial,
+            category_title: category.title ? category.title : {},
+            tag_serial: tag_id.tag_serial ? tag_id.tag_serial : {},
             enabled: true,
             active: active ? (
               <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
