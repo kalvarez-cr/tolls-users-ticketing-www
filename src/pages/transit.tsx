@@ -141,9 +141,6 @@ const Transit = () => {
     }
   }, [response]);
 
-  const sites = rows.map((row) => row.site);
-  let lastSite = sites[sites.length - 1];
-
   return (
     <div className="mt-24 w-full">
       <div className="mb-10 space-y-8">
@@ -173,7 +170,7 @@ const Transit = () => {
           />
           <Card
             title={'Último peaje'}
-            data={lastSite}
+            data={transits?.last_site?.name}
             icon={
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                 <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />

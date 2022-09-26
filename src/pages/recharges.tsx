@@ -28,6 +28,8 @@ const Recharges = () => {
   const account_info = useSelector(
     (state: any) => state.loginUser?.account_info
   );
+
+  const transits = useSelector((state: any) => state.loginUser);
   const {
     mutate,
     data: response,
@@ -114,9 +116,6 @@ const Recharges = () => {
     }
   }, [response]);
 
-  const amounts = rows.map((row) => row?.facial_amount);
-  let lastAmount = amounts[amounts.length - 1] || 0;
-
   return (
     <>
       {modal === 'recharge' ? (
@@ -169,7 +168,7 @@ const Recharges = () => {
             />
             <Card
               title={'Monto de última recarga'}
-              data={` Bs ${lastAmount} `}
+              data={` Bs ${transits?.last_recharge} `}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
                   <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
