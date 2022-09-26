@@ -19,6 +19,8 @@ import { useSelector } from 'react-redux';
 const Transit = () => {
   useGuard();
   const dispatch = useAppDispatch();
+  const [pageParam, setPageParam] = useState(1);
+  const [countPage, setCountPage] = useState(1);
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
@@ -98,11 +100,12 @@ const Transit = () => {
   ];
 
   React.useEffect(() => {
-    mutate({ account_number: accountNumber, per_page: 200 });
-  }, [accountNumber, mutate]);
+    mutate({ account_number: accountNumber, per_page: 10, page: pageParam });
+  }, [accountNumber, pageParam, mutate]);
 
   useEffect(() => {
     if (response) {
+      setCountPage(response.data.count_page)
       const rows = response.data.data.map(
         ({
           id,
@@ -223,7 +226,15 @@ const Transit = () => {
           </div> */}
         </div>
       </div>
-      <Table headers={headers} data={rows} isLoading={isLoading} />
+      <Table
+        headers={headers}
+        data={rows}
+        isLoading={isLoading}
+        errorMessage={'No hay data disponible.'}
+        countPage={countPage}
+        pageParam={pageParam}
+        setPageParam={setPageParam}
+      />
     </div>
   );
 };

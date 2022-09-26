@@ -5,6 +5,10 @@ import { TruckIcon, CalendarIcon, XCircleIcon } from '@heroicons/react/outline';
 import { useQuery } from 'react-query';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+import { useMutation } from 'react-query';
+import { useAppDispatch } from '@store/hooks';
+import { AxiosError } from 'axios';
+import { open } from '@store/counter/snackbarReducer';
 import { MinusCircleIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
@@ -15,15 +19,18 @@ const Vehicles = () => {
   useGuard();
 
   const { requester } = useAxios();
+  const dispatch = useAppDispatch();
 
-  const useFetchData = () =>
-    useQuery('vehicles', async () => {
-      const { data } = await requester.get('/registered-vehicle/get/');
-      return data.data;
-    });
+  // const useFetchData = () =>
+  //   useQuery('vehicles', async () => {
+  //     const { data } = await requester.get('/registered-vehicle/get/');
+  //     return data.data;
+  //   });
 
+  const [pageParam, setPageParam] = useState(1);
+  const [countPage, setCountPage] = useState(1);
   const [rows, setRows] = useState([]);
-  const { data, isLoading } = useFetchData();
+  // const { data, isLoading } = useFetchData();
   const [openModal, setOpenModal] = React.useState(false);
   const [modal, setModal] = React.useState('');
   const [idVehicle, setIdVehicle] = React.useState('');
@@ -32,6 +39,25 @@ const Vehicles = () => {
     (state: any) => state.loginUser?.user_info?.vehicles
   );
   const account = useSelector((state: any) => state.loginUser?.account_info);
+
+  const {
+    mutate,
+    data: response,
+    isLoading,
+  } = useMutation(
+    (account: any) => {
+      return requester({
+        method: 'POST',
+        data: account,
+        url: '/registered-vehicle/get/',
+      });
+    },
+    {
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
 
   const handleCancel = (e) => {
     setOpenModal(true);
@@ -85,9 +111,14 @@ const Vehicles = () => {
     },
   ];
 
+  React.useEffect(() => {
+    mutate({ page: pageParam });
+  }, [pageParam, mutate]);
+
   useEffect(() => {
-    if (data) {
-      const rows = data.map(
+    if (response) {
+      setCountPage(response.data.count_page);
+      const rows = response.data.data.map(
         ({ id, make, model, license_plate, category, tag_id, active }) => {
           return {
             make,
@@ -127,7 +158,7 @@ const Vehicles = () => {
       );
       setRows(rows);
     }
-  }, [data]);
+  }, [response]);
 
   const tags = rows.map((row) => row?.tag_serial);
   let lastTags = tags[tags.length - 1] || 0;
@@ -163,7 +194,7 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Último tag'}
+              title={'Último tag usado'}
               data={lastTags}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
@@ -219,7 +250,17 @@ const Vehicles = () => {
             </div> */}
           </div>
         </div>
-        <Table headers={headers} data={rows} isLoading={isLoading} />
+        <Table
+          headers={headers}
+          data={rows}
+          isLoading={isLoading}
+          errorMessage={
+            'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+          }
+          countPage={countPage}
+          pageParam={pageParam}
+          setPageParam={setPageParam}
+        />
       </div>
     </>
   );

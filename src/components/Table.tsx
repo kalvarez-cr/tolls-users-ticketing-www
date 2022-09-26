@@ -1,29 +1,53 @@
-import { EyeIcon, XIcon } from '@heroicons/react/solid';
+import {
+  EyeIcon,
+  XIcon,
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
+} from '@heroicons/react/solid';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface TableProps {
   headers: any;
   data: any;
   isLoading: any;
   children?: React.ReactNode;
+  countPage: any;
+  pageParam: any;
+  setPageParam: any;
+  // Tomar en cuenta que el mensaje se corta en '. '
+  errorMessage?: string;
 }
 
-const Table = ({ headers, data, isLoading }: TableProps) => {
-  // const [page, setPage] = useState(1);
-  // const [countPage, setCountPage] = useState(10);
+const Table = ({
+  headers,
+  data,
+  isLoading,
+  errorMessage,
+  pageParam,
+  setPageParam,
+  countPage,
+}: TableProps) => {
   const headerKeys: any[] = [];
   for (const header of headers) {
     headerKeys.push(header.key);
   }
+  let centerIdx = 1;
+  if (headers.length % 2 == 0) {
+    centerIdx = headers.length / 2;
+    // console.log('Par: ' + centerIdx);
+  } else {
+    centerIdx = (headers.length + 1) / 2;
+    // console.log('Impar: ' + centerIdx );
+  }
 
-  // const handleNextPage = () => {
-  //   setPage(page + 1);
-  // };
+  const handleNextPage = () => {
+    setPageParam(pageParam + 1);
+  };
 
-  // const handlePreviousPage = () => {
-  //   setPage(page - 1);
-  // };
+  const handlePreviousPage = () => {
+    setPageParam(pageParam - 1);
+  };
 
   return (
     <div className=" w-full">
@@ -195,32 +219,41 @@ const Table = ({ headers, data, isLoading }: TableProps) => {
             })} */}
           </div>
         </div>
+        {data.length == 0 && !isLoading ? (
+          <div className="flex items-center justify-center border-t bg-white py-6 font-medium text-gray-500/70">
+            {errorMessage}
+          </div>
+        ) : (
+          <></>
+        )}
         <nav
           className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
           aria-label="Pagination"
         >
-          {/* <div className="ml-3 hidden sm:block">
+          <div className="ml-3 hidden sm:block">
             <p className="text-sm text-gray-700">
-              Página <span className="font-medium">{page}</span> de{' '}
-              <span className="font-medium">{countPage}</span>
+              Página <span className="font-medium">{pageParam}</span> de{' '}
+              <span className="font-medium">
+                {countPage == 0 ? 1 : countPage}
+              </span>
             </p>
           </div>
           <div className="mr-3 flex flex-1 justify-between sm:justify-end">
             <button
               onClick={handlePreviousPage}
-              disabled={page === 1}
-              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              disabled={pageParam === 1}
+              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
             >
-              <ArrowLeftIcon className="h-5 w-5" />
+              <ArrowNarrowLeftIcon className="h-5 w-5" />
             </button>
             <button
               onClick={handleNextPage}
-              disabled={page === countPage}
-              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              disabled={pageParam === countPage}
+              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
             >
-              <ArrowRightIcon className="h-5 w-5" />
+              <ArrowNarrowRightIcon className="h-5 w-5" />
             </button>
-          </div> */}
+          </div>
         </nav>
       </div>
       <div className="grid grid-cols-1 gap-4 md:hidden">

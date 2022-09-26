@@ -37,7 +37,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
 
   return (
     <>
-      <div className=" min-h-screen bg-gray-200">
+      <div className="min-h-screen bg-gray-200">
         {modal === 'logout' ? <OutForm /> : null}
         <Disclosure
           as="nav"

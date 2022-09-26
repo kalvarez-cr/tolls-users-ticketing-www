@@ -8,7 +8,10 @@ import {
 } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-
+import { useMutation } from 'react-query';
+import { useAppDispatch } from '@store/hooks';
+import { AxiosError } from 'axios';
+import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
@@ -21,29 +24,38 @@ import { XCircleIcon } from '@heroicons/react/outline';
 const Home = () => {
   useGuard();
   const { requester } = useAxios();
-  const useFetchData = () =>
-    useQuery('vehicles', async () => {
-      const { data } = await requester.get('/registered-vehicle/get/');
-      return data.data;
-    });
-
+  const dispatch = useAppDispatch();
+  const [pageParam, setPageParam] = useState(1);
+  const [countPage, setCountPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [modal, setModal] = React.useState('');
   const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
   const [rows, setRows] = useState([]);
-
   const userInfo = useSelector((state: any) => state.loginUser?.user_info);
   const transits = useSelector((state: any) => state.loginUser?.transits);
   const balance = useSelector(
     (state: any) => state.loginUser?.account_info?.nominal_balance
   );
-  const { data, isLoading } = useFetchData();
 
-  // const handleRecharge = () => {
-  //   setOpenModal(true);
-  //   setModal('recharge');
-  // };
+  const {
+    mutate,
+    data: response,
+    isLoading,
+  } = useMutation(
+    (account: any) => {
+      return requester({
+        method: 'POST',
+        data: account,
+        url: '/registered-vehicle/get/',
+      });
+    },
+    {
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
+      },
+    }
+  );
 
   const handleCancel = (e) => {
     setOpenModal(true);
@@ -97,9 +109,14 @@ const Home = () => {
     },
   ];
 
+  React.useEffect(() => {
+    mutate({ page: pageParam });
+  }, [pageParam, mutate]);
+
   useEffect(() => {
-    if (data) {
-      const rows = data.map(
+    if (response) {
+      setCountPage(response.data.count_page)
+      const rows = response.data.data.map(
         ({ id, make, model, license_plate, category, tag_id, active }) => {
           return {
             make,
@@ -143,7 +160,7 @@ const Home = () => {
     } else {
       <p>No tiene vehículos registrados </p>;
     }
-  }, [data]);
+  }, [response]);
 
   return (
     <>
@@ -267,7 +284,15 @@ const Home = () => {
           <h2 className="text-2xl tracking-wide text-gray-800">
             Vehículos Asociados
           </h2>
-          <Table headers={headers} data={rows} isLoading={isLoading} />
+          <Table
+            headers={headers}
+            data={rows}
+            isLoading={isLoading}
+            errorMessage={'No hay data disponible.'}
+            countPage={countPage}
+            pageParam={pageParam}
+            setPageParam={setPageParam}
+          />
         </div>
       </div>
     </>

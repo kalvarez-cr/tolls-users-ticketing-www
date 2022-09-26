@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
@@ -15,17 +15,13 @@ import PaymentMethodCard from '@components/PaymentMethodCard';
 
 const Recharges = () => {
   useGuard();
+  const [pageParam, setPageParam] = useState(1)
+  const [countPage, setCountPage] = useState(1)
   const dispatch = useAppDispatch();
   const { requester } = useAxios();
   const [rows, setRows] = React.useState([]);
   const [openModal, setOpenModal] = React.useState(false);
   const [modal] = React.useState('');
-
-  // const handleRecharge = () => {
-  //   setOpenModal(true);
-  //   setModal('recharge');
-  // };
-
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
@@ -80,11 +76,12 @@ const Recharges = () => {
     },
   ];
   React.useEffect(() => {
-    mutate({ account_number: accountNumber });
+    mutate({ account_number: accountNumber, page: pageParam });
   }, [accountNumber, mutate]);
 
   React.useEffect(() => {
     if (response) {
+      setCountPage(response.data.count_page)
       const table = response.data.data.map(
         ({
           external_reference_id,
@@ -218,7 +215,15 @@ const Recharges = () => {
             />
           </div>
         </div> */}
-        <Table headers={headers} data={rows} isLoading={isLoading} />
+        <Table
+          headers={headers}
+          data={rows}
+          isLoading={isLoading}
+          errorMessage={'No hay data disponible.'}
+          countPage={countPage}
+          pageParam={pageParam}
+          setPageParam={setPageParam}
+        />
       </div>
     </>
   );
