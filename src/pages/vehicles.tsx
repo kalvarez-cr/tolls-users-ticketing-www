@@ -160,8 +160,7 @@ const Vehicles = () => {
     }
   }, [response]);
 
-  const tags = rows.map((row) => row?.tag_serial);
-  let lastTags = tags[tags.length - 1] || 0;
+  let lastTags = account.last_use_tag?.tag_serial || 0;
 
   return (
     <>

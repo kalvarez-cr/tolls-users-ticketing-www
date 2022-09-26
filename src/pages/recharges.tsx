@@ -15,8 +15,8 @@ import PaymentMethodCard from '@components/PaymentMethodCard';
 
 const Recharges = () => {
   useGuard();
-  const [pageParam, setPageParam] = useState(1)
-  const [countPage, setCountPage] = useState(1)
+  const [pageParam, setPageParam] = useState(1);
+  const [countPage, setCountPage] = useState(1);
   const dispatch = useAppDispatch();
   const { requester } = useAxios();
   const [rows, setRows] = React.useState([]);
@@ -81,7 +81,7 @@ const Recharges = () => {
 
   React.useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page)
+      setCountPage(response.data.count_page);
       const table = response.data.data.map(
         ({
           external_reference_id,
@@ -111,8 +111,6 @@ const Recharges = () => {
         }
       );
       setRows(table);
-    } else {
-      <p>No tiene recargas registradas </p>;
     }
   }, [response]);
 

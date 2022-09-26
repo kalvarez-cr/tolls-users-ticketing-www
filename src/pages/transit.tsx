@@ -24,7 +24,7 @@ const Transit = () => {
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
-  const transits = useSelector((state: any) => state.loginUser?.transits);
+  const transits = useSelector((state: any) => state.loginUser);
   const {
     mutate,
     data: response,
@@ -105,7 +105,7 @@ const Transit = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page)
+      setCountPage(response.data.count_page);
       const rows = response.data.data.map(
         ({
           id,
@@ -138,18 +138,8 @@ const Transit = () => {
         }
       );
       setRows(rows);
-    } else {
-      <p>No tiene tránsitos registrados </p>;
     }
   }, [response]);
-
-  const total = rows.map((amount) => Number(amount.collected_amount));
-
-  const initialValue = 0;
-  const transitAmount = total.reduce(
-    (previousValue, currentValue) => previousValue + currentValue,
-    initialValue
-  );
 
   const sites = rows.map((row) => row.site);
   let lastSite = sites[sites.length - 1];
@@ -163,7 +153,7 @@ const Transit = () => {
         <div className="grid grid-cols-3 gap-4">
           <Card
             title={'Tránsitos'}
-            data={transits}
+            data={transits.transits}
             icon={
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
                 <TruckIcon className="h-9 w-9 text-amber-600" />
@@ -173,7 +163,7 @@ const Transit = () => {
           />
           <Card
             title={'Total consumido'}
-            data={transitAmount.toString()}
+            data={transits?.total_transit}
             icon={
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
                 <CreditCardIcon className="h-9 w-9 text-emerald-600" />
