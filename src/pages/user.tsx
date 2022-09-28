@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
+import { logout } from '@store/counter/loginReducer';
 import {
   UserCircleIcon,
   PencilIcon,
@@ -18,22 +19,23 @@ import {
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+
 interface Inputs {
   password: string;
   phone_number: string;
 }
 const Schema = yup.object().shape({
   phone_number: yup
-    .number()
+    .string()
     // .test('len', 'Debe ser 11 dígitos', (val) => val.toString().length === 11)
-    .max(11, 'Deben ser 11 dígitos')
     .min(11, 'Deben ser 11 dígitos')
+    .max(11, 'Deben ser 11 dígitos')
     .typeError('Debe ser un número')
-    .required('Este campo es requerido'),
+    .optional(),
   password: yup
     .string()
     .min(8, 'Mínimo 8 caracteres')
-    .max(12, 'Máximo 12 caracteres')
+    .max(8, 'Máximo 8 caracteres')
     .required('Este campo es requerido'),
   confirm_password: yup
     .string()
@@ -54,15 +56,18 @@ const User = () => {
   const { mutate } = useMutation(
     (formData: Inputs) => {
       return requester({
-        method: 'POST',
+        method: 'PUT',
         data: formData,
         url: 'account-holder/update/',
       });
     },
     {
-      onSuccess: (response) => {
-        const { data } = response;
-        console.log('response data', data);
+      onSuccess: () => {
+        dispatch(open({ text: 'Actualización exitosa', type: 'success' }));
+        setIsEditable(false);
+        setTimeout(() => {
+          dispatch(logout());
+        }, 2000);
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
