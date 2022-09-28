@@ -14,14 +14,16 @@ import { useAxios } from 'hooks/useAxios';
 import Button from '@components/Button';
 
 const IS_PROD = process.env.NODE_ENV == 'production';
+const DEFAULT_USERNAME = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_USERNAME;
+const DEFAULT_PASSWORD = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_PASSWORD;
 
 interface Inputs {
   email: string;
   password: string;
 }
 const initialValues = {
-  name: IS_PROD ? '' : 'dinojefe@mail.com',
-  password: IS_PROD ? '' : 'm8ehbUmF',
+  name: IS_PROD ? '' : DEFAULT_USERNAME,
+  password: IS_PROD ? '' : DEFAULT_PASSWORD,
 };
 
 const Schema = yup.object().shape({
