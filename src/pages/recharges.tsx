@@ -78,8 +78,8 @@ const Recharges = () => {
     },
   ];
   React.useEffect(() => {
-    mutate({ account_number: accountNumber, page: pageParam });
-  }, [accountNumber, mutate]);
+    mutate({ page: pageParam });
+  }, [mutate]);
 
   React.useEffect(() => {
     if (response) {

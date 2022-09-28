@@ -21,10 +21,8 @@ const Transit = () => {
   const dispatch = useAppDispatch();
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
-  const accountNumber = useSelector(
-    (state: any) => state.loginUser?.user_info?.account_number
-  );
   const transits = useSelector((state: any) => state.loginUser);
+
   const {
     mutate,
     data: response,
@@ -100,8 +98,8 @@ const Transit = () => {
   ];
 
   React.useEffect(() => {
-    mutate({ account_number: accountNumber, per_page: 10, page: pageParam });
-  }, [accountNumber, pageParam, mutate]);
+    mutate({ per_page: 10, page: pageParam });
+  }, [pageParam, mutate]);
 
   useEffect(() => {
     if (response) {

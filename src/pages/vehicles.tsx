@@ -4,7 +4,7 @@ import Table from '@components/Table';
 import { TruckIcon, CalendarIcon, XCircleIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
@@ -38,7 +38,7 @@ const Vehicles = () => {
     (state: any) => state.loginUser?.user_info?.vehicles
   );
   const account = useSelector((state: any) => state.loginUser?.account_info);
-
+  const queryClient = useQueryClient();
   const {
     mutate,
     data: response,
@@ -52,6 +52,9 @@ const Vehicles = () => {
       });
     },
     {
+      onSuccess: (response) => {
+        queryClient.setQueryData(['account'], response);
+      },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
@@ -112,7 +115,7 @@ const Vehicles = () => {
 
   React.useEffect(() => {
     mutate({ page: pageParam });
-  }, [pageParam, mutate]);
+  }, [pageParam]);
 
   useEffect(() => {
     if (response) {
