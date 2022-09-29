@@ -205,7 +205,7 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Último tránsito'}
+              title={'Último registro'}
               data={new Date(account?.last_use_date).toLocaleDateString(
                 'es-VE'
               )}
