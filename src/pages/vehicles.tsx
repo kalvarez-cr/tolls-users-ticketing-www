@@ -162,7 +162,7 @@ const Vehicles = () => {
     }
   }, [response]);
 
-  let lastTags = account.last_use_tag?.tag_serial || 0;
+  let lastTags = account.last_use_tag?.tag_serial || 'Sin uso';
 
   return (
     <>
@@ -205,7 +205,7 @@ const Vehicles = () => {
               moreInfo={false}
             />
             <Card
-              title={'Última visita'}
+              title={'Último tránsito'}
               data={new Date(account?.last_use_date).toLocaleDateString(
                 'es-VE'
               )}

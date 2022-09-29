@@ -1,7 +1,7 @@
 import LogoDark from '@components/icons/LogoDark';
 import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/outline';
+import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
 import { UserCircleIcon } from '@heroicons/react/solid';
 import { open } from '@store/counter/modalReducer';
 import { useAppDispatch } from '@store/hooks';
@@ -96,7 +96,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                     </Link>
 
                     <button className="p-2" onClick={handleLogout}>
-                      <ArrowLeftIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
+                      <LogoutIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
                     </button>
                   </div>
                 </div>

@@ -107,7 +107,7 @@ const User = () => {
       <div className="mt-6 flex justify-between">
         <h3 className="text-lg">
           Bs{''}
-          {account_info?.nominal_balance}
+          {''} {account_info?.nominal_balance}
         </h3>
         <h3 className="text-lg">{user_info?.vehicles}</h3>
         <h3 className="text-lg">
