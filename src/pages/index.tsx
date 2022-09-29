@@ -14,8 +14,12 @@ import { useAxios } from 'hooks/useAxios';
 import Button from '@components/Button';
 
 const IS_PROD = process.env.NODE_ENV == 'production';
-const DEFAULT_USERNAME = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_USERNAME;
-const DEFAULT_PASSWORD = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_PASSWORD;
+const DEFAULT_USERNAME = IS_PROD
+  ? ''
+  : process.env.NEXT_PUBLIC_DEFAULT_USERNAME;
+const DEFAULT_PASSWORD = IS_PROD
+  ? ''
+  : process.env.NEXT_PUBLIC_DEFAULT_PASSWORD;
 
 interface Inputs {
   email: string;
