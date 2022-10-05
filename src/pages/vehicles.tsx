@@ -158,7 +158,7 @@ const Vehicles = () => {
     }
   }, [response]);
 
-  let lastTags = account.last_use_tag?.tag_serial || 'Sin uso';
+  let lastTags = account.last_use_tag?.tag_serial || '-';
 
   return (
     <>
@@ -176,7 +176,7 @@ const Vehicles = () => {
 
       <div className="mt-24  w-full ">
         <div className="mb-10 space-y-8">
-          <h2 className="text-3xl tracking-wide text-gray-800">
+          <h2 className="text-3xl sub-header-text">
             Vehículos Asociados
           </h2>
           <div className="grid grid-cols-3 gap-4">

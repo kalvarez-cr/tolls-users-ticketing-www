@@ -128,7 +128,7 @@ const Recharges = () => {
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-4">
           <div className="flex justify-between">
-            <h2 className="text-3xl tracking-wide text-gray-800">Recargas</h2>
+            <h2 className="text-3xl sub-header-text">Recargas</h2>
             {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
@@ -167,7 +167,7 @@ const Recharges = () => {
               moreInfo={false}
             />
             <Card
-              title={'Monto de última recarga'}
+              title={'Última recarga'}
               data={` Bs ${transits?.last_recharge} `}
               icon={
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">

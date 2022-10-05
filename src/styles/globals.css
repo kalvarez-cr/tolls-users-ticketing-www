@@ -154,3 +154,39 @@
   left: -100px;
   border-radius: 15px;
 }
+
+.header-text {
+    font-size: 20pt;
+    font-family: LibreFranklin, sans-serif;
+    font-weight: bold;
+    color: #3f3f3f;
+    text-transform: capitalize;
+    letter-spacing: 0.025em;
+}
+
+.sub-header-text {
+    font-size: 19pt;
+    font-family: LibreFranklin, sans-serif;
+    /*font-weight: bold;*/
+    color: #3f3f3f;
+    letter-spacing: 0.025em;
+    /*text-transform: capitalize;*/
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 12pt;
+    color: #656565;
+    text-transform: capitalize;
+}
+
+.card-data {
+    font-weight: bold;
+    color: black;
+    text-transform: capitalize;
+}
+
+.text-link {
+    cursor: pointer;
+    /*font-weight: bold;*/
+}

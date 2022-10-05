@@ -179,8 +179,8 @@ const Home = () => {
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
-            <h2 className="text-4xl capitalize tracking-wide text-gray-800">
-              Bienvenido, {userInfo?.first_name} {''} {userInfo?.last_name}
+            <h2 className="text-4xl header-text">
+              Bienvenido, {userInfo?.first_name}&nbsp;{userInfo?.last_name}
             </h2>
             {/* <button
               onClick={handleRecharge}
@@ -199,6 +199,7 @@ const Home = () => {
                 </div>
               }
               moreInfo={true}
+              link="/recharges"
             />
             <Card
               title={'Vehículos'}
@@ -209,6 +210,7 @@ const Home = () => {
                 </div>
               }
               moreInfo={true}
+              link="/vehicles"
             />
             <Card
               title={'Tránsitos'}
@@ -219,6 +221,7 @@ const Home = () => {
                 </div>
               }
               moreInfo={true}
+              link="/transit"
             />
             {/* <div className="h-36 rounded-xl shadow-md">
               <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
@@ -274,7 +277,7 @@ const Home = () => {
           </div>
         </div>
         <div className="space-y-8">
-          <h2 className="text-2xl tracking-wide text-gray-800">
+          <h2 className="text-2xl sub-header-text">
             Vehículos Asociados
           </h2>
           <Table
