@@ -5,32 +5,38 @@
 @font-face {
     font-family: 'Montserrat';
     font-weight: 400;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/Montserrat-Regular.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Montserrat';
     font-weight: 700;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/Montserrat-Bold.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Montserrat';
     font-weight: 800;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/Montserrat-ExtraBold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'LibreFranklin';
     font-weight: 400;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/LibreFranklin-Regular.ttf') format('truetype');
 }
 @font-face {
     font-family: 'LibreFranklin';
     font-weight: 700;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/LibreFranklin-Bold.ttf') format('truetype');
 }
 @font-face {
     font-family: 'LibreFranklin';
     font-weight: 800;
+    /*noinspection CssUnknownTarget*/
     src: url('/fonts/LibreFranklin-ExtraBold.ttf') format('truetype');
 }
 
@@ -55,9 +61,9 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #009b71;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border: 8px solid;
   border-color: #009b71 transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
@@ -160,7 +166,7 @@
     font-family: LibreFranklin, sans-serif;
     font-weight: bold;
     color: #3f3f3f;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
     letter-spacing: 0.025em;
 }
 

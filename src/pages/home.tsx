@@ -19,6 +19,7 @@ import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
 import { XCircleIcon } from '@heroicons/react/outline';
+import {GreetingByTime} from "../utils/requester";
 
 const Home = () => {
   useGuard();
@@ -180,7 +181,7 @@ const Home = () => {
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-4xl header-text">
-              Bienvenido, {userInfo?.first_name}&nbsp;{userInfo?.last_name}
+              {GreetingByTime()}, {userInfo?.first_name}&nbsp;{userInfo?.last_name}
             </h2>
             {/* <button
               onClick={handleRecharge}

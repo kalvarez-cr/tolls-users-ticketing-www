@@ -7,3 +7,10 @@ export const requester = axios.create({
     // 'content-type': 'application-json',
   },
 });
+
+export function GreetingByTime() {
+  const today = new Date()
+  const hour = today.getHours()
+
+  return hour < 12 ? 'Buenos días' : (hour < 18 ? 'Buenas tardes' : 'Buenas noches')
+}

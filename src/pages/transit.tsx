@@ -155,6 +155,7 @@ const Transit = () => {
               </div>
             }
             moreInfo={false}
+            link=""
           />
           <Card
             title={'Total consumido'}
@@ -165,6 +166,7 @@ const Transit = () => {
               </div>
             }
             moreInfo={false}
+            link=""
           />
           <Card
             title={'Último peaje'}
@@ -175,6 +177,7 @@ const Transit = () => {
               </div>
             }
             moreInfo={false}
+            link=""
           />
           {/* <div className="h-36 rounded-xl shadow-md">
             <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
@@ -228,4 +231,5 @@ Transit.getLayout = function getLayout(page: ReactElement) {
   return <LandingLayout>{page}</LandingLayout>;
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default Transit;
