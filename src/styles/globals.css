@@ -18,6 +18,22 @@
     src: url('/fonts/Montserrat-ExtraBold.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'LibreFranklin';
+    font-weight: 400;
+    src: url('/fonts/LibreFranklin-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'LibreFranklin';
+    font-weight: 700;
+    src: url('/fonts/LibreFranklin-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'LibreFranklin';
+    font-weight: 800;
+    src: url('/fonts/LibreFranklin-ExtraBold.ttf') format('truetype');
+}
+
 @layer components {
   .input {
     @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm hover:shadow-lg focus:border-logo focus:shadow-none focus:ring-logo sm:text-sm;
@@ -120,4 +136,21 @@
 
 .min-h-content {
   min-height: 62.8vh;
+}
+
+.logo-header-img {
+    max-width: 100%;
+    height: 43px;
+    margin-left: -50px;
+    margin-right: 50px;
+}
+
+.logo-header-bkg {
+  position: absolute;
+  width: 190px;
+  height: 50px;
+  z-index: -1;
+  background-color: white;
+  left: -100px;
+  border-radius: 15px;
 }
