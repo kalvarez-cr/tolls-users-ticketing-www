@@ -130,14 +130,12 @@ const Vehicles = () => {
             tag_serial: tag_id?.tag_serial ? tag_id?.tag_serial : {},
             enabled: true,
             active: active ? (
-              <div className="rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
-                {' '}
-                Activo{' '}
+              <div className="rounded-full bg-gray-100 py-0.5 text-center text-emerald-600 font-bold">
+                &nbsp;Activo&nbsp;
               </div>
             ) : (
-              <div className=" rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
-                {' '}
-                Inactivo{' '}
+              <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
+                &nbsp;Inactivo&nbsp;
               </div>
             ),
 
@@ -145,13 +143,11 @@ const Vehicles = () => {
               <div className="flex items-center space-x-3">
                 <button onClick={handleDisabled} data-id={id}>
                   <MinusCircleIcon
-                    className={`h-6 ${
-                      active ? 'text-emerald-500/60' : 'text-red-500/60'
-                    } `}
+                    className="h-6 text-rose-400 hover:text-rose-300"
                   />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XCircleIcon className="h-6 text-rose-400" />
+                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
                 </button>
               </div>
             ),

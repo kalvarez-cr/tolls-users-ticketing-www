@@ -41,16 +41,16 @@ const LandingLayout = ({ children }: TLandingLayout) => {
         {modal === 'logout' ? <OutForm /> : null}
         <Disclosure
           as="nav"
-          className="fixed z-10 w-full bg-emerald-700/90 bg-gradient-to-l"
+          className="fixed z-10 w-full bg-red-700 bg-gradient-to-l"
         >
           {({ open }) => (
             <>
               <div className="px-2 sm:px-20">
                 <div className="relative flex h-16 items-center justify-between">
-                  <img src="/logo.svg" alt="logo" className="h-6" />
+                  <img src="/venvias-logo1.png" alt="logo"/>
                   <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     {/* Mobile menu button*/}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -73,9 +73,9 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                             <button
                               className={classNames(
                                 item.href === router.asPath
-                                  ? 'pointer-events-none bg-emerald-400/40 text-white'
-                                  : 'text-white hover:bg-emerald-500/40 hover:text-white hover:shadow-xl',
-                                ' p-5 font-medium uppercase tracking-wider antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
+                                  ? 'pointer-events-none bg-red-400/40'
+                                  : 'hover:bg-red-500/40 hover:text-white hover:shadow-xl',
+                                ' p-5 text-white font-bold uppercase tracking-wider antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
                               )}
                               aria-current={
                                 item.href === router.asPath ? 'page' : undefined
@@ -111,8 +111,8 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                       href={item.href}
                       className={classNames(
                         item.href === router.asPath
-                          ? 'pointer-events-none bg-emerald-400/40 text-white'
-                          : 'text-white hover:bg-emerald-400/40',
+                          ? 'pointer-events-none bg-red-400/40 text-white'
+                          : 'text-white hover:bg-red-400/40',
                         'block rounded-md px-3 py-2 text-base font-medium'
                       )}
                       aria-current={
