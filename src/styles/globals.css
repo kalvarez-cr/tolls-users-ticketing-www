@@ -201,7 +201,26 @@
     height: 50px;
 }
 
+.margin-x-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .text-link {
     cursor: pointer;
     /*font-weight: bold;*/
+}
+
+.profile-card-item { }
+.profile-card-item img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4px;
+}
+.profile-card-item div {
+    font-size: 14pt;
+    text-align: center;
+}
+.profile-card-item span {
+    font-weight: bold;
 }

@@ -99,19 +99,22 @@ const User = () => {
         </h1>
         <h3 className="mt-4 text-center text-lg">{user_info?.email}</h3>
       </div>
+
       <div className="mt-16 flex justify-between">
-        <CreditCardIcon className=" h-12  text-teal-400 " />
-        <TruckIcon className="h-12 text-gray-400" />
-        <CalendarIcon className="h-12 text-red-400" />
-      </div>
-      <div className="mt-6 flex justify-between">
-        <h3 className="text-lg">
-          Bs {account_info?.nominal_balance}
-        </h3>
-        <h3 className="text-lg">{user_info?.vehicles}</h3>
-        <h3 className="text-lg">
-          {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}
-        </h3>
+        <div className="content-center profile-card-item">
+            <img src="/icon-wallet.png" alt="Saldo" className="card-icon" />
+            <div><span>Saldo:</span><br /> Bs {account_info?.nominal_balance}</div>
+        </div>
+
+        <div className="content-center profile-card-item">
+          <img src="/icon-car.png" alt="Vehículos" className="card-icon" />
+          <div><span>Vehículos:</span><br /> {user_info?.vehicles}</div>
+        </div>
+
+        <div className="content-center profile-card-item">
+          <img src="/icon-cal-recharge.png" alt="Último Uso" className="card-icon" />
+          <div><span>Último uso:</span><br /> {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}</div>
+        </div>
       </div>
 
       <div className="flex flex-col">
