@@ -12,12 +12,13 @@ interface TCardProps {
 
 const Card = ({ title, data, icon, moreInfo, link }: TCardProps) => {
   return (
-    <div className="h-36 rounded-xl shadow-md">
+    <div className="h-36 rounded-xl shadow-md justify-center">
       <div
         className={`flex items-center space-x-6  bg-white px-6 ${
           moreInfo ? 'h-4/6 rounded-t-xl' : 'h-full rounded-xl'
         }`}
       >
+        <div></div>
         {icon}
         <div>
           <h2 className={`card-title ${moreInfo ? 'text-md' : 'text-lg'}`}>

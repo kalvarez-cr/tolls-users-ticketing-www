@@ -12,5 +12,5 @@ export function GreetingByTime() {
   const today = new Date()
   const hour = today.getHours()
 
-  return hour < 12 ? 'Buenos días' : (hour < 18 ? 'Buenas tardes' : 'Buenas noches')
+  return hour < 12 ? 'Buenos días' : (hour < 19 ? 'Buenas tardes' : 'Buenas noches')
 }

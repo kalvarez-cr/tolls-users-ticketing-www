@@ -150,8 +150,8 @@ const Transit = () => {
             title={'Tránsitos'}
             data={transits.transits}
             icon={
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
-                <TruckIcon className="h-9 w-9 text-amber-600" />
+              <div className="flex h-10 w-10 items-center">
+                <img src="/icon-toll.png" alt="Tránsitos" className="card-icon" />
               </div>
             }
             moreInfo={false}
@@ -161,8 +161,8 @@ const Transit = () => {
             title={'Total consumido'}
             data={transits?.total_transit}
             icon={
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                <CreditCardIcon className="h-9 w-9 text-emerald-600" />
+              <div className="flex h-10 w-10 items-center">
+                <img src="/icon-receipt.png" alt="Total consumido" className="card-icon" />
               </div>
             }
             moreInfo={false}
@@ -172,8 +172,8 @@ const Transit = () => {
             title={'Último peaje'}
             data={transits?.last_site?.name}
             icon={
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
-                <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
+              <div className="flex h-10 w-10 items-center">
+                <img src="/icon-cal-toll.png" alt="Último peaje" className="card-icon" />
               </div>
             }
             moreInfo={false}

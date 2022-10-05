@@ -195,8 +195,8 @@ const Home = () => {
               title={'Saldo actual'}
               data={`Bs ${balance}`}
               icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-wallet.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={true}
@@ -206,8 +206,8 @@ const Home = () => {
               title={'Vehículos'}
               data={userInfo?.vehicles}
               icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
-                  <TruckIcon className="h-7 w-7 text-amber-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-car.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={true}
@@ -217,8 +217,8 @@ const Home = () => {
               title={'Tránsitos'}
               data={transits}
               icon={
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <InformationCircleIcon className="h-7 w-7 text-indigo-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-toll.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={true}

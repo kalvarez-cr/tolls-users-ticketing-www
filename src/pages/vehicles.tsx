@@ -184,21 +184,23 @@ const Vehicles = () => {
               title={'Vehículos'}
               data={vehicle}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <TruckIcon className="h-9 w-9 text-emerald-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-car.png" alt="Vehículos" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
             <Card
               title={'Último tag usado'}
               data={lastTags}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
-                  <img className="h-9 w-9" src="/nfc.svg" alt="tag" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-cal-tag.png" alt="Último Tag" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
             <Card
               title={'Último registro'}
@@ -206,11 +208,12 @@ const Vehicles = () => {
                 'es-VE'
               )}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <CalendarIcon className="h-9 w-9 text-indigo-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-cal-car.png" alt="Último Registro" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
             {/* <div className="h-36 rounded-xl shadow-md">
               <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">

@@ -148,11 +148,12 @@ const Recharges = () => {
               title={'Saldo actual'}
               data={`Bs ${account_info?.nominal_balance}`}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-9 w-9 text-emerald-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-wallet.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
             <Card
               title={'Última visita'}
@@ -160,21 +161,23 @@ const Recharges = () => {
                 'es-VE'
               )}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
-                  <CalendarIcon className="h-9 w-9 text-amber-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-cal-car.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
             <Card
               title={'Última recarga'}
               data={` Bs ${transits?.last_recharge} `}
               icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
+                <div className="flex h-10 w-10 items-center">
+                  <img src="/icon-cal-recharge.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={false}
+              link=""
             />
           </div>
         </div>
@@ -230,4 +233,5 @@ Recharges.getLayout = function getLayout(page: ReactElement) {
   return <LandingLayout>{page}</LandingLayout>;
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default Recharges;
