@@ -12,6 +12,7 @@ import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useAxios} from 'hooks/useAxios'
 import Button from '@components/Button'
+import Link from 'next/link'
 
 const IS_PROD = process.env.NODE_ENV == 'production'
 const DEFAULT_USERNAME = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_USERNAME
@@ -85,10 +86,10 @@ const Index = () => {
     }
 
     return (
-        <div className="flex items-center bg-gradient-to-l from-emerald-700 to-emerald-100">
+        <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
             <FooterLayout>
                 <div
-                    className="login-form mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-white/75 p-10 shadow-2xl">
+                    className="login-form mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-cyan-50 p-10 shadow-2xl">
                     <div>
                         <div className="">
                             <img src="/logo-login.png" alt="logo" className="logo"/>
@@ -118,21 +119,23 @@ const Index = () => {
                                 />
                             </div>
                             <div className="mt-8">
-                                <Button loading={isLoading} type="submit" text="Ingresar" />
+                                <Button loading={isLoading} type="submit" text="Ingresar"/>
                             </div>
                         </form>
-                        {/* <Link href="register">
-              <p className="mt-4 cursor-pointer text-center text-sm">
-                No tienes una cuenta?{' '}
-                <span className="underline decoration-emerald-600 decoration-2 hover:text-emerald-600">
-                  Regístrate
-                </span>
-              </p>
-            </Link> */}
+
+                        {<Link href="register">
+                            <p className="mt-4 cursor-pointer text-center text-sm">
+                                No tienes una cuenta?{' '}
+                                <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
+                                    Regístrate
+                                </span>
+                            </p>
+                        </Link>}
                     </div>
                 </div>
             </FooterLayout>
-            <div className=" hidden w-full lg:block">
+
+            <div className="hidden w-full lg:block">
                 <img className="aspect-1 max-h-screen" src="/login.svg" alt="login"/>
             </div>
         </div>
