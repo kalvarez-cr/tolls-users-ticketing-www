@@ -144,6 +144,27 @@
   min-height: 62.8vh;
 }
 
+/* Login Page */
+.login-form {
+
+}
+
+.login-form img.logo {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form .motto-line {
+    color: #707070;
+    font-size: 18pt;
+    font-weight: bold;
+    font-family: LibreFranklin, sans-serif;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Content Pages */
 .logo-header-img {
     max-width: 100%;
     height: 43px;
