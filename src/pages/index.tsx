@@ -150,6 +150,14 @@ const Index = () => {
             <div className="hidden w-full lg:block login-right-panel">
                 <img src="/login-carro-peaje-2.svg" alt="peaje"/>
             </div>
+
+            <div className="lg:hidden login-right-panel-md">
+                <img src="/login-carro-peaje-3.svg" alt="peaje"/>
+            </div>
+
+            <div className="lg:hidden login-logo-box-md">
+                <img src="/login-logo-box.svg" alt="logos"/>
+            </div>
         </div>
     )
 }
