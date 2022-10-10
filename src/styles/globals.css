@@ -146,7 +146,57 @@
 
 /* Login Page */
 .login-form {
+    width: 380px;
+    height: 623px;
+    padding: 75px 35px calc(102px + 20px) 35px;
+    z-index: 1;
+    background-color: aliceblue;
+}
 
+.login-form .header {
+    background-size: 380px 65px !important;
+    /*noinspection CssUnknownTarget*/
+    background: url("/movil-diagrama-header.png") no-repeat;
+    position: absolute;
+    width: 380px;
+    height: 65px;
+    margin-top: -75px;
+    margin-left: -35px;
+}
+
+.login-form .footer {
+    width: 380px;
+    height: 102px;
+    margin-left: -35px;
+    margin-top: 20px;
+
+    background-size: 380px 66px;
+    /*noinspection CssUnknownTarget*/
+    background: url("/movil-diagrama-footer.png") no-repeat;
+    position: absolute;
+}
+
+.login-form .left-column, .login-form .right-column {
+    margin-top: -10px;
+    width: 17px;
+    height: 496px;
+
+    background-size: 100% 100% !important;
+    position: absolute;
+}
+
+.login-form .left-column {
+    margin-left: -35px;
+
+    /*noinspection CssUnknownTarget*/
+    background: url("/movil-diagrama-col-izq.png") repeat-y;
+}
+
+.login-form .right-column {
+    margin-left: 328px;
+
+    /*noinspection CssUnknownTarget*/
+    background: url("/movil-diagrama-col-der.png") repeat-y;
 }
 
 .login-form img.logo {
@@ -162,6 +212,10 @@
     font-family: LibreFranklin, sans-serif;
     text-align: center;
     margin-top: 10px;
+}
+
+.login-right-panel {
+    z-index: 1;
 }
 
 /* Content Pages */
@@ -244,4 +298,16 @@
 }
 .profile-card-item span {
     font-weight: bold;
+}
+
+.login-background {
+    background-size: 560px 210px !important;
+    /*noinspection CssUnknownTarget*/
+    background: url("/movil-diagrama-edificios.png") repeat-x;
+    position: absolute;
+    width: 100%;
+    height: 210px;
+    top: calc(50% - 100px);
+    /*margin-top: -35px;*/
+    /*margin-left: -35px;*/
 }

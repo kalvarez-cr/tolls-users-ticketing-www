@@ -88,8 +88,12 @@ const Index = () => {
     return (
         <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
             <FooterLayout>
+                <div className="login-background"></div>
                 <div
-                    className="login-form mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-cyan-50 p-10 shadow-2xl">
+                    className="login-form mx-auto my-auto items-center justify-center">
+                    <div className="header"></div>
+                    <div className="left-column"></div>
+                    <div className="right-column"></div>
                     <div>
                         <div className="">
                             <img src="/logo-login.png" alt="logo" className="logo"/>
@@ -132,10 +136,11 @@ const Index = () => {
                             </p>
                         </Link>}
                     </div>
+                    <div className="footer"></div>
                 </div>
             </FooterLayout>
 
-            <div className="hidden w-full lg:block">
+            <div className="hidden w-full lg:block login-right-panel">
                 <img className="aspect-1 max-h-screen" src="/login.svg" alt="login"/>
             </div>
         </div>
