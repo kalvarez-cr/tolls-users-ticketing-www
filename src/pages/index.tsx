@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import FooterLayout from '@layouts/FooterLayout'
 import InputV2 from '@components/inputs/InputV2'
 import {useRouter} from 'next/router'
 import {useForm, SubmitHandler} from 'react-hook-form'
@@ -60,7 +59,7 @@ const Index = () => {
                 const {data} = response
 
                 dispatch(login(data));
-                router.push('/home')
+                router.push('/home').then()
             },
             onError: (error: AxiosError) => {
                 dispatch(open({text: error.response.statusText, type: 'error'}))
@@ -87,7 +86,7 @@ const Index = () => {
 
     return (
         <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
-            <FooterLayout>
+            <div className="flex h-screen w-screen flex-col justify-between">
                 <div className="login-background">
                     <img className="nube-1" src="/movil-diagrama-nubes.png" alt="nubes" />
                     <img className="nube-2" src="/movil-diagrama-nubes.png" alt="nubes" />
@@ -144,10 +143,12 @@ const Index = () => {
                     </div>
                     <div className="footer"></div>
                 </div>
-            </FooterLayout>
+
+                <div className="bottom-space-reserved"></div>
+            </div>
 
             <div className="hidden w-full lg:block login-right-panel">
-                <img src="/login-carro-peaje.svg" alt="peaje"/>
+                <img src="/login-carro-peaje-2.svg" alt="peaje"/>
             </div>
         </div>
     )

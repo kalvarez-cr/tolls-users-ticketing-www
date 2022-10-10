@@ -225,6 +225,21 @@
     position: fixed;
 }
 
+.bottom-space-reserved {
+    height: 6em;
+}
+
+/*
+.login-logos-box {
+    background-color: aliceblue;
+    z-index: 2;
+    position: absolute;
+    width: 300px;
+    height: 60px;
+    margin-left: calc(100% - 300px);
+}
+*/
+
 /*
 .login-background {
     background-size: 560px 187px !important;
