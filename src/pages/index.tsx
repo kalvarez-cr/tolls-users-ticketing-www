@@ -88,7 +88,13 @@ const Index = () => {
     return (
         <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
             <FooterLayout>
-                <div className="login-background"></div>
+                <div className="login-background">
+                    <img className="nube-1" src="/movil-diagrama-nubes.png" alt="nubes" />
+                    <img className="nube-2" src="/movil-diagrama-nubes.png" alt="nubes" />
+                    <img className="nube-3" src="/movil-diagrama-nubes.png" alt="nubes" />
+                    <img className="nube-4" src="/movil-diagrama-nubes.png" alt="nubes" />
+                    <img className="nube-5" src="/movil-diagrama-nubes.png" alt="nubes" />
+                </div>
                 <div
                     className="login-form mx-auto my-auto items-center justify-center">
                     <div className="header"></div>
@@ -141,7 +147,7 @@ const Index = () => {
             </FooterLayout>
 
             <div className="hidden w-full lg:block login-right-panel">
-                <img className="aspect-1 max-h-screen" src="/login.svg" alt="login"/>
+                <img src="/login-carro-peaje.svg" alt="peaje"/>
             </div>
         </div>
     )
