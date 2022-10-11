@@ -147,10 +147,11 @@
 /* Login Page */
 .login-form {
     width: 380px;
-    height: 623px;
+    height: 663px;
     padding: 75px 35px calc(102px + 20px) 35px;
     z-index: 2;
     background-color: aliceblue;
+    box-shadow: #000000a6 10px 10px 30px;
 }
 
 .login-form .header {
@@ -263,7 +264,7 @@
 }
 
 .bottom-space-reserved {
-    height: 6em;
+    height: 56px;
 }
 
 .login-background img.nube-1, .login-background img.nube-2, .login-background img.nube-3,
