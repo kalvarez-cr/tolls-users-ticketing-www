@@ -18,7 +18,7 @@ const DEFAULT_USERNAME = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_USERNAME
 const DEFAULT_PASSWORD = IS_PROD ? '' : process.env.NEXT_PUBLIC_DEFAULT_PASSWORD
 
 interface Inputs {
-    email: string;
+    usernameOrEmail: string;
     password: string;
 }
 
@@ -28,9 +28,8 @@ const initialValues = {
 }
 
 const Schema = yup.object().shape({
-    email: yup
+    usernameOrEmail: yup
         .string()
-        .email('Debe ser un correo válido')
         .required('Este campo es requerido'),
     password: yup
         .string()
@@ -80,8 +79,8 @@ const Index = () => {
     })
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        const {email, password} = data
-        mutate({email, password})
+        const {usernameOrEmail, password} = data
+        mutate({usernameOrEmail, password})
     }
 
     return (
@@ -109,10 +108,10 @@ const Index = () => {
                         <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
                             <div className="mt-16">
                                 <InputV2
-                                    label="Correo electrónico"
-                                    name="email"
+                                    label="Username o correo"
+                                    name="usernameOrEmail"
                                     type="text"
-                                    errorMessage={errors.email?.message}
+                                    errorMessage={errors.usernameOrEmail?.message}
                                     register={register}
                                     defaultValue={items.name}
                                 />
