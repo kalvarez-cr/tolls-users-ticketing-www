@@ -1,3 +1,4 @@
+import Logo from '@components/icons/Logo';
 import LogoDark from '@components/icons/LogoDark';
 import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
@@ -47,8 +48,9 @@ const LandingLayout = ({ children }: TLandingLayout) => {
             <>
               <div className="px-2 sm:px-20">
                 <div className="relative flex h-16 items-center justify-between">
-                  <div className="logo-header-bkg"></div>
-                  <img src="/venvias-logo2.png" alt="logo" className="logo-header-img"/>
+                  <div className="ml-10">
+                    <Logo className="w-36" />
+                  </div>
                   <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     {/* Mobile menu button*/}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -76,7 +78,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                                 item.href === router.asPath
                                   ? 'pointer-events-none bg-red-400/40'
                                   : 'hover:bg-red-500/40 hover:text-white hover:shadow-xl',
-                                ' p-5 text-white font-bold uppercase tracking-wider antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
+                                ' p-5 font-bold uppercase tracking-wider text-white antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
                               )}
                               aria-current={
                                 item.href === router.asPath ? 'page' : undefined

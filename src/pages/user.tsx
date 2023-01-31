@@ -100,80 +100,57 @@ const User = () => {
         <h3 className="mt-4 text-center text-lg">{user_info?.email}</h3>
       </div>
 
-      <div className="mt-16 flex justify-between">
-        <div className="content-center profile-card-item">
-            <img src="/icon-wallet.png" alt="Saldo" className="card-icon" />
-            <div><span>Saldo:</span><br /> Bs {account_info?.nominal_balance}</div>
-        </div>
-
-        <div className="content-center profile-card-item">
-          <img src="/icon-car.png" alt="Vehículos" className="card-icon" />
-          <div><span>Vehículos:</span><br /> {user_info?.vehicles}</div>
-        </div>
-
-        <div className="content-center profile-card-item">
-          <img src="/icon-cal-recharge.png" alt="Último Uso" className="card-icon" />
-          <div><span>Último uso:</span><br /> {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}</div>
-        </div>
-      </div>
-
       <div className="flex flex-col">
         <div className="mt-12 flex items-start">
-          {isEditable ? (
-            <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex flex-col items-start">
+          <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col items-start">
+              <InputV2
+                label="Teléfono celular"
+                name="phone_number"
+                type="text"
+                errorMessage={errors.phone_number?.message}
+                register={register}
+                defaultValue={user_info?.phone_number}
+                disabled
+              />
+              <div className="mt-14 flex">
                 <InputV2
-                  label="Teléfono celular"
-                  name="phone_number"
+                  label="Contraseña"
+                  name="password"
                   type="text"
-                  errorMessage={errors.phone_number?.message}
+                  errorMessage={errors.password?.message}
                   register={register}
-                  defaultValue={user_info?.phone_number}
                 />
-                <div className="mt-14 flex">
+                <div className="ml-16">
                   <InputV2
-                    label="Contraseña"
-                    name="password"
+                    label="Confirmar Contraseña"
+                    name="confirm_password"
                     type="text"
-                    errorMessage={errors.password?.message}
+                    errorMessage={
+                      // @ts-ignore
+                      errors.confirm_password &&
+                      'Las contraseñas deben coincidir'
+                    }
                     register={register}
                   />
-                  <div className="ml-16">
-                    <InputV2
-                      label="Confirmar Contraseña"
-                      name="confirm_password"
-                      type="text"
-                      errorMessage={
-                        // @ts-ignore
-                        errors.confirm_password &&
-                        'Las contraseñas deben coincidir'
-                      }
-                      register={register}
-                    />
-                  </div>
                 </div>
               </div>
-              <div className="flex justify-between space-x-4">
-                <input
-                  type="submit"
-                  value="Confirmar"
-                  className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-                />
-                <input
-                  onClick={() =>
-                    isEditable ? setIsEditable(false) : setIsEditable(true)
-                  }
-                  value="Cancelar"
-                  className="mt-14 block w-32 cursor-pointer rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-                />
-              </div>
-            </form>
-          ) : (
-            <>
-              <h3 className="mr-4 text-lg font-bold">Teléfono:</h3>
-              <h3 className="mr-auto text-lg">{user_info?.phone_number}</h3>
-            </>
-          )}
+            </div>
+            <div className="flex justify-between space-x-4">
+              <input
+                type="submit"
+                value="Confirmar"
+                className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+              <input
+                onClick={() =>
+                  isEditable ? setIsEditable(false) : setIsEditable(true)
+                }
+                value="Cancelar"
+                className="mt-14 block w-32 cursor-pointer rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+              />
+            </div>
+          </form>
 
           <button
             type="button"
