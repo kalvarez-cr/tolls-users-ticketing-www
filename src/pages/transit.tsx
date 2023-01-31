@@ -167,6 +167,7 @@ const Transit = () => {
           <Card
             title={'Tránsitos'}
             data={dataTransit?.data?.data?.transits}
+            isLoading={isLoadingTransit}
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
@@ -184,6 +185,7 @@ const Transit = () => {
             data={currencyFormatter.format(
               dataTotalConsumed?.data?.data?.total
             )}
+            isLoading={isLoadingTotalConsumed}
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
@@ -199,6 +201,7 @@ const Transit = () => {
           <Card
             title={'Último peaje'}
             data={dataTotalTransit?.data?.data?.last_transit?.toll_site}
+            isLoading={isLoadingTotalTransit}
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img

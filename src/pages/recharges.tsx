@@ -178,6 +178,7 @@ const Recharges = () => {
             <Card
               title={'Saldo actual'}
               data={currencyFormatter.format(data?.data?.data?.account_balance)}
+              isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -195,6 +196,7 @@ const Recharges = () => {
               data={new Date(
                 dataLogin?.data?.data?.last_login
               ).toLocaleDateString('es-VE')}
+              isLoading={isLoadingLogin}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -210,6 +212,7 @@ const Recharges = () => {
             <Card
               title={'Última recarga'}
               data={` Bs ${dataRecharge?.data?.data?.last_recharge?.amount} `}
+              isLoading={isLoadingRecharge}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img

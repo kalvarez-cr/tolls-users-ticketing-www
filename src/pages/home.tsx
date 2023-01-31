@@ -216,6 +216,7 @@ const Home = () => {
             <Card
               title={'Saldo actual'}
               data={currencyFormatter.format(data?.data?.data?.account_balance)}
+              isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -231,6 +232,7 @@ const Home = () => {
             <Card
               title={'Vehículos'}
               data={dataVehicle?.data?.data?.vehicles}
+              isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img src="/icon-car.png" alt="saldo" className="card-icon" />
@@ -242,6 +244,7 @@ const Home = () => {
             <Card
               title={'Tránsitos'}
               data={dataTransit?.data?.data?.transits}
+              isLoading={isLoadingTransit}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img src="/icon-toll.png" alt="saldo" className="card-icon" />

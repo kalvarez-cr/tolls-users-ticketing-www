@@ -180,6 +180,7 @@ const Vehicles = () => {
             <Card
               title={'Vehículos'}
               data={dataVehicle?.data?.data?.vehicles}
+              isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -195,6 +196,7 @@ const Vehicles = () => {
             <Card
               title={'Último tag usado'}
               data={dataTotal?.data?.data?.last_transit?.tag_serial}
+              isLoading={isLoadingTotal}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -210,6 +212,7 @@ const Vehicles = () => {
             <Card
               title={'Último Canal'}
               data={dataTotal?.data?.data?.last_transit?.lane}
+              isLoading={isLoadingTotal}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
