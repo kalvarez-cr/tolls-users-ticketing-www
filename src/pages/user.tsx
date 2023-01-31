@@ -9,13 +9,7 @@ import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
 import { logout } from '@store/counter/loginReducer';
-import {
-  UserCircleIcon,
-  PencilIcon,
-  CreditCardIcon,
-  TruckIcon,
-  CalendarIcon,
-} from '@heroicons/react/solid';
+import { UserCircleIcon, PencilIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
@@ -101,19 +95,33 @@ const User = () => {
       </div>
 
       <div className="mt-16 flex justify-between">
-        <div className="content-center profile-card-item">
-            <img src="/icon-wallet.png" alt="Saldo" className="card-icon" />
-            <div><span>Saldo:</span><br /> Bs {account_info?.nominal_balance}</div>
+        <div className="profile-card-item content-center">
+          <img src="/icon-wallet.png" alt="Saldo" className="card-icon" />
+          <div>
+            <span>Saldo:</span>
+            <br /> Bs {account_info?.nominal_balance}
+          </div>
         </div>
 
-        <div className="content-center profile-card-item">
+        <div className="profile-card-item content-center">
           <img src="/icon-car.png" alt="Vehículos" className="card-icon" />
-          <div><span>Vehículos:</span><br /> {user_info?.vehicles}</div>
+          <div>
+            <span>Vehículos:</span>
+            <br /> {user_info?.vehicles}
+          </div>
         </div>
 
-        <div className="content-center profile-card-item">
-          <img src="/icon-cal-recharge.png" alt="Último Uso" className="card-icon" />
-          <div><span>Último uso:</span><br /> {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}</div>
+        <div className="profile-card-item content-center">
+          <img
+            src="/icon-cal-recharge.png"
+            alt="Último Uso"
+            className="card-icon"
+          />
+          <div>
+            <span>Último uso:</span>
+            <br />{' '}
+            {new Date(account_info?.last_use_date).toLocaleDateString('es-VE')}
+          </div>
         </div>
       </div>
 

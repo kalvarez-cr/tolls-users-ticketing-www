@@ -3,11 +3,10 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
-import { useSelector } from 'react-redux';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
@@ -23,9 +22,16 @@ const Vehicles = () => {
   const [modal, setModal] = React.useState('');
   const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
-  const vehicle = useSelector(
-    (state: any) => state.loginUser?.user_info?.vehicles
-  );
+
+  const { data: dataVehicle, isLoading: isLoadingVehicle } = useQuery({
+    queryKey: ['getVehicle'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/count_vehicle/',
+      });
+    },
+  });
 
   const {
     mutate,
@@ -163,7 +169,7 @@ const Vehicles = () => {
           <div className="grid grid-cols-3 gap-4">
             <Card
               title={'Vehículos'}
-              data={vehicle}
+              data={dataVehicle?.data?.data?.vehicles}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img

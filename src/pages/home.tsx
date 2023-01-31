@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useSelector } from 'react-redux';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
@@ -29,9 +29,26 @@ const Home = () => {
   const [rows, setRows] = useState([]);
   const userInfo = useSelector((state: any) => state.loginUser?.user_info);
   const transits = useSelector((state: any) => state.loginUser?.transits);
-  const balance = useSelector(
-    (state: any) => state.loginUser?.account_info?.nominal_balance
-  );
+
+  const { data, isLoading: isLoadingBalance } = useQuery({
+    queryKey: ['getBalance'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/account_balance/',
+      });
+    },
+  });
+
+  const { data: dataVehicle, isLoading: isLoadingVehicle } = useQuery({
+    queryKey: ['getVehicle'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/count_vehicle/',
+      });
+    },
+  });
 
   const {
     mutate,
@@ -187,7 +204,7 @@ const Home = () => {
           <div className="grid grid-cols-3 gap-4">
             <Card
               title={'Saldo actual'}
-              data={`Bs ${balance}`}
+              data={`Bs ${data?.data?.data?.account_balance}`}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -202,7 +219,7 @@ const Home = () => {
             />
             <Card
               title={'Vehículos'}
-              data={userInfo?.vehicles}
+              data={dataVehicle?.data?.data?.vehicles}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img src="/icon-car.png" alt="saldo" className="card-icon" />
@@ -222,57 +239,6 @@ const Home = () => {
               moreInfo={true}
               link="/transit"
             />
-            {/* <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <CashIcon className="h-7 w-7 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Saldo actual</h2>
-                  <h2 className="text-xl font-medium">Bs {balance}</h2>
-                </div>
-              </div>
-              <Link href="/recharges">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/30">
-                  <TruckIcon className="h-7 w-7 text-amber-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Vehículos</h2>
-                  <h2 className="text-xl font-medium">{vehicle}</h2>
-                </div>
-              </div>
-              <Link href="/vehicles">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-4/6 items-center space-x-6 rounded-t-xl bg-white px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <SupportIcon className="h-7 w-7 text-indigo-600" />
-                </div>
-                <div>
-                  <h2 className="text-md text-gray-600">Tránsitos</h2>
-                  <h2 className="text-xl font-medium">12750</h2>
-                </div>
-              </div>
-              <Link href="/transit">
-                <div className="flex h-2/6 items-center rounded-b-xl bg-gray-100 px-6 text-emerald-600 decoration-emerald-600 decoration-2 hover:underline">
-                  <h4 className="text-sm font-normal">Más información</h4>
-                  <ChevronRightIcon className="h-4 w-4" />
-                </div>
-              </Link>
-            </div> */}
           </div>
         </div>
         <div className="space-y-8">
