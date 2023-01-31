@@ -130,7 +130,7 @@ const Vehicles = () => {
             tag_serial: tag_id?.tag_serial ? tag_id?.tag_serial : {},
             enabled: true,
             active: active ? (
-              <div className="rounded-full bg-gray-100 py-0.5 text-center text-emerald-600 font-bold">
+              <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
                 &nbsp;Activo&nbsp;
               </div>
             ) : (
@@ -142,9 +142,7 @@ const Vehicles = () => {
             actions: (
               <div className="flex items-center space-x-3">
                 <button onClick={handleDisabled} data-id={id}>
-                  <MinusCircleIcon
-                    className="h-6 text-rose-400 hover:text-rose-300"
-                  />
+                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
                 </button>
                 <button onClick={handleCancel} data-tag={tag_id.id}>
                   <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
@@ -158,7 +156,7 @@ const Vehicles = () => {
     }
   }, [response]);
 
-  let lastTags = account.last_use_tag?.tag_serial || '-';
+  let lastTags = account?.last_use_tag?.tag_serial || '-';
 
   return (
     <>
@@ -176,16 +174,18 @@ const Vehicles = () => {
 
       <div className="mt-24  w-full ">
         <div className="mb-10 space-y-8">
-          <h2 className="text-3xl sub-header-text">
-            Vehículos Asociados
-          </h2>
+          <h2 className="sub-header-text text-3xl">Vehículos Asociados</h2>
           <div className="grid grid-cols-3 gap-4">
             <Card
               title={'Vehículos'}
               data={vehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-car.png" alt="Vehículos" className="card-icon" />
+                  <img
+                    src="/icon-car.png"
+                    alt="Vehículos"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}
@@ -196,7 +196,11 @@ const Vehicles = () => {
               data={lastTags}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-cal-tag.png" alt="Último Tag" className="card-icon" />
+                  <img
+                    src="/icon-cal-tag.png"
+                    alt="Último Tag"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}
@@ -209,7 +213,11 @@ const Vehicles = () => {
               )}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-cal-car.png" alt="Último Registro" className="card-icon" />
+                  <img
+                    src="/icon-cal-car.png"
+                    alt="Último Registro"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}

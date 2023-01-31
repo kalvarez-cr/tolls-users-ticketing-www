@@ -38,7 +38,7 @@ const OutForm = () => {
       {modalState.open ? (
         <Modal
           open={modalState.open}
-          setOpen={dispatch(open())}
+          setOpen={modalState ? dispatch(close()) : dispatch(open())}
           handleAccept={() => handleAccept()}
           title="Advertencia"
           acceptButtonText="Aceptar"
