@@ -4,8 +4,9 @@ import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
 import { UserCircleIcon } from '@heroicons/react/solid';
+import { loginUser, logout } from '@store/counter/loginReducer';
 import { open } from '@store/counter/modalReducer';
-import { useAppDispatch } from '@store/hooks';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -21,12 +22,16 @@ interface TLandingLayout {
 const LandingLayout = ({ children }: TLandingLayout) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { loggedIn } = useAppSelector(loginUser);
+  console.log(dispatch);
 
   const [modal, setModal] = React.useState('');
+  console.log(setModal);
 
   const handleLogout = () => {
-    dispatch(open());
-    setModal('logout');
+    dispatch(logout());
+    router.push('/');
+    // setModal('logout');
   };
   const navigation = [
     { name: 'Inicio', href: '/home' },
