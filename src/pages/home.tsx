@@ -51,6 +51,16 @@ const Home = () => {
     },
   });
 
+  const { data: dataTransit, isLoading: isLoadingTransit } = useQuery({
+    queryKey: ['getTransit'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/count_transits/',
+      });
+    },
+  });
+
   const {
     mutate,
     data: response,
@@ -231,7 +241,7 @@ const Home = () => {
             />
             <Card
               title={'Tránsitos'}
-              data={transits}
+              data={dataTransit?.data?.data?.transits}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img src="/icon-toll.png" alt="saldo" className="card-icon" />

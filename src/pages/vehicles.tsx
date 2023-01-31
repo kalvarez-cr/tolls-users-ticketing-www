@@ -33,6 +33,16 @@ const Vehicles = () => {
     },
   });
 
+  const { data: dataTotal, isLoading: isLoadingTotal } = useQuery({
+    queryKey: ['getTotals'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/last_transit/',
+      });
+    },
+  });
+
   const {
     mutate,
     data: response,
@@ -184,7 +194,7 @@ const Vehicles = () => {
             />
             <Card
               title={'Último tag usado'}
-              data={''}
+              data={dataTotal?.data?.data?.last_transit?.tag_serial}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -198,8 +208,8 @@ const Vehicles = () => {
               link=""
             />
             <Card
-              title={'Último registro'}
-              data={''}
+              title={'Último Canal'}
+              data={dataTotal?.data?.data?.last_transit?.lane}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img

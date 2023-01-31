@@ -115,7 +115,7 @@ const Recharges = () => {
   React.useEffect(() => {
     if (response) {
       setCountPage(response.data.pagination.count);
-      const table = response.data.data.map(
+      const table = response?.data?.data?.map(
         ({
           external_reference_id,
           amount,
