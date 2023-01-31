@@ -39,7 +39,7 @@ const Recharges = () => {
       return requester({
         method: 'POST',
         data: account,
-        url: 'recharge-module/get/',
+        url: 'external-recharge/list/',
       });
     },
     {
@@ -66,11 +66,11 @@ const Recharges = () => {
       key: 'facial_amount',
       header: 'Monto',
     },
-    {
-      id: '4',
-      key: 'payment_method',
-      header: 'Método de pago',
-    },
+    // {
+    //   id: '4',
+    //   key: 'payment_method',
+    //   header: 'Método de pago',
+    // },
     {
       id: '5',
       key: 'status',
@@ -78,23 +78,23 @@ const Recharges = () => {
     },
   ];
   React.useEffect(() => {
-    mutate({ page: pageParam });
+    mutate({ page: pageParam, per_page: 10 });
   }, [mutate]);
 
   React.useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page);
+      setCountPage(response.data.pagination.count);
       const table = response.data.data.map(
         ({
           external_reference_id,
-          facial_amount,
+          amount,
           status,
           payment_method,
           created_on,
         }) => {
           return {
             external_reference_id,
-            facial_amount,
+            facial_amount: amount,
             payment_method,
             created_on: new Date(created_on).toLocaleDateString('es-VE'),
             status:
@@ -128,7 +128,7 @@ const Recharges = () => {
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-4">
           <div className="flex justify-between">
-            <h2 className="text-3xl sub-header-text">Recargas</h2>
+            <h2 className="sub-header-text text-3xl">Recargas</h2>
             {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
@@ -149,7 +149,11 @@ const Recharges = () => {
               data={`Bs ${account_info?.nominal_balance}`}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-wallet.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/icon-wallet.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}
@@ -162,7 +166,11 @@ const Recharges = () => {
               )}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-cal-car.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/icon-cal-car.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}
@@ -173,7 +181,11 @@ const Recharges = () => {
               data={` Bs ${transits?.last_recharge} `}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-cal-recharge.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/icon-cal-recharge.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={false}
