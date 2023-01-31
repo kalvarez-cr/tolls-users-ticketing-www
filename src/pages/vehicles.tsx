@@ -1,14 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { TruckIcon, CalendarIcon, XCircleIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
-import { MinusCircleIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
@@ -16,20 +14,11 @@ import BlockForm from '@components/modalForms/BlockForm';
 
 const Vehicles = () => {
   useGuard();
-
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-
-  // const useFetchData = () =>
-  //   useQuery('vehicles', async () => {
-  //     const { data } = await requester.get('/registered-vehicle/get/');
-  //     return data.data;
-  //   });
-
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
   const [rows, setRows] = useState([]);
-  // const { data, isLoading } = useFetchData();
   const [openModal, setOpenModal] = React.useState(false);
   const [modal, setModal] = React.useState('');
   const [idVehicle, setIdVehicle] = React.useState('');
@@ -37,8 +26,7 @@ const Vehicles = () => {
   const vehicle = useSelector(
     (state: any) => state.loginUser?.user_info?.vehicles
   );
-  const account = useSelector((state: any) => state.loginUser?.account_info);
-  const queryClient = useQueryClient();
+
   const {
     mutate,
     data: response,
@@ -48,13 +36,10 @@ const Vehicles = () => {
       return requester({
         method: 'POST',
         data: account,
-        url: '/registered-vehicle/get/',
+        url: '/vehicle-account/list/',
       });
     },
     {
-      onSuccess: (response) => {
-        queryClient.setQueryData(['account'], response);
-      },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
@@ -76,28 +61,28 @@ const Vehicles = () => {
   };
 
   const headers = [
+    // {
+    //   id: '1',
+    //   key: 'make',
+    //   header: 'Marca',
+    // },
     {
       id: '1',
-      key: 'make',
-      header: 'Marca',
-    },
-    {
-      id: '2',
       key: 'model',
       header: 'Modelo',
     },
     {
-      id: '3',
+      id: '2',
       key: 'license_plate',
       header: 'Placa',
     },
     {
-      id: '4',
+      id: '3',
       key: 'category_title',
       header: 'Categoría',
     },
     {
-      id: '5',
+      id: '4',
       key: 'tag_serial',
       header: 'Tag asociado',
     },
@@ -114,20 +99,20 @@ const Vehicles = () => {
   ];
 
   React.useEffect(() => {
-    mutate({ page: pageParam });
-  }, [pageParam]);
+    mutate({ page: pageParam, per_page: 10 });
+  }, [pageParam, mutate]);
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page);
-      const rows = response.data.data.map(
-        ({ id, make, model, license_plate, category, tag_id, active }) => {
+      setCountPage(response.data.pagination.count);
+      const rows = response?.data?.data?.map(
+        ({ id, make, model, plate, vehicle_category, vin, active }) => {
           return {
             make,
             model,
-            license_plate,
-            category_title: category?.title ? category?.title : {},
-            tag_serial: tag_id?.tag_serial ? tag_id?.tag_serial : {},
+            license_plate: plate,
+            category_title: vehicle_category,
+            tag_serial: vin,
             enabled: true,
             active: active ? (
               <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
@@ -139,16 +124,16 @@ const Vehicles = () => {
               </div>
             ),
 
-            actions: (
-              <div className="flex items-center space-x-3">
-                <button onClick={handleDisabled} data-id={id}>
-                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button>
-                <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button>
-              </div>
-            ),
+            // actions: (
+            //   <div className="flex items-center space-x-3">
+            //     <button onClick={handleDisabled} data-id={id}>
+            //       <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+            //     </button>
+            //     <button onClick={handleCancel} data-tag={tag_id.id}>
+            //       <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+            //     </button>
+            //   </div>
+            // ),
           };
         }
       );
@@ -156,7 +141,7 @@ const Vehicles = () => {
     }
   }, [response]);
 
-  let lastTags = account?.last_use_tag?.tag_serial || '-';
+  // let lastTags = account?.last_use_tag?.tag_serial || '-';
 
   return (
     <>
@@ -193,7 +178,7 @@ const Vehicles = () => {
             />
             <Card
               title={'Último tag usado'}
-              data={lastTags}
+              data={''}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -208,9 +193,7 @@ const Vehicles = () => {
             />
             <Card
               title={'Último registro'}
-              data={new Date(account?.last_use_date).toLocaleDateString(
-                'es-VE'
-              )}
+              data={''}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -223,39 +206,6 @@ const Vehicles = () => {
               moreInfo={false}
               link=""
             />
-            {/* <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <TruckIcon className="h-9 w-9 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="text-lg text-gray-600">Vehículos</h2>
-                  <h2 className="text-2xl font-medium">{vehicle}</h2>
-                </div>
-              </div>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
-                  <img className="h-9 w-9" src="/nfc.svg" alt="tag" />
-                </div>
-                <div>
-                  <h2 className="text-lg text-gray-600">Tag activos</h2>
-                  <h2 className="text-2xl font-medium">3</h2>
-                </div>
-              </div>
-            </div>
-            <div className="h-36 rounded-xl shadow-md">
-              <div className="flex h-full items-center space-x-6 rounded-xl bg-white px-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <CalendarIcon className="h-9 w-9 text-indigo-600" />
-                </div>
-                <div>
-                  <h2 className="text-lg text-gray-600">Último uso</h2>
-                  <h2 className="text-2xl font-medium">10/07/2022</h2>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
         <Table
