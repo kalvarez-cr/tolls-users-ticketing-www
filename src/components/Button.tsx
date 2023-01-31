@@ -1,35 +1,35 @@
-import React from 'react'
-import Loader2 from './loaders/Loader2'
+import React from 'react';
+import Loader2 from './loaders/Loader2';
 
 interface ButtonProps {
-    loading: boolean
-    text: string
-    type: 'button' | 'submit' | 'reset'
-    onClick?: React.MouseEventHandler
+  loading: boolean;
+  text: string;
+  type: 'button' | 'submit' | 'reset';
+  onClick?: React.MouseEventHandler;
 }
 
-const Button = ({loading, text, type, onClick}: ButtonProps) => {
-    return (
-        <button
-            type={type}
-            disabled={loading}
-            onClick={onClick}
-            className={`relative inline-flex h-10 w-full items-center justify-center rounded-md bg-blue-800 
-      py-1 px-4 align-middle text-white shadow-md  focus:outline-none focus:ring-2 focus:ring-blueLight focus:ring-offset-2 ${
-                loading
-                    ? 'pointer-events-none'
-                    : ' font-bold transition-all delay-100 duration-200 hover:bg-blue-600 hover:text-white hover:shadow-lg '
-            }`}
-        >
-            {loading ? (
-                <div className="absolute -top-5">
-                    <Loader2/>
-                </div>
-            ) : (
-                text
-            )}
-        </button>
-    )
-}
+const Button = ({ loading, text, type, onClick }: ButtonProps) => {
+  return (
+    <button
+      type={type}
+      disabled={loading}
+      onClick={onClick}
+      className={`focus:ring-blueLight relative inline-flex h-10 w-full items-center justify-center rounded-md 
+      bg-red-600 py-1 px-4 align-middle text-white  shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+        loading
+          ? 'pointer-events-none'
+          : ' font-bold transition-all delay-100 duration-200 hover:bg-red-500 hover:text-white hover:shadow-lg '
+      }`}
+    >
+      {loading ? (
+        <div className="absolute -top-5">
+          <Loader2 />
+        </div>
+      ) : (
+        text
+      )}
+    </button>
+  );
+};
 
-export default Button
+export default Button;

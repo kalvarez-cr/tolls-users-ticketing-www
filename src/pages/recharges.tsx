@@ -5,13 +5,14 @@ import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
+import { currencyFormatter } from 'utils/utils';
 
 const Recharges = () => {
   useGuard();
@@ -30,6 +31,36 @@ const Recharges = () => {
   );
 
   const transits = useSelector((state: any) => state.loginUser);
+
+  const { data, isLoading: isLoadingBalance } = useQuery({
+    queryKey: ['getBalance'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/account_balance/',
+      });
+    },
+  });
+
+  const { data: dataLogin, isLoading: isLoadingLogin } = useQuery({
+    queryKey: ['getLastLogin'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/last_login/',
+      });
+    },
+  });
+  const { data: dataRecharge, isLoading: isLoadingRecharge } = useQuery({
+    queryKey: ['getRecharge'],
+    queryFn: async () => {
+      return await requester({
+        method: 'GET',
+        url: '/dashboard/last_recharge/',
+      });
+    },
+  });
+
   const {
     mutate,
     data: response,
@@ -94,7 +125,7 @@ const Recharges = () => {
         }) => {
           return {
             external_reference_id,
-            facial_amount: amount,
+            facial_amount: currencyFormatter.format(amount),
             payment_method,
             created_on: new Date(created_on).toLocaleDateString('es-VE'),
             status:
@@ -146,7 +177,7 @@ const Recharges = () => {
 
             <Card
               title={'Saldo actual'}
-              data={`Bs ${account_info?.nominal_balance}`}
+              data={currencyFormatter.format(data?.data?.data?.account_balance)}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -161,9 +192,9 @@ const Recharges = () => {
             />
             <Card
               title={'Última visita'}
-              data={new Date(account_info?.last_use_date).toLocaleDateString(
-                'es-VE'
-              )}
+              data={new Date(
+                dataLogin?.data?.data?.last_login
+              ).toLocaleDateString('es-VE')}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
@@ -178,7 +209,7 @@ const Recharges = () => {
             />
             <Card
               title={'Última recarga'}
-              data={` Bs ${transits?.last_recharge} `}
+              data={` Bs ${dataRecharge?.data?.data?.last_recharge?.amount} `}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img

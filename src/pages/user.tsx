@@ -9,29 +9,18 @@ import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
 import { logout } from '@store/counter/loginReducer';
-import {
-  UserCircleIcon,
-  PencilIcon,
-  CreditCardIcon,
-  TruckIcon,
-  CalendarIcon,
-} from '@heroicons/react/solid';
+import { UserCircleIcon, PencilIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
+import ResetPassword from '@components/modalForms/ResetPasswordForm';
+import Button from '@components/Button';
 
 interface Inputs {
   password: string;
   phone_number: string;
 }
 const Schema = yup.object().shape({
-  phone_number: yup
-    .string()
-    // .test('len', 'Debe ser 11 dígitos', (val) => val.toString().length === 11)
-    .min(11, 'Deben ser 11 dígitos')
-    .max(11, 'Deben ser 11 dígitos')
-    .typeError('Debe ser un número')
-    .optional(),
   password: yup
     .string()
     .min(8, 'Mínimo 8 caracteres')
@@ -46,6 +35,7 @@ const Schema = yup.object().shape({
 const User = () => {
   useGuard();
   const [isEditable, setIsEditable] = useState(false);
+  const [openResetPassword, setOpenResetPassword] = useState(false);
   const user_info = useSelector((state: any) => state.loginUser?.user_info);
   const account_info = useSelector(
     (state: any) => state.loginUser?.account_info
@@ -101,57 +91,16 @@ const User = () => {
       </div>
 
       <div className="flex flex-col">
-        <div className="mt-12 flex items-start">
-          <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col items-start">
-              <InputV2
-                label="Teléfono celular"
-                name="phone_number"
-                type="text"
-                errorMessage={errors.phone_number?.message}
-                register={register}
-                defaultValue={user_info?.phone_number}
-                disabled
-              />
-              <div className="mt-14 flex">
-                <InputV2
-                  label="Contraseña"
-                  name="password"
-                  type="text"
-                  errorMessage={errors.password?.message}
-                  register={register}
-                />
-                <div className="ml-16">
-                  <InputV2
-                    label="Confirmar Contraseña"
-                    name="confirm_password"
-                    type="text"
-                    errorMessage={
-                      // @ts-ignore
-                      errors.confirm_password &&
-                      'Las contraseñas deben coincidir'
-                    }
-                    register={register}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-between space-x-4">
-              <input
-                type="submit"
-                value="Confirmar"
-                className="mt-14 block cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-              />
-              <input
-                onClick={() =>
-                  isEditable ? setIsEditable(false) : setIsEditable(true)
-                }
-                value="Cancelar"
-                className="mt-14 block w-32 cursor-pointer rounded bg-red-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-              />
-            </div>
-          </form>
-
+        <div className="mt-12 mb-10 flex items-start">
+          <InputV2
+            label="Teléfono celular"
+            name="phone_number"
+            type="text"
+            errorMessage={errors.phone_number?.message}
+            register={register}
+            defaultValue={user_info?.phone_number}
+            disabled
+          />
           <button
             type="button"
             onClick={() =>
@@ -160,7 +109,17 @@ const User = () => {
           >
             <PencilIcon className="h-5 text-gray-600 hover:text-emerald-500" />
           </button>
+          <ResetPassword
+            open={openResetPassword}
+            setOpen={setOpenResetPassword}
+          />
         </div>
+        <Button
+          text="Cambiar contraseña"
+          type="button"
+          loading={false}
+          onClick={(e) => setOpenResetPassword(true)}
+        />
       </div>
     </div>
   );
