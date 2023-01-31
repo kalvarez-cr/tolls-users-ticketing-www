@@ -67,38 +67,38 @@ const Home = () => {
   };
 
   const headers = [
+    // {
+    //   id: '1',
+    //   key: 'make',
+    //   header: 'Marca',
+    // },
     {
       id: '1',
-      key: 'make',
-      header: 'Marca',
-    },
-    {
-      id: '2',
       key: 'model',
       header: 'Modelo',
     },
     {
-      id: '3',
+      id: '2',
       key: 'license_plate',
       header: 'Placa',
     },
     {
-      id: '4',
+      id: '3',
       key: 'category_title',
       header: 'Categoría',
     },
     {
-      id: '5',
+      id: '4',
       key: 'tag_serial',
       header: 'Tag asociado',
     },
     {
-      id: '6',
+      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
     {
-      id: '7',
+      id: '6',
       key: 'actions',
       header: 'Acciones',
     },
@@ -110,39 +110,39 @@ const Home = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.count_page);
-      //   const rows = response?.data?.data?.data?.map(
-      //     ({ id, make, model, license_plate, category, tag_id, active }) => {
-      //       return {
-      //         make,
-      //         model,
-      //         license_plate,
-      //         category_title: category?.title ? category.title : {},
-      //         tag_serial: tag_id?.tag_serial ? tag_id.tag_serial : {},
-      //         enabled: true,
-      //         active: active ? (
-      //           <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
-      //             &nbsp;Activo&nbsp;
-      //           </div>
-      //         ) : (
-      //           <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
-      //             &nbsp;Inactivo&nbsp;
-      //           </div>
-      //         ),
+      setCountPage(response.data.pagination.count);
+      const rows = response?.data?.data?.map(
+        ({ id, model, plate, vehicle_category, vin, status }) => {
+          return {
+            model,
+            license_plate: plate,
+            category_title: vehicle_category,
+            tag_serial: vin,
+            enabled: true,
+            active:
+              status === 'active' ? (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
+                  &nbsp;Activo&nbsp;
+                </div>
+              ) : (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
+                  &nbsp;Inactivo&nbsp;
+                </div>
+              ),
 
-      //         actions: (
-      //           <div className="flex space-x-3">
-      //             <button onClick={handleDisabled} data-id={id}>
-      //               <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-      //             </button>
-      //             <button onClick={handleCancel} data-tag={tag_id?.id}>
-      //               <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-      //             </button>
-      //           </div>
-      //         ),
-      //       };
-      //     }
-      //   );
+            actions: (
+              <div className="flex space-x-3">
+                <button onClick={handleDisabled} data-id={id}>
+                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button>
+                <button onClick={handleCancel} data-tag={id}>
+                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button>
+              </div>
+            ),
+          };
+        }
+      );
       setRows(rows);
     } else {
       <p>No tiene vehículos registrados </p>;
