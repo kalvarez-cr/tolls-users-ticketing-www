@@ -10,7 +10,7 @@ export type SnackbarState = {
 
 const initialState: SnackbarState = {
   open: true,
-  text: '',
+  text: 'No hay mensaje',
   type: 'success',
 };
 
@@ -25,7 +25,9 @@ export const counterSlice = createSlice({
   reducers: {
     open: (state, action: PayloadAction<TSnackbarPayload>) => {
       state.open = true;
-      state.text = action.payload.text;
+      state.text = action.payload.text
+        ? action.payload.text
+        : initialState.text;
       state.type = action.payload.type;
     },
     close: (state) => {

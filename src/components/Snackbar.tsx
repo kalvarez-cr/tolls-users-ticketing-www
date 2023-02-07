@@ -21,7 +21,7 @@ const Snackbar = () => {
 
   return open ? (
     <div
-      className={`absolute right-6 top-16 flex h-16 w-96 items-center rounded-md p-2 ${
+      className={`absolute right-6 top-2 z-10 flex h-16 w-96 items-center rounded-md p-2 ${
         type == 'success' ? 'bg-emerald-300' : ''
       } ${type == 'error' ? 'bg-red-500' : ''}`}
     >
