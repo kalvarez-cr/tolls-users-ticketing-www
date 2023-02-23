@@ -6,9 +6,8 @@ module.exports = {
       {
         source: '/bdv-payment/:id',
         destination:
-          'https://biodemo.ex-cle.com:4443/ipg/Web/PaymentProcess/Token/:id',
+          'https://biopago.banvenez.com/IPG/PaymentProcess/Token/:id',
         permanent: false,
-        basePath: false,
       },
     ];
   },

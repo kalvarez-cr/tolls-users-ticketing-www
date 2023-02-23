@@ -159,7 +159,7 @@ const Recharges = () => {
       <div className="mt-24 w-full">
         <div className="mb-10 space-y-4">
           <div className="flex justify-between">
-            <h2 className="sub-header-text text-3xl">Recargas</h2>
+            <h2 className="sub-header-text text-3xl">Realiza tu recarga</h2>
             {/* <button
               onClick={handleRecharge}
               className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
@@ -177,7 +177,11 @@ const Recharges = () => {
 
             <Card
               title={'Saldo actual'}
-              data={currencyFormatter.format(data?.data?.data?.account_balance)}
+              data={
+                data?.data?.data?.account_balance
+                  ? currencyFormatter.format(data?.data?.data?.account_balance)
+                  : 'No hay data'
+              }
               isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
@@ -211,7 +215,13 @@ const Recharges = () => {
             />
             <Card
               title={'Última recarga'}
-              data={` Bs ${dataRecharge?.data?.data?.last_recharge?.amount} `}
+              data={
+                dataRecharge?.data?.data?.last_recharge?.amount
+                  ? currencyFormatter.format(
+                      dataRecharge?.data?.data?.last_recharge?.amount
+                    )
+                  : 'No hay data'
+              }
               isLoading={isLoadingRecharge}
               icon={
                 <div className="flex h-10 w-10 items-center">

@@ -139,7 +139,7 @@ const Index = () => {
                 <Button loading={isLoading} type="submit" text="Ingresar" />
               </div>
             </form>
-            {
+            {/* {
               <Link href="register">
                 <p className="mt-4 cursor-pointer text-center text-sm">
                   No tienes una cuenta?{' '}
@@ -148,7 +148,7 @@ const Index = () => {
                   </span>
                 </p>
               </Link>
-            }
+            } */}
           </div>
           <div className="footer"></div>
         </div>

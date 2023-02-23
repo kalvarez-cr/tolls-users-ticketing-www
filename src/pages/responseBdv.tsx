@@ -21,7 +21,7 @@ const ResponseBdv = () => {
       return requester({
         method: 'POST',
         data: formData,
-        url: 'recharge-module/payment_bdv_external/',
+        url: 'external-recharge/payment_bdv_external/',
       });
     },
     {

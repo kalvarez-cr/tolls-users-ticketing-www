@@ -211,7 +211,11 @@ const Vehicles = () => {
             />
             <Card
               title={'Último Canal'}
-              data={dataTotal?.data?.data?.last_transit?.lane}
+              data={
+                dataTotal?.data?.data?.last_transit?.lane
+                  ? dataTotal?.data?.data?.last_transit?.lane
+                  : 'No hay data'
+              }
               isLoading={isLoadingTotal}
               icon={
                 <div className="flex h-10 w-10 items-center">

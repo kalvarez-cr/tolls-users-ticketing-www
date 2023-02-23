@@ -80,7 +80,7 @@ const codes = [
   },
   {
     value: '0426',
-    label: '0416',
+    label: '0426',
   },
 ];
 
@@ -100,7 +100,7 @@ const MobilePay = () => {
       return requester({
         method: 'POST',
         data: formData,
-        url: 'recharge-module/payment_bdv_external/',
+        url: 'external-recharge/payment_bdv_external/',
       });
     },
     {
