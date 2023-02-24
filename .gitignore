@@ -4,6 +4,10 @@
 .next
 /out
 
+# Ignore .env files
+.env.development
+.env.production
+
 # Logs
 logs
 *.log
