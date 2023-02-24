@@ -220,7 +220,7 @@ const Home = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-wallet.png"
+                    src="/app/icon-wallet.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -235,7 +235,11 @@ const Home = () => {
               isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-car.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/app/icon-car.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={true}
@@ -247,7 +251,11 @@ const Home = () => {
               isLoading={isLoadingTransit}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-toll.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/app/icon-toll.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={true}

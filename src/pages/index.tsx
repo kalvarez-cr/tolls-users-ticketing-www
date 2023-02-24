@@ -96,11 +96,31 @@ const Index = () => {
     <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
       <div className="flex h-screen w-screen flex-col justify-between">
         <div className="login-background">
-          <img className="nube-1" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-2" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-3" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-4" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-5" src="/movil-diagrama-nubes.png" alt="nubes" />
+          <img
+            className="nube-1"
+            src="/app/movil-diagrama-nubes.png"
+            alt="nubes"
+          />
+          <img
+            className="nube-2"
+            src="/app/movil-diagrama-nubes.png"
+            alt="nubes"
+          />
+          <img
+            className="nube-3"
+            src="/app/movil-diagrama-nubes.png"
+            alt="nubes"
+          />
+          <img
+            className="nube-4"
+            src="/app/movil-diagrama-nubes.png"
+            alt="nubes"
+          />
+          <img
+            className="nube-5"
+            src="/app/movil-diagrama-nubes.png"
+            alt="nubes"
+          />
         </div>
         <div className="login-form mx-auto my-auto items-center justify-center">
           <div className="header"></div>
@@ -108,7 +128,7 @@ const Index = () => {
           <div className="right-column"></div>
           <div>
             <div className="">
-              <img src="/logo-login.png" alt="logo" className="logo" />
+              <img src="/app/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
@@ -157,15 +177,15 @@ const Index = () => {
       </div>
 
       <div className="login-right-panel hidden w-full lg:block">
-        <img src="/login-carro-peaje-2.svg" alt="peaje" />
+        <img src="/app/login-carro-peaje-2.svg" alt="peaje" />
       </div>
 
       <div className="login-right-panel-md lg:hidden">
-        <img src="/login-carro-peaje-3.svg" alt="peaje" />
+        <img src="/app/login-carro-peaje-3.svg" alt="peaje" />
       </div>
 
       <div className="login-logo-box-md lg:hidden">
-        <img src="/login-logo-box.svg" alt="logos" />
+        <img src="/app/login-logo-box.svg" alt="logos" />
       </div>
     </div>
   );
