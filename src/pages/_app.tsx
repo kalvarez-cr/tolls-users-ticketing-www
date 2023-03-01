@@ -32,12 +32,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <PersistGate loading={null} persistor={persistor}>
           {/* <ThemeProvider> */}
           <Head>
-            {/* <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon/favicon.ico"
-          /> */}
+            <title>Venvías Usuario</title>
+            <link
+              rel="icon"
+              type="image/svg"
+              sizes="32x32"
+              href="/favicon.svg"
+            />
           </Head>
           {getLayout(<Component {...pageProps} />)}
           <Snackbar />
