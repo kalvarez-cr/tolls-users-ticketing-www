@@ -3,10 +3,7 @@ import LogoDark from '@components/icons/LogoDark';
 import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
-import { UserCircleIcon } from '@heroicons/react/solid';
-import { loginUser, logout } from '@store/counter/loginReducer';
-import { open } from '@store/counter/modalReducer';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { useAppDispatch } from '@store/hooks';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,16 +20,10 @@ interface TLandingLayout {
 const LandingLayout = ({ children }: TLandingLayout) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { loggedIn } = useAppSelector(loginUser);
-  console.log(dispatch);
-
-  const [modal, setModal] = React.useState('');
-  console.log(setModal);
+  const [open, setOpen] = React.useState(false);
 
   const handleLogout = () => {
-    dispatch(logout());
-    router.push('/');
-    // setModal('logout');
+    setOpen(true);
   };
   const navigation = [
     { name: 'Inicio', href: '/home' },
@@ -45,7 +36,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
   return (
     <>
       <div className="min-h-screen bg-gray-200">
-        {modal === 'logout' ? <OutForm /> : null}
+        <OutForm open={open} setOpen={setOpen} />
         <Disclosure
           as="nav"
           className="fixed z-10 w-full bg-red-700 bg-gradient-to-l"
