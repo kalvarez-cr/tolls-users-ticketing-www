@@ -108,7 +108,14 @@ const MobilePay = () => {
       onSuccess: (response) => {
         const { data } = response;
         if (data) {
-          router.push(`/bdv-payment/${data.data.paymentId}`);
+          // router.push(`/bdv-payment/${data.data.paymentId}`);
+          window
+            .open(
+              `https://biopago.banvenez.com/IPG/PaymentProcess/Token/${data.data.paymentId}`,
+              'name',
+              'height=1000,width=1000'
+            )
+            .focus();
         }
       },
       onError: (error: AxiosError) => {

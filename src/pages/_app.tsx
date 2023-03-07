@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           {/* <ThemeProvider> */}
           {getLayout(<Component {...pageProps} />)}
           <Snackbar />
-          <OutForm />
+          {/* <OutForm /> */}
           <ReactQueryDevtools initialIsOpen={false} />
           {/* </ThemeProvider> */}
         </PersistGate>
