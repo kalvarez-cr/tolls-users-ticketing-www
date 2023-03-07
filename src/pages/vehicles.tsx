@@ -195,7 +195,11 @@ const Vehicles = () => {
             />
             <Card
               title={'Último tag usado'}
-              data={dataTotal?.data?.data?.last_transit?.tag_serial}
+              data={
+                dataTotal?.data?.data?.last_transit?.tag_serial
+                  ? dataTotal?.data?.data?.last_transit?.tag_serial
+                  : 'No hay data'
+              }
               isLoading={isLoadingTotal}
               icon={
                 <div className="flex h-10 w-10 items-center">
