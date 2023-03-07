@@ -34,6 +34,7 @@ module.exports = {
         greenLight: '#008a00',
         grey: '#cbd5e1',
         green20: '#059669',
+        blueVen: '#044ba7',
       },
     },
   },

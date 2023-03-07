@@ -158,15 +158,19 @@ const Transit = () => {
   }, [response]);
 
   return (
-    <div className="mt-24 w-full">
+    <div className="mx-6 mt-24 w-full">
       <div className="mb-10 space-y-8">
         <h2 className="sub-header-text text-3xl tracking-wide">
           Historial de Tránsitos
         </h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           <Card
             title={'Tránsitos'}
-            data={dataTransit?.data?.data?.transits}
+            data={
+              dataTransit?.data?.data?.transits
+                ? dataTransit?.data?.data?.transits
+                : 'No hay data'
+            }
             isLoading={isLoadingTransit}
             icon={
               <div className="flex h-10 w-10 items-center">
@@ -182,9 +186,11 @@ const Transit = () => {
           />
           <Card
             title={'Total consumido'}
-            data={currencyFormatter.format(
+            data={
               dataTotalConsumed?.data?.data?.total
-            )}
+                ? currencyFormatter.format(dataTotalConsumed?.data?.data?.total)
+                : 'No hay data'
+            }
             isLoading={isLoadingTotalConsumed}
             icon={
               <div className="flex h-10 w-10 items-center">
@@ -200,7 +206,11 @@ const Transit = () => {
           />
           <Card
             title={'Último peaje'}
-            data={dataTotalTransit?.data?.data?.last_transit?.toll_site}
+            data={
+              dataTotalTransit?.data?.data?.last_transit?.toll_site
+                ? dataTotalTransit?.data?.data?.last_transit?.toll_site
+                : 'No hay data'
+            }
             isLoading={isLoadingTotalTransit}
             icon={
               <div className="flex h-10 w-10 items-center">

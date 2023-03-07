@@ -173,13 +173,17 @@ const Vehicles = () => {
         <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
       ) : null}
 
-      <div className="mt-24  w-full ">
+      <div className="mx-6 mt-24  w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="sub-header-text text-3xl">Vehículos Asociados</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Vehículos'}
-              data={dataVehicle?.data?.data?.vehicles}
+              data={
+                dataVehicle?.data?.data?.vehicles
+                  ? dataVehicle?.data?.data?.vehicles
+                  : 'No hay data'
+              }
               isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">

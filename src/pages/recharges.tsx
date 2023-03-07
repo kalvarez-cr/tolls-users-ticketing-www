@@ -198,9 +198,13 @@ const Recharges = () => {
             />
             <Card
               title={'Última visita'}
-              data={new Date(
+              data={
                 dataLogin?.data?.data?.last_login
-              ).toLocaleDateString('es-VE')}
+                  ? new Date(
+                      dataLogin?.data?.data?.last_login
+                    ).toLocaleDateString('es-VE')
+                  : 'No hay data'
+              }
               isLoading={isLoadingLogin}
               icon={
                 <div className="flex h-10 w-10 items-center">
