@@ -134,7 +134,7 @@ const Index = () => {
             <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-16">
                 <InputV2
-                  label="Username o correo"
+                  label="Documento de identidad"
                   name="usernameOrEmail"
                   type="text"
                   errorMessage={errors.usernameOrEmail?.message}
