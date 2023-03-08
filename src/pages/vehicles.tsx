@@ -103,12 +103,12 @@ const Vehicles = () => {
       header: 'Tag asociado',
     },
     {
-      id: '6',
+      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
     {
-      id: '7',
+      id: '6',
       key: 'actions',
       header: 'Acciones',
     },
