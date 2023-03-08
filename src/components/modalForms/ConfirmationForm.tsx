@@ -41,9 +41,11 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
     {
       onSuccess: (response) => {
         const { data } = response;
-        if (data) {
+        if (data.return_code === '00') {
           setOpen(false);
           router.push('/recharges');
+        } else {
+          dispatch(open({ text: 'Error inesperado', type: 'error' }));
         }
       },
       onError: (error: AxiosError) => {
