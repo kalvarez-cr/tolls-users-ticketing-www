@@ -1,6 +1,18 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
+interface modalProps {
+  open: boolean;
+  setOpen: any;
+  title: string;
+  handleAccept: any;
+  acceptButtonText: string;
+  icon: any;
+  cancelButtonText: string;
+  loading?: boolean;
+  children?: any;
+}
+
 export default function Example({
   open,
   setOpen,
@@ -11,7 +23,7 @@ export default function Example({
   icon,
   cancelButtonText,
   loading,
-}) {
+}: modalProps) {
   const cancelButtonRef = useRef(null);
   const handleCancel = () => {
     setOpen(false);
