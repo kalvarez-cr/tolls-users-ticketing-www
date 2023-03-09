@@ -215,11 +215,7 @@ const Home = () => {
           <div className=" grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Saldo actual'}
-              data={
-                data?.data?.data?.account_balance
-                  ? currencyFormatter.format(data?.data?.data?.account_balance)
-                  : 'No hay data'
-              }
+              data={currencyFormatter.format(data?.data?.data?.account_balance)}
               isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
@@ -243,11 +239,7 @@ const Home = () => {
               isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img
-                    src="/icon-car.png"
-                    alt="saldo"
-                    className="card-icon"
-                  />
+                  <img src="/icon-car.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={true}
@@ -263,11 +255,7 @@ const Home = () => {
               isLoading={isLoadingTransit}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img
-                    src="/icon-toll.png"
-                    alt="saldo"
-                    className="card-icon"
-                  />
+                  <img src="/icon-toll.png" alt="saldo" className="card-icon" />
                 </div>
               }
               moreInfo={true}
