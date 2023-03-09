@@ -25,12 +25,12 @@ const ResponseBdv = () => {
       });
     },
     {
-      //   onSuccess: (response) => {
-      //     const { data } = response;
-      //     if (data) {
-      //       router.push(`/bdv-payment/${data.data.paymentId}`);
-      //     }
-      //   },
+      // onSuccess: (response) => {
+      //   const { data } = response;
+      //   if (data.return_code === '9700') {
+
+      //   }
+      // },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
@@ -48,10 +48,10 @@ const ResponseBdv = () => {
       ) : (
         <div className="mt-28 w-5/6 rounded-xl bg-gray-100 p-24 shadow-xl">
           {response?.data?.data?.responseDescription}
-          <br /> Bs {response?.data?.data?.amount} recargados
+
           {setTimeout(() => {
             router.push('/recharges');
-          }, 5000)}
+          }, 3000)}
         </div>
       )}
     </div>

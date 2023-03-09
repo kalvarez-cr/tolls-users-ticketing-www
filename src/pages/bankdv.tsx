@@ -96,7 +96,7 @@ const MobilePay = () => {
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
@@ -155,10 +155,6 @@ const MobilePay = () => {
         </h1>
       </div>
       <div className="mt-8 mb-10 flex flex-wrap md:px-16">
-        {/* <div className="mt-6 flex items-center">
-          <h3 className="mr-4 text-lg  font-bold">Correo:</h3>
-          <h3 className="mr-auto text-lg">{'muu'}</h3>
-        </div> */}
         <div className="flex w-full items-center md:w-1/2 md:pr-4">
           <div className="w-2/5 pr-4 md:w-1/3">
             <Select
@@ -208,15 +204,6 @@ const MobilePay = () => {
             register={register}
           />
         </div>
-
-        <>
-          {/* <h3 className="mr-4 text-lg font-bold">Teléfono:</h3>
-            <h3 className="mr-auto text-lg">{'muu'}</h3> */}
-        </>
-
-        {/* <button type="button" onClick={() => console.log('click')}>
-            <PencilAltIcon className="h-5 text-gray-600 hover:text-emerald-500" />
-          </button> */}
       </div>
       <div className="mt-4 flex items-center justify-between md:px-16">
         <div className="border-r-2">
@@ -227,10 +214,6 @@ const MobilePay = () => {
         </h1>
       </div>
       <div className=" mt-2 flex w-full md:px-16">
-        {/* <div className="mt-6 flex items-center">
-          <h3 className="mr-4 text-lg  font-bold">Correo:</h3>
-          <h3 className="mr-auto text-lg">{'muu'}</h3>
-        </div> */}
         <div className="flex w-full flex-wrap">
           <div className="mt-10 w-full md:w-1/2 md:pr-4">
             <InputV2
@@ -260,21 +243,18 @@ const MobilePay = () => {
             />
           </div>
         </div>
-        <>
-          {/* <h3 className="mr-4 text-lg font-bold">Teléfono:</h3>
-            <h3 className="mr-auto text-lg">{'muu'}</h3> */}
-        </>
-
-        {/* <button type="button" onClick={() => console.log('click')}>
-            <PencilAltIcon className="h-5 text-gray-600 hover:text-emerald-500" />
-          </button> */}
       </div>
       <div className="flex justify-between md:justify-end md:gap-10">
         <input
           type="button"
           value="Confirmar"
           onClick={handleSubmit(onSubmit)}
-          className="mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+          className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
+          ${
+            isLoading
+              ? 'animate-pulse bg-slate-400 '
+              : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
+          }`}
         />
         <input
           onClick={() => router.back()}

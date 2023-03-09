@@ -100,7 +100,7 @@ const Vehicles = () => {
     {
       id: '4',
       key: 'tag_serial',
-      header: 'Tag asociado',
+      header: 'Vin',
     },
     {
       id: '5',

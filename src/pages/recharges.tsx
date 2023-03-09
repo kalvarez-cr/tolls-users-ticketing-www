@@ -158,23 +158,6 @@ const Recharges = () => {
       ) : null}
       <div className="mx-6 mt-24 w-full">
         <div className="mb-10 space-y-4">
-          <div className="flex justify-between">
-            <h2 className="sub-header-text text-3xl">Realiza tu recarga</h2>
-            {/* <button
-              onClick={handleRecharge}
-              className="cursor-pointer rounded-lg bg-emerald-600/70 px-4 py-2 text-center font-medium text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
-            >
-              Recargar
-            </button> */}
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            <PaymentMethodCard
-              image={'/metodos-de-pago-01.svg'}
-              href="/bankdv"
-            />
-            <PaymentMethodCard image={'/puntoYa.svg'} href="/credicard" />
-            <PaymentMethodCard image={'/metodos-de-pagos-03.svg'} href="" />
-          </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Saldo actual'}
@@ -241,41 +224,19 @@ const Recharges = () => {
               link=""
             />
           </div>
-        </div>
-        {/* <div className="mb-10 space-y-8">
-          <div className="grid grid-cols-3 gap-4">
-            <Card
-              title={'Saldo actual'}
-              data={`Bs ${balance}`}
-              icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/30">
-                  <BanknotesIcon className="h-9 w-9 text-emerald-600" />
-                </div>
-              }
-              moreInfo={false}
-            />
-            <Card
-              title={'Última recarga'}
-              data={'10/07/2022'}
-              icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/30">
-                  <CalendarIcon className="h-9 w-9 text-amber-600" />
-                </div>
-              }
-              moreInfo={false}
-            />
-            <Card
-              title={'Monto de última recarga'}
-              data={'Bs 10'}
-              icon={
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/30">
-                  <TicketIcon className="h-9 w-9 rotate-90 text-indigo-600" />
-                </div>
-              }
-              moreInfo={false}
-            />
+          <div className="flex justify-between">
+            <h2 className="sub-header-text text-3xl">Realiza tu recarga</h2>
           </div>
-        </div> */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            <PaymentMethodCard
+              image={'/metodos-de-pago-01.svg'}
+              href="/bankdv"
+            />
+            <PaymentMethodCard image={'/puntoYa.svg'} href="/credicard" />
+            <PaymentMethodCard image={'/metodos-de-pagos-03.svg'} href="" />
+          </div>
+        </div>
+
         <Table
           headers={headers}
           data={rows}

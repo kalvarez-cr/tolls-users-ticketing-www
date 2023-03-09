@@ -10,6 +10,7 @@ export default function Example({
   children,
   icon,
   cancelButtonText,
+  loading,
 }) {
   const cancelButtonRef = useRef(null);
   const handleCancel = () => {
@@ -87,7 +88,13 @@ export default function Example({
                     )}
                     <button
                       type="button"
-                      className="inline-flex  w-full justify-center rounded-md border border-transparent bg-blueVen px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blueVen focus:outline-none focus:ring-2 focus:ring-blueVen focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      className={`inline-flex  w-full justify-center rounded-md border border-transparent bg-blueVen px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blueVen  sm:ml-3 sm:w-auto sm:text-sm  
+                        ${
+                          loading
+                            ? 'animate-pulse bg-slate-400 '
+                            : ' font-bold transition-all delay-100 duration-200 hover:bg-slate-400 hover:text-white  '
+                        }
+                      `}
                       onClick={handleAccept}
                     >
                       {acceptButtonText}

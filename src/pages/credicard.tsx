@@ -78,7 +78,7 @@ const credicard = () => {
     resolver: yupResolver(Schema),
   });
 
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
@@ -198,7 +198,14 @@ const credicard = () => {
             type="button"
             value="Confirmar"
             onClick={handleSubmit(onSubmit)}
-            className="mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+            className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 
+            ${
+              isLoading
+                ? 'animate-pulse bg-slate-400 '
+                : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
+            }
+            
+            `}
           />
           <input
             onClick={() => router.back()}

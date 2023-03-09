@@ -30,7 +30,7 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
   });
 
   const dispatch = useAppDispatch();
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (code: any) => {
       return requester({
         method: 'POST',
@@ -73,6 +73,7 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
         acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<ChatAltIcon />}
+        loading={isLoading}
       >
         <p className="">Introduzca el código de confirmación recibido</p>
         <form className="mt-12">
