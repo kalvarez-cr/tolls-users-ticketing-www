@@ -1,16 +1,16 @@
 import React from 'react';
 import Modal from '@components/Modal';
-import { CreditCardIcon } from '@heroicons/react/solid';
+
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { close, modal, open } from '@store/counter/modalReducer';
+import { useAppDispatch } from '@store/hooks';
+import { close } from '@store/counter/modalReducer';
 import { logout } from '@store/counter/loginReducer';
 import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';
+import { EmojiSadIcon } from '@heroicons/react/outline';
 
-const OutForm = () => {
+const OutForm = ({ open, setOpen }) => {
   const dispatch = useAppDispatch();
-  const modalState = useAppSelector(modal);
   const router = useRouter();
   const { requester } = useAxios();
   const { mutate } = useMutation(
@@ -35,17 +35,17 @@ const OutForm = () => {
 
   return (
     <>
-      {modalState.open ? (
+      {open ? (
         <Modal
-          open={modalState.open}
-          setOpen={modalState ? dispatch(close()) : dispatch(open())}
+          open={open}
+          setOpen={setOpen}
           handleAccept={() => handleAccept()}
-          title="Advertencia"
+          title="Cierre de sesión"
           acceptButtonText="Aceptar"
-          cancelButtonText={null}
-          icon={<CreditCardIcon />}
+          cancelButtonText="Cancelar"
+          icon={<EmojiSadIcon />}
         >
-          <p>Usted será redirigido al login</p>
+          <p>¿Usted desea cerrar sesión?</p>
         </Modal>
       ) : null}
     </>

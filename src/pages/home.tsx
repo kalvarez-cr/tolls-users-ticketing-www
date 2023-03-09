@@ -118,7 +118,7 @@ const Home = () => {
     {
       id: '4',
       key: 'tag_serial',
-      header: 'Tag asociado',
+      header: 'Vin',
     },
     {
       id: '5',
@@ -198,7 +198,7 @@ const Home = () => {
       {modal === 'block' ? (
         <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
       ) : null}
-      <div className="mt-24 w-full">
+      <div className="mx-6 mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="header-text text-4xl">
@@ -212,15 +212,19 @@ const Home = () => {
               Recargar
             </button> */}
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className=" grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Saldo actual'}
-              data={currencyFormatter.format(data?.data?.data?.account_balance)}
+              data={
+                data?.data?.data?.account_balance
+                  ? currencyFormatter.format(data?.data?.data?.account_balance)
+                  : 'No hay data'
+              }
               isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-wallet.png"
+                    src="/app/icon-wallet.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -231,11 +235,19 @@ const Home = () => {
             />
             <Card
               title={'Vehículos'}
-              data={dataVehicle?.data?.data?.vehicles}
+              data={
+                dataVehicle?.data?.data?.vehicles
+                  ? dataVehicle?.data?.data?.vehicles
+                  : 'No hay data'
+              }
               isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-car.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/app/icon-car.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={true}
@@ -243,11 +255,19 @@ const Home = () => {
             />
             <Card
               title={'Tránsitos'}
-              data={dataTransit?.data?.data?.transits}
+              data={
+                dataTransit?.data?.data?.transits
+                  ? dataTransit?.data?.data?.transits
+                  : 'No hay data'
+              }
               isLoading={isLoadingTransit}
               icon={
                 <div className="flex h-10 w-10 items-center">
-                  <img src="/icon-toll.png" alt="saldo" className="card-icon" />
+                  <img
+                    src="/app/icon-toll.png"
+                    alt="saldo"
+                    className="card-icon"
+                  />
                 </div>
               }
               moreInfo={true}

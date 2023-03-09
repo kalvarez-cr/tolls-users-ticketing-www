@@ -28,20 +28,21 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={client}>
+      <Head>
+        <link
+          rel="icon"
+          type="image/svg"
+          sizes="32x32"
+          href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Venezuela.svg/1920px-Flag_of_Venezuela.svg.png"
+        />
+        <title>VenVías</title>
+      </Head>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           {/* <ThemeProvider> */}
-          <Head>
-            {/* <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon/favicon.ico"
-          /> */}
-          </Head>
           {getLayout(<Component {...pageProps} />)}
           <Snackbar />
-          <OutForm />
+          {/* <OutForm /> */}
           <ReactQueryDevtools initialIsOpen={false} />
           {/* </ThemeProvider> */}
         </PersistGate>

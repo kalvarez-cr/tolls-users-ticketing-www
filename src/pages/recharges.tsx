@@ -156,7 +156,7 @@ const Recharges = () => {
           accountNumber={accountNumber}
         />
       ) : null}
-      <div className="mt-24 w-full">
+      <div className="mx-6 mt-24 w-full">
         <div className="mb-10 space-y-4">
           <div className="flex justify-between">
             <h2 className="sub-header-text text-3xl">Realiza tu recarga</h2>
@@ -167,14 +167,15 @@ const Recharges = () => {
               Recargar
             </button> */}
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <PaymentMethodCard
-              image={'/metodos-de-pago-01.svg'}
+              image={'/app/metodos-de-pago-01.svg'}
               href="/bankdv"
             />
-            <PaymentMethodCard image={'/metodos-de-pago-02.svg'} href="" />
-            <PaymentMethodCard image={'/metodos-de-pago-03.svg'} href="" />
-
+            <PaymentMethodCard image={'/app/puntoYa.svg'} href="/credicard" />
+            <PaymentMethodCard image={'/app/metodos-de-pagos-03.svg'} href="" />
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Saldo actual'}
               data={
@@ -186,7 +187,7 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-wallet.png"
+                    src="/app/icon-wallet.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -197,14 +198,18 @@ const Recharges = () => {
             />
             <Card
               title={'Última visita'}
-              data={new Date(
+              data={
                 dataLogin?.data?.data?.last_login
-              ).toLocaleDateString('es-VE')}
+                  ? new Date(
+                      dataLogin?.data?.data?.last_login
+                    ).toLocaleDateString('es-VE')
+                  : 'No hay data'
+              }
               isLoading={isLoadingLogin}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-car.png"
+                    src="/app/icon-cal-car.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -226,7 +231,7 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-recharge.png"
+                    src="/app/icon-cal-recharge.png"
                     alt="saldo"
                     className="card-icon"
                   />

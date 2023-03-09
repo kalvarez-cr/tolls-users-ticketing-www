@@ -3,10 +3,8 @@ import LogoDark from '@components/icons/LogoDark';
 import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
-import { UserCircleIcon } from '@heroicons/react/solid';
-import { loginUser, logout } from '@store/counter/loginReducer';
-import { open } from '@store/counter/modalReducer';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { useAppDispatch } from '@store/hooks';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -22,16 +20,10 @@ interface TLandingLayout {
 const LandingLayout = ({ children }: TLandingLayout) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { loggedIn } = useAppSelector(loginUser);
-  console.log(dispatch);
-
-  const [modal, setModal] = React.useState('');
-  console.log(setModal);
+  const [open, setOpen] = React.useState(false);
 
   const handleLogout = () => {
-    dispatch(logout());
-    router.push('/');
-    // setModal('logout');
+    setOpen(true);
   };
   const navigation = [
     { name: 'Inicio', href: '/home' },
@@ -44,12 +36,12 @@ const LandingLayout = ({ children }: TLandingLayout) => {
   return (
     <>
       <div className="min-h-screen bg-gray-200">
-        {modal === 'logout' ? <OutForm /> : null}
+        <OutForm open={open} setOpen={setOpen} />
         <Disclosure
           as="nav"
           className="fixed z-10 w-full bg-red-700 bg-gradient-to-l"
         >
-          {({ open }) => (
+          {({ open, close }) => (
             <>
               <div className="px-2 sm:px-20">
                 <div className="relative flex h-16 items-center justify-between">
@@ -111,24 +103,26 @@ const LandingLayout = ({ children }: TLandingLayout) => {
               </div>
 
               <Disclosure.Panel className="sm:hidden">
-                <div className="space-y-1 px-2 pt-2 pb-3">
+                <div
+                  className="flex flex-col space-y-1 px-2 pt-2 pb-3"
+                  onClick={() => close()}
+                >
                   {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        item.href === router.asPath
-                          ? 'pointer-events-none bg-red-400/40 text-white'
-                          : 'text-white hover:bg-red-400/40',
-                        'block rounded-md px-3 py-2 text-base font-medium'
-                      )}
-                      aria-current={
-                        item.href === router.asPath ? 'page' : undefined
-                      }
-                    >
-                      {item.name}
-                    </Disclosure.Button>
+                    <Link href={item.href} key={item.name}>
+                      <button
+                        className={classNames(
+                          item.href === router.asPath
+                            ? 'pointer-events-none bg-red-400/40'
+                            : 'hover:bg-red-500/40 hover:text-white hover:shadow-xl',
+                          ' p-5 font-bold uppercase tracking-wider text-white antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
+                        )}
+                        aria-current={
+                          item.href === router.asPath ? 'page' : undefined
+                        }
+                      >
+                        {item.name}
+                      </button>
+                    </Link>
                   ))}
                 </div>
               </Disclosure.Panel>

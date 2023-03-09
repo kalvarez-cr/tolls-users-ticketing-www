@@ -103,12 +103,12 @@ const Vehicles = () => {
       header: 'Tag asociado',
     },
     {
-      id: '6',
+      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
     {
-      id: '7',
+      id: '6',
       key: 'actions',
       header: 'Acciones',
     },
@@ -173,18 +173,22 @@ const Vehicles = () => {
         <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
       ) : null}
 
-      <div className="mt-24  w-full ">
+      <div className="mx-6 mt-24  w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="sub-header-text text-3xl">Vehículos Asociados</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Vehículos'}
-              data={dataVehicle?.data?.data?.vehicles}
+              data={
+                dataVehicle?.data?.data?.vehicles
+                  ? dataVehicle?.data?.data?.vehicles
+                  : 'No hay data'
+              }
               isLoading={isLoadingVehicle}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-car.png"
+                    src="/app/icon-car.png"
                     alt="Vehículos"
                     className="card-icon"
                   />
@@ -195,12 +199,16 @@ const Vehicles = () => {
             />
             <Card
               title={'Último tag usado'}
-              data={dataTotal?.data?.data?.last_transit?.tag_serial}
+              data={
+                dataTotal?.data?.data?.last_transit?.tag_serial
+                  ? dataTotal?.data?.data?.last_transit?.tag_serial
+                  : 'No hay data'
+              }
               isLoading={isLoadingTotal}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-tag.png"
+                    src="/app/icon-cal-tag.png"
                     alt="Último Tag"
                     className="card-icon"
                   />
@@ -220,7 +228,7 @@ const Vehicles = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-car.png"
+                    src="/app/icon-cal-car.png"
                     alt="Último Registro"
                     className="card-icon"
                   />
