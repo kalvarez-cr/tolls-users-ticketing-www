@@ -1,8 +1,6 @@
 import React from 'react';
 import Modal from '@components/Modal';
-import { CreditCardIcon } from '@heroicons/react/solid';
 import InputV2 from '@components/inputs/InputV2';
-import Select from '@components/inputs/Select';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
@@ -13,6 +11,7 @@ import * as yup from 'yup';
 
 interface Inputs {
   password: string;
+  old_password: string;
 }
 const Schema = yup.object().shape({
   password: yup
@@ -24,23 +23,25 @@ const Schema = yup.object().shape({
     .string()
     .required('Este campo es requerido')
     .oneOf([yup.ref('password'), 'Las contraseñas deben coincidir']),
+  old_password: yup.string().required('Este campo es requerido'),
 });
 
-const ResetPassword = ({ open, setOpen }) => {
+const ResetPassword = ({ open, setOpen, loading }) => {
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
         data: formData,
-        url: '/recharge-module/create/',
+        url: 'account-holder/update-password/',
       });
     },
     {
       onSuccess: (response) => {
         const { data } = response;
-        console.log(data);
-        setOpen(false);
+        if (data) {
+          setOpen(false);
+        }
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -51,16 +52,15 @@ const ResetPassword = ({ open, setOpen }) => {
   const {
     register,
     handleSubmit,
-    getValues,
-    watch,
+
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { password } = data;
-    mutate({ password });
+    const { password, old_password } = data;
+    mutate({ password, old_password });
   };
 
   return (
@@ -72,6 +72,7 @@ const ResetPassword = ({ open, setOpen }) => {
         title="Cambiar contraseña"
         acceptButtonText="Aceptar"
         cancelButtonText="Cancelar"
+        loading={loading}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,17 +91,28 @@ const ResetPassword = ({ open, setOpen }) => {
         }
       >
         <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col items-start">
-            <div className="flex gap-4 py-6">
+          <div className="mt-5 flex flex-col items-center">
+            <div className=" mt-5">
               <InputV2
-                label="Contraseña"
+                label="Antigua contraseña"
+                name="old_password"
+                type="text"
+                errorMessage={errors.password?.message}
+                register={register}
+              />
+            </div>
+            <div className="mt-5">
+              <InputV2
+                label="Nueva contraseña"
                 name="password"
                 type="text"
                 errorMessage={errors.password?.message}
                 register={register}
               />
+            </div>
+            <div className="mt-5">
               <InputV2
-                label="Confirmar Contraseña"
+                label="Confirmar contraseña"
                 name="confirm_password"
                 type="text"
                 errorMessage={

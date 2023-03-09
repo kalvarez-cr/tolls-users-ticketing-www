@@ -23,6 +23,7 @@ interface Inputs {
   phone?: string;
   email: string;
   cellphone: string;
+  channel?: string;
 }
 
 const Schema = yup.object().shape({
@@ -133,6 +134,7 @@ const MobilePay = () => {
       description,
       email,
       cellphone: `${code}${phone}`,
+      channel: 'web_site',
     });
   };
 

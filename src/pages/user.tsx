@@ -8,7 +8,6 @@ import { useMutation } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
 import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
-import { logout } from '@store/counter/loginReducer';
 import { UserCircleIcon, PencilIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 import { useGuard } from 'hooks/useGuard';
@@ -17,36 +16,30 @@ import ResetPassword from '@components/modalForms/ResetPasswordForm';
 import Button from '@components/Button';
 
 interface Inputs {
-  password: string;
-  phone_number: string;
+  phone_number?: string;
+  id: string;
+  data: any;
 }
 const Schema = yup.object().shape({
-  password: yup
+  phone_number: yup
     .string()
-    .min(8, 'Mínimo 8 caracteres')
-    .max(8, 'Máximo 8 caracteres')
+    .min(11, 'Mínimo 11 caracteres')
+    .max(11, 'Máximo 11 caracteres')
     .required('Este campo es requerido'),
-  confirm_password: yup
-    .string()
-    .required('Este campo es requerido')
-    .oneOf([yup.ref('password'), 'Las contraseñas deben coincidir']),
 });
 
 const User = () => {
   useGuard();
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState<boolean>(false);
   const [openResetPassword, setOpenResetPassword] = useState(false);
   const user_info = useSelector((state: any) => state.loginUser?.user_info);
-  const account_info = useSelector(
-    (state: any) => state.loginUser?.account_info
-  );
 
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
-        method: 'PUT',
+        method: 'POST',
         data: formData,
         url: 'account-holder/update/',
       });
@@ -54,10 +47,6 @@ const User = () => {
     {
       onSuccess: () => {
         dispatch(open({ text: 'Actualización exitosa', type: 'success' }));
-        setIsEditable(false);
-        setTimeout(() => {
-          dispatch(logout());
-        }, 2000);
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
@@ -73,9 +62,14 @@ const User = () => {
     resolver: yupResolver(Schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { phone_number, password } = data;
-    mutate({ phone_number, password });
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    const { phone_number } = data;
+    mutate({
+      id: user_info.id,
+      data: {
+        phone_number,
+      },
+    });
   };
 
   return (
@@ -99,7 +93,6 @@ const User = () => {
             errorMessage={errors.phone_number?.message}
             register={register}
             defaultValue={user_info?.phone_number}
-            disabled
           />
           <button
             type="button"
@@ -109,9 +102,22 @@ const User = () => {
           >
             <PencilIcon className="h-5 text-gray-600 hover:text-emerald-500" />
           </button>
+
+          {!isEditable ? (
+            <div className=" mx-9 w-1/3">
+              <Button
+                text="Cambiar Teléfono"
+                type="button"
+                loading={isLoading}
+                onClick={handleSubmit(onSubmit)}
+              />
+            </div>
+          ) : null}
+
           <ResetPassword
             open={openResetPassword}
             setOpen={setOpenResetPassword}
+            loading={isLoading}
           />
         </div>
         <Button

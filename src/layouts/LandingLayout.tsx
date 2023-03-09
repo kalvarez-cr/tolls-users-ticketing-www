@@ -2,7 +2,12 @@ import Logo from '@components/icons/Logo';
 import LogoDark from '@components/icons/LogoDark';
 import OutForm from '@components/modalForms/OutForm';
 import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline';
+import {
+  MenuIcon,
+  XIcon,
+  LogoutIcon,
+  UserCircleIcon,
+} from '@heroicons/react/outline';
 import { useAppDispatch } from '@store/hooks';
 
 import Link from 'next/link';
@@ -89,11 +94,11 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                     </div>
                   </div>
                   <div className="absolute inset-y-0 right-0 flex items-center space-x-4 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    {/* <Link href="/user">
+                    <Link href="/user">
                       <button>
                         <UserCircleIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
                       </button>
-                    </Link> */}
+                    </Link>
 
                     <button className="p-2" onClick={handleLogout}>
                       <LogoutIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
