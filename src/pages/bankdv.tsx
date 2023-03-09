@@ -108,10 +108,11 @@ const MobilePay = () => {
     {
       onSuccess: (response) => {
         const { data } = response;
+
         if (data) {
           // router.push(`/bdv-payment/${data.data.paymentId}`);
           location.assign(
-            `https://biopago.banvenez.com/IPG/PaymentProcess/Token/${data.data.paymentId}`
+            `https://biopago.banvenez.com/IPG/PaymentProcess/Token/${data.data.bdv_response.paymentId}`
           );
         }
       },
