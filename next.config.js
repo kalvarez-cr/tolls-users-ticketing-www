@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
-  basePath: '/app',
+  // basePath: '/app',
   async redirects() {
     return [
       {

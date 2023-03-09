@@ -130,7 +130,7 @@ const credicard = () => {
       <div className="m-10 mt-24 rounded-xl bg-gray-100 p-12 shadow-xl">
         <div className="mb-5 flex w-full items-center justify-center">
           <img
-            src="/app/puntoYa.svg"
+            src="/puntoYa.svg"
             alt="puntoYa-logo"
             className=" w-28 md:w-44"
           />

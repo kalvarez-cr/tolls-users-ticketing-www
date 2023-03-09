@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import InputV2 from '@components/inputs/InputV2';
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAxios } from 'hooks/useAxios';
 import Button from '@components/Button';
-import Link from 'next/link';
+// import Link from 'next/link';
 // import Captcha from 'demos-react-captcha';
 
 const IS_PROD = process.env.NODE_ENV == 'production';
@@ -98,27 +98,27 @@ const Index = () => {
         <div className="login-background">
           <img
             className="nube-1"
-            src="/app/movil-diagrama-nubes.png"
+            src="/movil-diagrama-nubes.png"
             alt="nubes"
           />
           <img
             className="nube-2"
-            src="/app/movil-diagrama-nubes.png"
+            src="/movil-diagrama-nubes.png"
             alt="nubes"
           />
           <img
             className="nube-3"
-            src="/app/movil-diagrama-nubes.png"
+            src="/movil-diagrama-nubes.png"
             alt="nubes"
           />
           <img
             className="nube-4"
-            src="/app/movil-diagrama-nubes.png"
+            src="/movil-diagrama-nubes.png"
             alt="nubes"
           />
           <img
             className="nube-5"
-            src="/app/movil-diagrama-nubes.png"
+            src="/movil-diagrama-nubes.png"
             alt="nubes"
           />
         </div>
@@ -128,7 +128,7 @@ const Index = () => {
           <div className="right-column"></div>
           <div>
             <div className="">
-              <img src="/app/logo-login.png" alt="logo" className="logo" />
+              <img src="/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
@@ -177,15 +177,15 @@ const Index = () => {
       </div>
 
       <div className="login-right-panel hidden w-full lg:block">
-        <img src="/app/login-carro-peaje-2.svg" alt="peaje" />
+        <img src="/login-carro-peaje-2.svg" alt="peaje" />
       </div>
 
       <div className="login-right-panel-md lg:hidden">
-        <img src="/app/login-carro-peaje-3.svg" alt="peaje" />
+        <img src="/login-carro-peaje-3.svg" alt="peaje" />
       </div>
 
       <div className="login-logo-box-md lg:hidden">
-        <img src="/app/login-logo-box.svg" alt="logos" />
+        <img src="/login-logo-box.svg" alt="logos" />
       </div>
     </div>
   );

@@ -175,7 +175,7 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/app/icon-toll.png"
+                  src="/icon-toll.png"
                   alt="Tránsitos"
                   className="card-icon"
                 />
@@ -195,7 +195,7 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/app/icon-receipt.png"
+                  src="/icon-receipt.png"
                   alt="Total consumido"
                   className="card-icon"
                 />
@@ -215,7 +215,7 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/app/icon-cal-toll.png"
+                  src="/icon-cal-toll.png"
                   alt="Último peaje"
                   className="card-icon"
                 />

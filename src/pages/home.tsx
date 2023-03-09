@@ -224,7 +224,7 @@ const Home = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-wallet.png"
+                    src="/icon-wallet.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -244,7 +244,7 @@ const Home = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-car.png"
+                    src="/icon-car.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -264,7 +264,7 @@ const Home = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-toll.png"
+                    src="/icon-toll.png"
                     alt="saldo"
                     className="card-icon"
                   />

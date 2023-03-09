@@ -169,11 +169,11 @@ const Recharges = () => {
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <PaymentMethodCard
-              image={'/app/metodos-de-pago-01.svg'}
+              image={'/metodos-de-pago-01.svg'}
               href="/bankdv"
             />
-            <PaymentMethodCard image={'/app/puntoYa.svg'} href="/credicard" />
-            <PaymentMethodCard image={'/app/metodos-de-pagos-03.svg'} href="" />
+            <PaymentMethodCard image={'/puntoYa.svg'} href="/credicard" />
+            <PaymentMethodCard image={'/metodos-de-pagos-03.svg'} href="" />
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
@@ -187,7 +187,7 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-wallet.png"
+                    src="/icon-wallet.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -209,7 +209,7 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-cal-car.png"
+                    src="/icon-cal-car.png"
                     alt="saldo"
                     className="card-icon"
                   />
@@ -231,7 +231,7 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-cal-recharge.png"
+                    src="/icon-cal-recharge.png"
                     alt="saldo"
                     className="card-icon"
                   />

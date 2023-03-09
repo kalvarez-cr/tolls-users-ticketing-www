@@ -6,9 +6,9 @@ const FooterLayout = ({ children }) => {
       {children}
       <div className="my-2 w-full p-2">
         <div className="my-4 flex justify-around">
-          <img src="/app/fontur.svg" alt="fontur" className="h-14" />
-          <img src="/app/fontur2.svg" alt="fontur2" className="h-14" />
-          <img src="/app/fontur3.svg" alt="fontur3" className="h-14" />
+          <img src="/fontur.svg" alt="fontur" className="h-14" />
+          <img src="/fontur2.svg" alt="fontur2" className="h-14" />
+          <img src="/fontur3.svg" alt="fontur3" className="h-14" />
         </div>
         <p className="my-2 text-center">Copyright © 2022 Fontur.</p>
       </div>

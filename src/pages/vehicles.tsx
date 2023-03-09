@@ -188,7 +188,7 @@ const Vehicles = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-car.png"
+                    src="/icon-car.png"
                     alt="Vehículos"
                     className="card-icon"
                   />
@@ -208,7 +208,7 @@ const Vehicles = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-cal-tag.png"
+                    src="/icon-cal-tag.png"
                     alt="Último Tag"
                     className="card-icon"
                   />
@@ -228,7 +228,7 @@ const Vehicles = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/app/icon-cal-car.png"
+                    src="/icon-cal-car.png"
                     alt="Último Registro"
                     className="card-icon"
                   />
