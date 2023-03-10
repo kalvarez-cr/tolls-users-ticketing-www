@@ -49,7 +49,7 @@ const User = () => {
         dispatch(open({ text: 'Actualización exitosa', type: 'success' }));
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -93,6 +93,7 @@ const User = () => {
             errorMessage={errors.phone_number?.message}
             register={register}
             defaultValue={user_info?.phone_number}
+            disabled={!isEditable}
           />
           <button
             type="button"
@@ -103,7 +104,7 @@ const User = () => {
             <PencilIcon className="h-5 text-gray-600 hover:text-emerald-500" />
           </button>
 
-          {!isEditable ? (
+          {isEditable ? (
             <div className=" mx-9 w-1/3">
               <Button
                 text="Cambiar Teléfono"

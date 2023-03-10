@@ -51,7 +51,9 @@ const InputV2 = ({
         {label}
       </label>
       <div className="absolute inset-y-0 right-0 flex items-center pl-3">
-        <button onClick={onClick}>{icon}</button>
+        <button type={'button'} onClick={onClick}>
+          {icon}
+        </button>
       </div>
       <label
         htmlFor={name}

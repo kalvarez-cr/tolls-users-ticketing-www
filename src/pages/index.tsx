@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAxios } from 'hooks/useAxios';
 import Button from '@components/Button';
+import { EyeIcon } from '@heroicons/react/outline';
 // import Link from 'next/link';
 // import Captcha from 'demos-react-captcha';
 
@@ -49,6 +50,10 @@ const Index = () => {
   const [items] = React.useState(initialValues);
   const { loggedIn } = useAppSelector(loginUser);
   // const [captcha, setCaptcha] = useState(false);
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
@@ -66,7 +71,7 @@ const Index = () => {
         router.push('/home').then();
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -96,31 +101,11 @@ const Index = () => {
     <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
       <div className="flex h-screen w-screen flex-col justify-between">
         <div className="login-background">
-          <img
-            className="nube-1"
-            src="/movil-diagrama-nubes.png"
-            alt="nubes"
-          />
-          <img
-            className="nube-2"
-            src="/movil-diagrama-nubes.png"
-            alt="nubes"
-          />
-          <img
-            className="nube-3"
-            src="/movil-diagrama-nubes.png"
-            alt="nubes"
-          />
-          <img
-            className="nube-4"
-            src="/movil-diagrama-nubes.png"
-            alt="nubes"
-          />
-          <img
-            className="nube-5"
-            src="/movil-diagrama-nubes.png"
-            alt="nubes"
-          />
+          <img className="nube-1" src="/movil-diagrama-nubes.png" alt="nubes" />
+          <img className="nube-2" src="/movil-diagrama-nubes.png" alt="nubes" />
+          <img className="nube-3" src="/movil-diagrama-nubes.png" alt="nubes" />
+          <img className="nube-4" src="/movil-diagrama-nubes.png" alt="nubes" />
+          <img className="nube-5" src="/movil-diagrama-nubes.png" alt="nubes" />
         </div>
         <div className="login-form mx-auto my-auto items-center justify-center">
           <div className="header"></div>
@@ -146,10 +131,16 @@ const Index = () => {
                 <InputV2
                   label="Contraseña"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   errorMessage={errors.password?.message}
                   register={register}
                   defaultValue={items.password}
+                  icon={
+                    <EyeIcon
+                      className="h-5 w-full"
+                      onClick={handleShowPassword}
+                    />
+                  }
                 />
               </div>
               {/* <div className="my-2 flex items-center justify-center">

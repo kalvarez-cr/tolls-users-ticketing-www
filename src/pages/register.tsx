@@ -48,7 +48,7 @@ const Register = () => {
         router.push('/');
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );

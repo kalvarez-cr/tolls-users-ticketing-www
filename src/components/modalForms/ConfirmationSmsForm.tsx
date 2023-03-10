@@ -10,16 +10,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ChatAltIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import Select from '@components/inputs/Select';
+import { open } from '@store/counter/snackbarReducer';
 
 interface Inputs {
-  sms_code: string;
+  smsCode: string;
+  paymentMethod: string;
 }
 
 const Schema = yup.object().shape({
-  sms_code: yup.string().required('Este campo es requerido'),
+  smsCode: yup.string().required('Este campo es requerido'),
 });
 
-const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
+const ConfirmationSmsForm = ({
+  openModal,
+  setOpenModal,
+  token,
+  paymentMethod,
+}) => {
   const router = useRouter();
   const {
     register,
@@ -35,39 +43,48 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
       return requester({
         method: 'POST',
         data: code,
-        url: 'punto-ya/confirm-code/',
+        url: 'external-recharge/confirm_bdv_sms/',
       });
     },
     {
       onSuccess: (response) => {
         const { data } = response;
-        if (data.return_code === '00') {
-          setOpen(false);
+
+        if (data.data?.bdv_response?.success === 1) {
+          setOpenModal(false);
+          dispatch(
+            open({ text: data.data?.bdv_response?.message, type: 'success' })
+          );
           router.push('/recharges');
         } else {
-          dispatch(open({ text: 'Error inesperado', type: 'error' }));
+          setOpenModal(false);
+          dispatch(
+            open({ text: data.data?.bdv_response?.message, type: 'error' })
+          );
         }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Error inesperado', type: 'error' }));
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
     }
   );
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { sms_code } = data;
+    const { smsCode, paymentMethod } = data;
     mutate({
-      transaction_id: transaction,
-      identification: `${type}${ci}`,
-      sms_code,
+      token,
+      smsCode,
+      channel: 'web_site',
+      bank: '1',
+      paymentMethod,
     });
   };
 
   return (
     <>
       <Modal
-        open={open}
-        setOpen={setOpen}
+        open={openModal}
+        setOpen={setOpenModal}
         handleAccept={handleSubmit(onSubmit)}
         title="Código de confirmación"
         acceptButtonText="Proceder"
@@ -77,12 +94,12 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
       >
         <p className="">Introduzca el código de confirmación recibido</p>
         <form className="mt-12">
-          <div className="mt-12">
+          <div className="w-full">
             <InputV2
-              label=""
-              name="sms_code"
+              label="Código"
+              name="smsCode"
               type="text"
-              errorMessage={errors.sms_code?.message}
+              errorMessage={errors.smsCode?.message}
               register={register}
             />
           </div>
@@ -92,4 +109,4 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
   );
 };
 
-export default ConfirmationForm;
+export default ConfirmationSmsForm;

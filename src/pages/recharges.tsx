@@ -75,7 +75,7 @@ const Recharges = () => {
     },
     {
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -110,7 +110,7 @@ const Recharges = () => {
   ];
   React.useEffect(() => {
     mutate({ page: pageParam, per_page: 10 });
-  }, [mutate]);
+  }, [mutate, pageParam]);
 
   React.useEffect(() => {
     if (response) {

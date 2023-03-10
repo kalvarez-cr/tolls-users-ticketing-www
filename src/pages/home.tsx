@@ -75,7 +75,7 @@ const Home = () => {
     },
     {
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -158,16 +158,16 @@ const Home = () => {
                 </div>
               ),
 
-            actions: (
-              <div className="flex space-x-3">
-                <button onClick={handleDisabled} data-id={id}>
-                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button>
-                <button onClick={handleCancel} data-tag={id}>
-                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button>
-              </div>
-            ),
+            // actions: (
+            //   <div className="flex space-x-3">
+            //     <button onClick={handleDisabled} data-id={id}>
+            //       <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+            //     </button>
+            //     <button onClick={handleCancel} data-tag={id}>
+            //       <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+            //     </button>
+            //   </div>
+            // ),
           };
         }
       );

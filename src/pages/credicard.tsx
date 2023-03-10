@@ -97,7 +97,7 @@ const credicard = () => {
         }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -173,7 +173,7 @@ const credicard = () => {
                 register={register}
               />
             </div>
-            <div className="mt-10 w-full md:w-1/3 md:pl-4">
+            <div className="mt-10 w-full md:w-1/3 ">
               <Select
                 label="Banco"
                 name="bank_code"
@@ -182,7 +182,7 @@ const credicard = () => {
                 register={register}
               />
             </div>
-            <div className="mt-14 w-full md:w-1/2 md:pl-9">
+            <div className="mt-14 w-full md:w-1/2 md:pl-8">
               <InputV2
                 label="Monto"
                 name="charge_amount"
