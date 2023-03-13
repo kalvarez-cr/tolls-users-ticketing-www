@@ -46,157 +46,158 @@ const Table = ({
   };
 
   return (
-    <div className=" w-full">
-      <div className="hidden md:block">
-        <div className="text-md table w-full rounded-t-lg bg-white shadow-md">
-          <div className="table-header-group font-medium uppercase text-gray-800 antialiased">
-            <div className="table-row">
-              {headers.map((header) => {
-                return header.id === '1' ? (
-                  <div
-                    className="table-cell rounded-tl-lg bg-red-400 py-4 pl-10 font-bold text-white"
-                    key={header.id}
-                  >
-                    {header.header}
-                  </div>
-                ) : header.id == headers.length ? (
-                  <div
-                    className="table-cell rounded-tr-lg bg-red-400 px-10 py-4 font-bold text-white"
-                    key={header.id}
-                  >
-                    {header.header}
-                  </div>
-                ) : (
-                  <div
-                    className="table-cell bg-red-400 py-4 pl-10 font-bold text-white"
-                    key={header.id}
-                  >
-                    {header.header}
-                  </div>
-                );
-              })}
+    <>
+      <div className=" w-full">
+        <div className="hidden md:block">
+          <div className="text-md table w-full rounded-t-lg bg-white shadow-md">
+            <div className="table-header-group font-medium uppercase text-gray-800 antialiased">
+              <div className="table-row">
+                {headers.map((header) => {
+                  return header.id === '1' ? (
+                    <div
+                      className="table-cell rounded-tl-lg bg-red-400 py-4 pl-10 font-bold text-white"
+                      key={header.id}
+                    >
+                      {header.header}
+                    </div>
+                  ) : header.id == headers.length ? (
+                    <div
+                      className="table-cell rounded-tr-lg bg-red-400 px-10 py-4 font-bold text-white"
+                      key={header.id}
+                    >
+                      {header.header}
+                    </div>
+                  ) : (
+                    <div
+                      className="table-cell bg-red-400 py-4 pl-10 font-bold text-white"
+                      key={header.id}
+                    >
+                      {header.header}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          <div className="table-row-group text-black antialiased">
-            {isLoading ? (
-              <>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="table-row">
-                  {headerKeys.map((headerKey) => {
-                    return (
-                      <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
-                        key={headerKey}
-                      >
-                        <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              data.map((row) => {
-                return (
-                  <div className="table-row" key={row.id}>
+            <div className="table-row-group text-black antialiased">
+              {isLoading ? (
+                <>
+                  <div className="table-row">
                     {headerKeys.map((headerKey) => {
-                      const value = row[headerKey];
                       return (
                         <div
                           className="table-cell border-t py-4 pl-10 align-middle"
                           key={headerKey}
                         >
-                          {value}
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
                         </div>
                       );
                     })}
                   </div>
-                );
-              })
-            )}
-            {/* {data.map((row) => {
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="table-row">
+                    {headerKeys.map((headerKey) => {
+                      return (
+                        <div
+                          className="table-cell border-t py-4 pl-10 align-middle"
+                          key={headerKey}
+                        >
+                          <div className="h-6 w-5/6 animate-pulse rounded-md bg-gray-200" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                data.map((row) => {
+                  return (
+                    <div className="table-row" key={row.id}>
+                      {headerKeys.map((headerKey) => {
+                        const value = row[headerKey];
+                        return (
+                          <div
+                            className="table-cell border-t py-4 pl-10 align-middle"
+                            key={headerKey}
+                          >
+                            {value}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })
+              )}
+              {/* {data.map((row) => {
               return (
                 <div className="table-row" key={row.id}>
                   {headerKeys.map((headerKey) => {
@@ -213,59 +214,69 @@ const Table = ({
                 </div>
               );
             })} */}
+            </div>
           </div>
+          {data.length == 0 && !isLoading ? (
+            <div className="flex items-center justify-center border-t bg-white py-6 font-medium text-gray-500/70">
+              {errorMessage}
+            </div>
+          ) : (
+            <></>
+          )}
+          <nav
+            className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
+            aria-label="Pagination"
+          >
+            <div className="ml-3 hidden sm:block">
+              <p className="text-sm text-gray-700">
+                Página <span className="font-medium">{pageParam}</span> de{' '}
+                <span className="font-medium">
+                  {countPage == 0 ? 1 : countPage}
+                </span>
+              </p>
+            </div>
+            <div className="mr-3 flex flex-1 justify-between sm:justify-end">
+              <button
+                onClick={handlePreviousPage}
+                disabled={pageParam === 1}
+                className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              >
+                <ArrowNarrowLeftIcon className="h-5 w-5" />
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={pageParam === countPage}
+                className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              >
+                <ArrowNarrowRightIcon className="h-5 w-5" />
+              </button>
+            </div>
+          </nav>
         </div>
-        {data.length == 0 && !isLoading ? (
-          <div className="flex items-center justify-center border-t bg-white py-6 font-medium text-gray-500/70">
-            {errorMessage}
-          </div>
-        ) : (
-          <></>
-        )}
-        <nav
-          className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
-          aria-label="Pagination"
-        >
-          <div className="ml-3 hidden sm:block">
-            <p className="text-sm text-gray-700">
-              Página <span className="font-medium">{pageParam}</span> de{' '}
-              <span className="font-medium">
-                {countPage == 0 ? 1 : countPage}
-              </span>
-            </p>
-          </div>
-          <div className="mr-3 flex flex-1 justify-between sm:justify-end">
-            <button
-              onClick={handlePreviousPage}
-              disabled={pageParam === 1}
-              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
-            >
-              <ArrowNarrowLeftIcon className="h-5 w-5" />
-            </button>
-            <button
-              onClick={handleNextPage}
-              disabled={pageParam === countPage}
-              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50"
-            >
-              <ArrowNarrowRightIcon className="h-5 w-5" />
-            </button>
-          </div>
-        </nav>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:hidden">
-        <div className="space-y-3 rounded-lg bg-gray-100 p-4 shadow">
-          <div className="flex items-center justify-between space-x-2">
-            {data.map((row) => {
+
+      <div className="grid grid-cols-1 md:hidden">
+        <div className="rounded-lg">
+          <div className="flex flex-col justify-between">
+            {data.map((row, index) => {
               return (
-                <div className="table-row" key={row.id}>
+                <div
+                  className={`my-2 flex flex-col rounded-lg bg-white p-4  `}
+                  key={row.id}
+                >
                   {headerKeys.map((headerKey) => {
+                    const headerValue = headers.find(
+                      (header) => header.key === headerKey
+                    ).header;
+
                     const value = row[headerKey];
                     return (
                       <div
-                        className="table-cell border-t py-4 pl-10 align-middle"
+                        className="flex justify-around border-t py-4"
                         key={headerKey}
                       >
-                        {value}
+                        <div className="w-1/3">{headerValue}</div>
+                        <div className="w-2/3 ">{value}</div>
                       </div>
                     );
                   })}
@@ -275,7 +286,28 @@ const Table = ({
           </div>
         </div>
       </div>
-    </div>
+
+      <div className="flex justify-between bg-white px-4 py-8  md:hidden">
+        <button
+          onClick={handlePreviousPage}
+          disabled={pageParam === 1}
+          className=""
+        >
+          <ArrowNarrowLeftIcon className="h-5 w-5" />
+        </button>
+        <p className="text-sm text-gray-700">
+          Página <span className="font-medium">{pageParam}</span> de{' '}
+          <span className="font-medium">{countPage == 0 ? 1 : countPage}</span>
+        </p>
+        <button
+          onClick={handleNextPage}
+          disabled={pageParam === countPage}
+          className=" "
+        >
+          <ArrowNarrowRightIcon className="h-5 w-5" />
+        </button>
+      </div>
+    </>
   );
 };
 

@@ -2,20 +2,16 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useSelector } from 'react-redux';
-import { useMutation, useQuery } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
-import { AxiosError } from 'axios';
-import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
-import { MinusCircleIcon } from '@heroicons/react/solid';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
-import { XCircleIcon } from '@heroicons/react/outline';
 import { GreetingByTime } from '../utils/requester';
 import { currencyFormatter } from 'utils/utils';
+import { UseApiCall } from 'hooks/useApiCall';
 
 const Home = () => {
   useGuard();
@@ -31,54 +27,28 @@ const Home = () => {
   const userInfo = useSelector((state: any) => state.loginUser?.user_info);
   const transits = useSelector((state: any) => state.loginUser?.transits);
 
-  const { data, isLoading: isLoadingBalance } = useQuery({
-    queryKey: ['getBalance'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/account_balance/',
-      });
-    },
+  const { useGet, usePost } = UseApiCall();
+
+  const { data, isLoading: isLoadingBalance } = useGet({
+    queryKey: 'getBalance',
+    url: '/dashboard/account_balance/',
   });
 
-  const { data: dataVehicle, isLoading: isLoadingVehicle } = useQuery({
-    queryKey: ['getVehicle'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/count_vehicle/',
-      });
-    },
+  const { data: dataVehicle, isLoading: isLoadingVehicle } = useGet({
+    queryKey: 'getVehicle',
+    url: '/dashboard/count_vehicle/',
   });
 
-  const { data: dataTransit, isLoading: isLoadingTransit } = useQuery({
-    queryKey: ['getTransit'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/count_transits/',
-      });
-    },
+  const { data: dataTransit, isLoading: isLoadingTransit } = useGet({
+    queryKey: 'getTransit',
+    url: '/dashboard/count_transits/',
   });
 
   const {
     mutate,
     data: response,
     isLoading,
-  } = useMutation(
-    (account: any) => {
-      return requester({
-        method: 'POST',
-        data: account,
-        url: '/vehicle-account/list/',
-      });
-    },
-    {
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
-      },
-    }
-  );
+  } = usePost({ url: '/vehicle-account/list/' });
 
   const handleCancel = (e) => {
     setOpenModal(true);
@@ -95,11 +65,6 @@ const Home = () => {
   };
 
   const headers = [
-    // {
-    //   id: '1',
-    //   key: 'make',
-    //   header: 'Marca',
-    // },
     {
       id: '1',
       key: 'model',
@@ -138,8 +103,8 @@ const Home = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.pagination.count);
-      const rows = response?.data?.data?.map(
+      setCountPage(response?.pagination?.count);
+      const rows = response?.data?.map(
         ({ id, model, plate, vehicle_category, vin, status }) => {
           return {
             model,

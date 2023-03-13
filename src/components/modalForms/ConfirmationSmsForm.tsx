@@ -70,7 +70,7 @@ const ConfirmationSmsForm = ({
   );
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { smsCode, paymentMethod } = data;
+    const { smsCode } = data;
     mutate({
       token,
       smsCode,

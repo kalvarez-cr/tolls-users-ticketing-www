@@ -13,6 +13,7 @@ import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
 import { currencyFormatter } from 'utils/utils';
+import { UseApiCall } from 'hooks/useApiCall';
 
 const Recharges = () => {
   useGuard();
@@ -31,54 +32,27 @@ const Recharges = () => {
   );
 
   const transits = useSelector((state: any) => state.loginUser);
+  const { useGet, usePost } = UseApiCall();
 
-  const { data, isLoading: isLoadingBalance } = useQuery({
-    queryKey: ['getBalance'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/account_balance/',
-      });
-    },
+  const { data, isLoading: isLoadingBalance } = useGet({
+    queryKey: 'getBalance',
+    url: '/dashboard/account_balance/',
   });
 
-  const { data: dataLogin, isLoading: isLoadingLogin } = useQuery({
-    queryKey: ['getLastLogin'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/last_login/',
-      });
-    },
+  const { data: dataLogin, isLoading: isLoadingLogin } = useGet({
+    queryKey: 'getLastLogin',
+    url: '/dashboard/last_login/',
   });
-  const { data: dataRecharge, isLoading: isLoadingRecharge } = useQuery({
-    queryKey: ['getRecharge'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/last_recharge/',
-      });
-    },
+  const { data: dataRecharge, isLoading: isLoadingRecharge } = useGet({
+    queryKey: 'getRecharge',
+    url: '/dashboard/last_recharge/',
   });
 
   const {
     mutate,
     data: response,
     isLoading,
-  } = useMutation(
-    (account: any) => {
-      return requester({
-        method: 'POST',
-        data: account,
-        url: 'external-recharge/list/',
-      });
-    },
-    {
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
-      },
-    }
-  );
+  } = usePost({ url: 'external-recharge/list/' });
 
   const headers = [
     {
@@ -114,8 +88,9 @@ const Recharges = () => {
 
   React.useEffect(() => {
     if (response) {
-      setCountPage(response.data.pagination.count);
-      const table = response?.data?.data?.map(
+      setCountPage(response?.pagination?.count);
+
+      const table = response?.data?.map(
         ({
           external_reference_id,
           amount,

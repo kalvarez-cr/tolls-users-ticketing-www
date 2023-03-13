@@ -10,6 +10,7 @@ import { open } from '@store/counter/snackbarReducer';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
+import { UseApiCall } from 'hooks/useApiCall';
 
 const Vehicles = () => {
   useGuard();
@@ -23,44 +24,25 @@ const Vehicles = () => {
   const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
 
-  const { data: dataVehicle, isLoading: isLoadingVehicle } = useQuery({
-    queryKey: ['getVehicle'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/count_vehicle/',
-      });
-    },
+  const { useGet, usePost } = UseApiCall();
+
+  const { data: dataVehicle, isLoading: isLoadingVehicle } = useGet({
+    queryKey: 'getVehicle',
+    url: '/dashboard/count_vehicle/',
   });
 
-  const { data: dataTotal, isLoading: isLoadingTotal } = useQuery({
-    queryKey: ['getTotals'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/last_transit/',
-      });
-    },
+  const { data: dataTotal, isLoading: isLoadingTotal } = useGet({
+    queryKey: 'getTotals',
+    url: '/dashboard/last_transit/',
   });
 
   const {
     mutate,
     data: response,
     isLoading,
-  } = useMutation(
-    (account: any) => {
-      return requester({
-        method: 'POST',
-        data: account,
-        url: '/vehicle-account/list/',
-      });
-    },
-    {
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
-      },
-    }
-  );
+  } = usePost({
+    url: '/vehicle-account/list/',
+  });
 
   const handleCancel = (e) => {
     setOpenModal(true);
@@ -77,11 +59,6 @@ const Vehicles = () => {
   };
 
   const headers = [
-    // {
-    //   id: '1',
-    //   key: 'make',
-    //   header: 'Marca',
-    // },
     {
       id: '1',
       key: 'model',
@@ -120,8 +97,8 @@ const Vehicles = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.pagination.count);
-      const rows = response?.data?.data?.map(
+      setCountPage(response?.pagination?.count);
+      const rows = response?.data?.map(
         ({ id, make, model, plate, vehicle_category, vin, active }) => {
           return {
             make,
@@ -156,8 +133,6 @@ const Vehicles = () => {
       setRows(rows);
     }
   }, [response]);
-
-  // let lastTags = account?.last_use_tag?.tag_serial || '-';
 
   return (
     <>
