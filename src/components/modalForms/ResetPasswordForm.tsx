@@ -16,8 +16,8 @@ interface Inputs {
 const Schema = yup.object().shape({
   password: yup
     .string()
-    .min(8, 'Mínimo 8 caracteres')
-    .max(8, 'Máximo 8 caracteres')
+    .min(6, 'Mínimo 6 caracteres')
+    .max(12, 'Máximo 12 caracteres')
     .required('Este campo es requerido'),
   confirm_password: yup
     .string()

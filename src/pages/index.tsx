@@ -37,7 +37,7 @@ const Schema = yup.object().shape({
   usernameOrEmail: yup.string().required('Este campo es requerido'),
   password: yup
     .string()
-    .min(8, 'Mínimo 8 caracteres')
+    .min(6, 'Mínimo 6 caracteres')
     .max(12, 'Máximo 12 caracteres')
     .required('Este campo es requerido'),
   // captcha: yup.boolean().required('Este c'),
