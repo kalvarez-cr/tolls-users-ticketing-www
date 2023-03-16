@@ -6,8 +6,49 @@ import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
 import { UseApiCall } from 'hooks/useApiCall';
-import { EyeIcon } from '@heroicons/react/outline';
+import { EyeIcon, FilterIcon, MinusCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import SimpleContainer from '@components/SimpleContainer';
+import Modal from '@components/Modal';
+import FilterForm, {
+  FilterVehiclesFormSchema,
+  TFilterVehiclesFormInputs,
+} from '@components/vehicles/filterForm';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const headers = [
+  {
+    id: '1',
+    key: 'model',
+    header: 'Modelo',
+  },
+  {
+    id: '2',
+    key: 'license_plate',
+    header: 'Placa',
+  },
+  {
+    id: '3',
+    key: 'category_title',
+    header: 'Categoría',
+  },
+  {
+    id: '4',
+    key: 'tag_serial',
+    header: 'Vin',
+  },
+  {
+    id: '5',
+    key: 'active',
+    header: 'Habilitado',
+  },
+  {
+    id: '6',
+    key: 'actions',
+    header: 'Acciones',
+  },
+];
 
 const Vehicles = () => {
   useGuard();
@@ -19,6 +60,8 @@ const Vehicles = () => {
   const [modal, setModal] = React.useState('');
   const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
+  const [openFilter, setOpenFilter] = React.useState<boolean>(false);
+  const [responseData, setResponseData] = React.useState<any>(null);
 
   const { useGet, usePost } = UseApiCall();
 
@@ -32,12 +75,18 @@ const Vehicles = () => {
     url: '/dashboard/last_transit/',
   });
 
-  const {
-    mutate,
-    data: response,
-    isLoading,
-  } = usePost({
+  const { mutate, isLoading } = usePost({
     url: '/vehicle-account/list/',
+    options: {
+      onSuccess: (data) => {
+        console.log('data', data);
+        setResponseData(data);
+      },
+    },
+  });
+
+  const filterHookForm = useForm<TFilterVehiclesFormInputs>({
+    resolver: yupResolver(FilterVehiclesFormSchema),
   });
 
   const handleCancel = (e) => {
@@ -59,47 +108,31 @@ const Vehicles = () => {
     router.push(`/vehicle/${id}`);
   };
 
-  const headers = [
-    {
-      id: '1',
-      key: 'model',
-      header: 'Modelo',
-    },
-    {
-      id: '2',
-      key: 'license_plate',
-      header: 'Placa',
-    },
-    {
-      id: '3',
-      key: 'category_title',
-      header: 'Categoría',
-    },
-    {
-      id: '4',
-      key: 'tag_serial',
-      header: 'Vin',
-    },
-    {
-      id: '5',
-      key: 'active',
-      header: 'Habilitado',
-    },
-    {
-      id: '6',
-      key: 'actions',
-      header: 'Acciones',
-    },
-  ];
+  const handleOpenFilter = (e) => {
+    e.preventDefault();
+    setOpenFilter(true);
+  };
+
+  const onSubmit: SubmitHandler<TFilterVehiclesFormInputs> = async (
+    inputsData: TFilterVehiclesFormInputs
+  ) => {
+    const { nickname } = inputsData;
+    console.log(inputsData);
+    // mutate({
+    //   label: name,
+    //   status: StatusEnum.created,
+    // });
+  };
 
   React.useEffect(() => {
     mutate({ page: pageParam, per_page: 10 });
   }, [pageParam, mutate]);
 
   useEffect(() => {
-    if (response) {
-      setCountPage(response?.pagination?.count);
-      const rows = response?.data?.map(
+    if (responseData) {
+      setCountPage(responseData?.pagination?.count);
+      console.log();
+      const rows = responseData?.data?.map(
         ({ id, make, model, plate, vehicle_category, vin, active }) => {
           return {
             make,
@@ -136,7 +169,7 @@ const Vehicles = () => {
       );
       setRows(rows);
     }
-  }, [response]);
+  }, [responseData]);
 
   return (
     <>
@@ -151,8 +184,17 @@ const Vehicles = () => {
       {modal === 'block' ? (
         <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
       ) : null}
-
-      <div className="mx-6 mt-24  w-full ">
+      <Modal
+        open={openFilter}
+        setOpen={setOpenFilter}
+        handleAccept={filterHookForm.handleSubmit(onSubmit)}
+        title="Filtro avanzado"
+        acceptButtonText="Buscar"
+        cancelButtonText="Cancelar"
+      >
+        <FilterForm useForm={filterHookForm} />
+      </Modal>
+      <div className="mx-6 mt-24 w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="sub-header-text text-3xl">Vehículos Asociados</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -218,17 +260,26 @@ const Vehicles = () => {
             />
           </div>
         </div>
-        <Table
-          headers={headers}
-          data={rows}
-          isLoading={isLoading}
-          errorMessage={
-            'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+        <SimpleContainer
+          title={'Vehículos Asociados'}
+          rightComponent={
+            <button onClick={handleOpenFilter}>
+              <FilterIcon className="w-4" />
+            </button>
           }
-          countPage={countPage}
-          pageParam={pageParam}
-          setPageParam={setPageParam}
-        />
+        >
+          <Table
+            headers={headers}
+            data={rows}
+            isLoading={isLoading}
+            errorMessage={
+              'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+            }
+            countPage={countPage}
+            pageParam={pageParam}
+            setPageParam={setPageParam}
+          />
+        </SimpleContainer>
       </div>
     </>
   );
