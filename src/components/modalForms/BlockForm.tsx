@@ -6,7 +6,7 @@ import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
 import { MinusCircleIcon } from '@heroicons/react/outline';
 
-const CancelForm = ({ open, setOpen, idTag }) => {
+const CancelForm = ({ open, setOpen, idTag, status }) => {
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(
     (id: any) => {
@@ -24,7 +24,12 @@ const CancelForm = ({ open, setOpen, idTag }) => {
   );
 
   const handleAccept = () => {
-    mutate({ id: idTag });
+    mutate({
+      id: idTag,
+      data: {
+        status,
+      },
+    });
     setOpen(false);
   };
 

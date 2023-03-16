@@ -1,14 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
-import { CashIcon, CalendarIcon, TicketIcon } from '@heroicons/react/outline';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
 import { useAxios } from 'hooks/useAxios';
-import { useMutation, useQuery } from 'react-query';
 import { useAppDispatch } from '@store/hooks';
-import { AxiosError } from 'axios';
-import { open } from '@store/counter/snackbarReducer';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
@@ -19,19 +15,13 @@ const Recharges = () => {
   useGuard();
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
-  const dispatch = useAppDispatch();
-  const { requester } = useAxios();
   const [rows, setRows] = React.useState([]);
   const [openModal, setOpenModal] = React.useState(false);
   const [modal] = React.useState('');
   const accountNumber = useSelector(
     (state: any) => state.loginUser?.user_info?.account_number
   );
-  const account_info = useSelector(
-    (state: any) => state.loginUser?.account_info
-  );
 
-  const transits = useSelector((state: any) => state.loginUser);
   const { useGet, usePost } = UseApiCall();
 
   const { data, isLoading: isLoadingBalance } = useGet({
@@ -76,11 +66,6 @@ const Recharges = () => {
       key: 'facial_amount',
       header: 'Monto',
     },
-    // {
-    //   id: '4',
-    //   key: 'payment_method',
-    //   header: 'Método de pago',
-    // },
     {
       id: '5',
       key: 'status',

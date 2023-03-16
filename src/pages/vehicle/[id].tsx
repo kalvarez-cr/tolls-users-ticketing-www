@@ -46,6 +46,7 @@ const VehicleDetail = () => {
     options: {
       onSuccess: () => {
         dispatch(open({ text: 'Actualización exitosa', type: 'success' }));
+        setIsEditable(false);
       },
     },
   });
@@ -152,7 +153,7 @@ const VehicleDetail = () => {
             </div>
 
             {isEditable ? (
-              <div className="mt-4 w-1/2">
+              <div className="mt-14 ml-2 w-1/3">
                 <Button
                   text="Actualizar nickname"
                   type="button"

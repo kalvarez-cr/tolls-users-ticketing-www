@@ -21,6 +21,17 @@ interface FilterVehiclesFormProps {
   useForm: UseFormReturn<TFilterVehiclesFormInputs, any>;
 }
 
+const status = [
+  {
+    label: 'Activo',
+    value: 'active',
+  },
+  {
+    label: 'Inactivo',
+    value: 'false',
+  },
+];
+
 export default function FilterVehiclesForm({
   data,
   useForm,
@@ -43,17 +54,17 @@ export default function FilterVehiclesForm({
           register={register}
           type={'text'}
         />
-        <Select
+        {/* <Select
           label="Categoría"
           name="category"
           options={[]}
           // errorMessage={errors.nif?.message}
           register={register}
-        />
+        /> */}
         <Select
           label="Status"
           name="status"
-          options={[]}
+          options={status}
           //   errorMessage={errors.nif?.message}
           register={register}
         />

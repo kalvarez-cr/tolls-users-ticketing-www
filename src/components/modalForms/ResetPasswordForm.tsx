@@ -8,6 +8,8 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useRouter } from 'next/router';
+import { logout } from '@store/counter/loginReducer';
 
 interface Inputs {
   password: string;
@@ -28,6 +30,7 @@ const Schema = yup.object().shape({
 
 const ResetPassword = ({ open, setOpen, loading }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { mutate } = useMutation(
     (formData: Inputs) => {
       return requester({
@@ -41,9 +44,20 @@ const ResetPassword = ({ open, setOpen, loading }) => {
         const { data } = response;
         if (data) {
           setOpen(false);
+          dispatch(
+            open({
+              text: 'Actualización exitosa, sera redirido al login',
+              type: 'success',
+            })
+          );
+          setTimeout(() => {
+            dispatch(logout());
+            router.push('/');
+          }, 5000);
         }
       },
       onError: (error: AxiosError) => {
+        setOpen(false);
         dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }

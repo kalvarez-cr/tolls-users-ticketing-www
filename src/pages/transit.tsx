@@ -15,7 +15,6 @@ import { UseApiCall } from 'hooks/useApiCall';
 
 const Transit = () => {
   useGuard();
-  const dispatch = useAppDispatch();
   const [rows, setRows] = useState([]);
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);

@@ -3,7 +3,6 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useGuard } from 'hooks/useGuard';
 import Card from '@components/Card';
-import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
 import { UseApiCall } from 'hooks/useApiCall';
 import { EyeIcon, FilterIcon, MinusCircleIcon } from '@heroicons/react/outline';
@@ -33,15 +32,16 @@ const headers = [
     key: 'category_title',
     header: 'Categoría',
   },
+
   {
     id: '4',
-    key: 'tag_serial',
-    header: 'Vin',
+    key: 'active',
+    header: 'Habilitado',
   },
   {
     id: '5',
-    key: 'active',
-    header: 'Habilitado',
+    key: 'nickname',
+    header: 'Nickname',
   },
   {
     id: '6',
@@ -58,8 +58,8 @@ const Vehicles = () => {
   const [rows, setRows] = useState([]);
   const [openModal, setOpenModal] = React.useState(false);
   const [modal, setModal] = React.useState('');
-  const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
+  const [active, setActive] = React.useState<string>();
   const [openFilter, setOpenFilter] = React.useState<boolean>(false);
   const [responseData, setResponseData] = React.useState<any>(null);
 
@@ -85,22 +85,27 @@ const Vehicles = () => {
     },
   });
 
+  const { mutate: mutateFilter } = usePost({
+    url: '/vehicle-account/list/',
+    options: {
+      onSuccess: (data) => {
+        setResponseData(data);
+        setOpenFilter(false);
+      },
+    },
+  });
+
   const filterHookForm = useForm<TFilterVehiclesFormInputs>({
     resolver: yupResolver(FilterVehiclesFormSchema),
   });
-
-  const handleCancel = (e) => {
-    setOpenModal(true);
-    setModal('cancel');
-    const id = e.currentTarget.dataset.tag;
-    setIdVehicle(id);
-  };
 
   const handleDisabled = (e) => {
     setOpenModal(true);
     setModal('block');
     const id = e.currentTarget.dataset.id;
+    const active = e.currentTarget.dataset.active;
     setIdTag(id);
+    setActive(active === 'active' ? 'false' : 'active');
   };
 
   const handleEdit = (e) => {
@@ -116,12 +121,14 @@ const Vehicles = () => {
   const onSubmit: SubmitHandler<TFilterVehiclesFormInputs> = async (
     inputsData: TFilterVehiclesFormInputs
   ) => {
-    const { nickname } = inputsData;
-    console.log(inputsData);
-    // mutate({
-    //   label: name,
-    //   status: StatusEnum.created,
-    // });
+    const { nickname, status } = inputsData;
+
+    mutateFilter({
+      nickname,
+      status,
+      per_page: 10,
+      page: pageParam,
+    });
   };
 
   React.useEffect(() => {
@@ -131,9 +138,18 @@ const Vehicles = () => {
   useEffect(() => {
     if (responseData) {
       setCountPage(responseData?.pagination?.count);
-      console.log();
+
       const rows = responseData?.data?.map(
-        ({ id, make, model, plate, vehicle_category, vin, active }) => {
+        ({
+          id,
+          make,
+          model,
+          plate,
+          vehicle_category,
+          vin,
+          status,
+          nickname,
+        }) => {
           return {
             make,
             model,
@@ -141,27 +157,30 @@ const Vehicles = () => {
             category_title: vehicle_category,
             tag_serial: vin,
             enabled: true,
-            active: active ? (
-              <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
-                &nbsp;Activo&nbsp;
-              </div>
-            ) : (
-              <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
-                &nbsp;Inactivo&nbsp;
-              </div>
-            ),
+            nickname,
+            active:
+              status === 'active' ? (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
+                  &nbsp;Activo&nbsp;
+                </div>
+              ) : (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
+                  &nbsp;Inactivo&nbsp;
+                </div>
+              ),
 
             actions: (
               <div className="flex items-center space-x-3">
                 <button onClick={handleEdit} data-id={id}>
-                  <EyeIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                  <EyeIcon className="h-6 text-gray-400 hover:text-gray-300" />
                 </button>
-                {/* <button onClick={handleDisabled} data-id={id}>
+                <button
+                  onClick={handleDisabled}
+                  data-id={id}
+                  data-active={status}
+                >
                   <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button> */}
-                {/* <button onClick={handleCancel} data-tag={tag_id.id}>
-                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-                </button> */}
+                </button>
               </div>
             ),
           };
@@ -173,16 +192,13 @@ const Vehicles = () => {
 
   return (
     <>
-      {modal === 'cancel' ? (
-        <CancelForm
+      {modal === 'block' ? (
+        <BlockForm
           open={openModal}
           setOpen={setOpenModal}
-          idVehicle={idVehicle}
+          idTag={idTag}
+          status={active}
         />
-      ) : null}
-
-      {modal === 'block' ? (
-        <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
       ) : null}
       <Modal
         open={openFilter}
@@ -239,10 +255,10 @@ const Vehicles = () => {
               link=""
             />
             <Card
-              title={'Último Canal'}
+              title={'Último peaje transitado'}
               data={
-                dataTotal?.data?.data?.last_transit?.lane
-                  ? dataTotal?.data?.data?.last_transit?.lane
+                dataTotal?.data?.data?.last_transit?.toll_site
+                  ? dataTotal?.data?.data?.last_transit?.toll_site
                   : 'No hay data'
               }
               isLoading={isLoadingTotal}

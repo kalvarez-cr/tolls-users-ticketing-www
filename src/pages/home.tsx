@@ -80,18 +80,14 @@ const Home = () => {
       key: 'category_title',
       header: 'Categoría',
     },
+
     {
       id: '4',
-      key: 'tag_serial',
-      header: 'Vin',
-    },
-    {
-      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
     {
-      id: '6',
+      id: '5',
       key: 'actions',
       header: 'Acciones',
     },
@@ -160,9 +156,6 @@ const Home = () => {
         />
       ) : null}
 
-      {modal === 'block' ? (
-        <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
-      ) : null}
       <div className="mx-6 mt-24 w-full">
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
