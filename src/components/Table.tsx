@@ -55,14 +55,14 @@ const Table = ({
                 {headers.map((header) => {
                   return header.id === '1' ? (
                     <div
-                      className="table-cell rounded-tl-lg bg-red-400 py-4 pl-10 font-bold text-white"
+                      className="table-cell bg-red-400 py-4 pl-10 font-bold text-white"
                       key={header.id}
                     >
                       {header.header}
                     </div>
                   ) : header.id == headers.length ? (
                     <div
-                      className="table-cell rounded-tr-lg bg-red-400 px-10 py-4 font-bold text-white"
+                      className="table-cell bg-red-400 px-10 py-4 font-bold text-white"
                       key={header.id}
                     >
                       {header.header}
