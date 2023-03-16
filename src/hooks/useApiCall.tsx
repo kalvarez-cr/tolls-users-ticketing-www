@@ -9,6 +9,7 @@ import {
 import { requester } from 'utils/requester';
 import { open } from '@store/counter/snackbarReducer';
 import { logout } from '@store/counter/loginReducer';
+import { useRouter } from 'next/router';
 
 interface TUseGet {
   url: string;
@@ -23,6 +24,7 @@ interface TUsePost {
 
 export const UseApiCall = () => {
   const dispatch = useAppDispatch();
+  const { isReady } = useRouter();
 
   const useGet = ({ url, queryKey, options }: TUseGet) =>
     useQuery({
@@ -34,12 +36,13 @@ export const UseApiCall = () => {
         });
       },
       onError: ({ response }) => {
-        console.log(response);
         if (response.status === 403) {
           dispatch(open({ text: 'Sesión expirada', type: 'error' }));
           dispatch(logout());
         }
       },
+      retry: false,
+      enabled: isReady,
       ...options,
     });
 

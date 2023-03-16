@@ -2,20 +2,16 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useGuard } from 'hooks/useGuard';
-import { useAxios } from 'hooks/useAxios';
-import { useMutation, useQuery } from 'react-query';
-import { useAppDispatch } from '@store/hooks';
-import { AxiosError } from 'axios';
-import { open } from '@store/counter/snackbarReducer';
 import Card from '@components/Card';
 import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
 import { UseApiCall } from 'hooks/useApiCall';
+import { EyeIcon } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
 
 const Vehicles = () => {
   useGuard();
-  const { requester } = useAxios();
-  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
   const [rows, setRows] = useState([]);
@@ -56,6 +52,11 @@ const Vehicles = () => {
     setModal('block');
     const id = e.currentTarget.dataset.id;
     setIdTag(id);
+  };
+
+  const handleEdit = (e) => {
+    const id = e.currentTarget.dataset.id;
+    router.push(`/vehicle/${id}`);
   };
 
   const headers = [
@@ -117,16 +118,19 @@ const Vehicles = () => {
               </div>
             ),
 
-            // actions: (
-            //   <div className="flex items-center space-x-3">
-            //     <button onClick={handleDisabled} data-id={id}>
-            //       <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-            //     </button>
-            //     <button onClick={handleCancel} data-tag={tag_id.id}>
-            //       <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-            //     </button>
-            //   </div>
-            // ),
+            actions: (
+              <div className="flex items-center space-x-3">
+                <button onClick={handleEdit} data-id={id}>
+                  <EyeIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button>
+                {/* <button onClick={handleDisabled} data-id={id}>
+                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button> */}
+                {/* <button onClick={handleCancel} data-tag={tag_id.id}>
+                  <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button> */}
+              </div>
+            ),
           };
         }
       );

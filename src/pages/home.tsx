@@ -167,8 +167,11 @@ const Home = () => {
         <div className="mb-10 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="header-text text-4xl">
-              {GreetingByTime()}, {userInfo?.first_name}&nbsp;
-              {userInfo?.last_name}
+              {userInfo?.account_type === 'personal_account'
+                ? `${GreetingByTime()}, ${userInfo?.first_name} ${
+                    userInfo?.last_name
+                  }`
+                : `${GreetingByTime()}, ${userInfo?.company_name}`}
             </h2>
             {/* <button
               onClick={handleRecharge}
@@ -215,7 +218,7 @@ const Home = () => {
               data={
                 dataTransit?.data?.data?.transits
                   ? dataTransit?.data?.data?.transits
-                  : 'No hay data'
+                  : 'Sin tránsitos aún'
               }
               isLoading={isLoadingTransit}
               icon={

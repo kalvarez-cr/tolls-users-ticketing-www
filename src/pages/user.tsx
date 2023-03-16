@@ -87,7 +87,10 @@ const User = () => {
     mutate({
       id: user_info.id,
       data: {
-        phone_number,
+        phone_number:
+          user_info?.account_type === 'personal_account'
+            ? phone_number
+            : phone_legal,
         first_name:
           user_info?.account_type === 'personal_account'
             ? first_name
@@ -96,7 +99,6 @@ const User = () => {
           user_info?.account_type === 'personal_account'
             ? last_name
             : last_legal,
-        contact_phone_number: phone_legal,
       },
     });
   };
@@ -263,7 +265,7 @@ const User = () => {
                   type="text"
                   errorMessage={errors.name_legal?.message}
                   register={register}
-                  defaultValue={user_info?.legal_representative.first_name}
+                  defaultValue={user_info?.legal_representative?.first_name}
                   disabled={!isEditable}
                 />
               </div>

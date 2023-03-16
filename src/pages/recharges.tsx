@@ -60,14 +60,19 @@ const Recharges = () => {
       key: 'created_on',
       header: 'Fecha',
     },
-
     {
       id: '2',
+      key: 'issuer_company',
+      header: 'Canal de pago ',
+    },
+
+    {
+      id: '3',
       key: 'external_reference_id',
       header: 'Referencia',
     },
     {
-      id: '3',
+      id: '4',
       key: 'facial_amount',
       header: 'Monto',
     },
@@ -97,11 +102,13 @@ const Recharges = () => {
           status,
           payment_method,
           created_on,
+          issuer_company,
         }) => {
           return {
             external_reference_id,
             facial_amount: currencyFormatter.format(amount),
             payment_method,
+            issuer_company,
             created_on: new Date(created_on).toLocaleDateString('es-VE'),
             status:
               status === 'created' ? (

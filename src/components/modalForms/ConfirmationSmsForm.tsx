@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ChatAltIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
-import Select from '@components/inputs/Select';
 import { open } from '@store/counter/snackbarReducer';
 
 interface Inputs {

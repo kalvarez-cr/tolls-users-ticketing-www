@@ -30,7 +30,11 @@ interface Inputs {
 const Schema = yup.object().shape({
   charge_amount: yup.string().required('Este campo es requerido'),
   type: yup.string().required('Este campo es requerido'),
-  ci: yup.string().required('Este campo es requerido'),
+  ci: yup
+    .string()
+    .min(7, 'Mínimo 7 caracteres')
+    .max(9, 'Máximo 9 caracteres')
+    .required('Este campo es requerido'),
   bank_code: yup.string().required('Este campo es requerido'),
   phone: yup
     .string()
@@ -68,6 +72,7 @@ const credicard = () => {
   const [modal, setModal] = React.useState('');
 
   const banks = useSelector((state: any) => state.loginUser?.banks);
+  const user_info = useSelector((state: any) => state.loginUser?.user_info);
 
   const {
     register,
@@ -76,6 +81,7 @@ const credicard = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
+    mode: 'onChange',
   });
 
   const { mutate, isLoading } = useMutation(
@@ -89,11 +95,15 @@ const credicard = () => {
     {
       onSuccess: (response) => {
         const { data } = response;
-
+        console.log(response);
         if (data) {
           setOpenModal(true);
           setModal('confirmation');
           SetTransaction(data.data.transactionId);
+
+          setTimeout(() => {
+            setOpenModal(false);
+          }, 60000);
         }
       },
       onError: (error: AxiosError) => {
@@ -119,8 +129,8 @@ const credicard = () => {
     <>
       {modal === 'confirmation' ? (
         <ConfirmationForm
-          open={openModal}
-          setOpen={setOpenModal}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
           transaction={transaction}
           ci={watch('ci')}
           type={watch('type')}
@@ -157,11 +167,12 @@ const credicard = () => {
             </div>
             <div className="mt-14 w-full md:w-1/3">
               <InputV2
-                label="Cédula"
+                label="Documento"
                 name="ci"
                 type="text"
                 errorMessage={errors.ci?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_number}
               />
             </div>
             <div className="mt-14 w-full md:w-1/3 md:pl-4">
@@ -171,6 +182,7 @@ const credicard = () => {
                 type="text"
                 errorMessage={errors.phone?.message}
                 register={register}
+                defaultValue={user_info?.phone_number}
               />
             </div>
             <div className="mt-10 w-full md:w-1/3 ">
@@ -189,6 +201,7 @@ const credicard = () => {
                 type="text"
                 errorMessage={errors.charge_amount?.message}
                 register={register}
+                defaultValue={'1.0'}
               />
             </div>
           </div>

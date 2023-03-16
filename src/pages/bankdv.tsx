@@ -35,9 +35,12 @@ const Schema = yup.object().shape({
   number: yup
     .string()
     .min(7, 'Mínimo 7 caracteres')
-    .max(8, 'Máximo 8 caracteres')
+    .max(9, 'Máximo 9 caracteres')
     .required('Este campo es requerido'),
-  amount: yup.string().required('Este campo es requerido'),
+  amount: yup
+    .string()
+    .matches(/^\d*\.\d+$/, 'Debe escribirse Ej: 1.0')
+    .required('Este campo es requerido'),
   title: yup.string().required('Este campo es requerido'),
   email: yup
     .string()
@@ -121,7 +124,7 @@ const MobilePay = () => {
   const account = useSelector(
     (state: any) => state.loginUser?.account_info?.account_number
   );
-
+  const user_info = useSelector((state: any) => state.loginUser?.user_info);
   const {
     register,
     handleSubmit,
@@ -129,6 +132,7 @@ const MobilePay = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
+    mode: 'onChange',
   });
 
   const { mutate, isLoading } = useMutation(
@@ -147,6 +151,10 @@ const MobilePay = () => {
           setOpenModal(true);
           setModal('confirmation');
           SetToken(data.data.paymentId);
+
+          setTimeout(() => {
+            setOpenModal(false);
+          }, 60000);
         }
       },
       onError: (error: AxiosError) => {
@@ -222,11 +230,12 @@ const MobilePay = () => {
             </div>
             <div className="w-3/5 md:w-2/3">
               <InputV2
-                label="Cédula"
+                label="Documento"
                 name="number"
                 type="text"
                 errorMessage={errors.number?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_number}
               />
             </div>
           </div>
@@ -247,6 +256,7 @@ const MobilePay = () => {
                 type="text"
                 errorMessage={errors.phone?.message}
                 register={register}
+                defaultValue={user_info?.phone_number?.slice(4)}
               />
             </div>
           </div>
@@ -257,6 +267,7 @@ const MobilePay = () => {
               type="text"
               errorMessage={errors.email?.message}
               register={register}
+              defaultValue={user_info?.email}
             />
           </div>
         </div>
@@ -270,16 +281,6 @@ const MobilePay = () => {
         </div>
         <div className=" mt-2 flex w-full md:px-16">
           <div className="flex w-full flex-wrap">
-            <div className="mt-10 w-full md:w-1/2 md:pl-4">
-              <InputV2
-                label="Monto"
-                name="amount"
-                type="text"
-                errorMessage={errors.amount?.message}
-                register={register}
-              />
-            </div>
-
             <div className="mt-6 w-full md:w-1/2 md:pl-4">
               <Select
                 label="Tipo de pago"
@@ -289,6 +290,18 @@ const MobilePay = () => {
                 register={register}
               />
             </div>
+
+            <div className="mt-10 w-full md:w-1/2 md:pl-4">
+              <InputV2
+                label="Monto"
+                name="amount"
+                type="text"
+                errorMessage={errors.amount?.message}
+                register={register}
+                defaultValue={'1.0'}
+              />
+            </div>
+
             <div className="mt-10 w-full md:w-1/2 md:pl-4">
               <InputV2
                 label="Título"

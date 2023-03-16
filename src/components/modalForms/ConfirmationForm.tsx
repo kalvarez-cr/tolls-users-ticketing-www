@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ChatAltIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import { open } from '@store/counter/snackbarReducer';
 
 interface Inputs {
   sms_code: string;
@@ -19,7 +20,13 @@ const Schema = yup.object().shape({
   sms_code: yup.string().required('Este campo es requerido'),
 });
 
-const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
+const ConfirmationForm = ({
+  openModal,
+  setOpenModal,
+  transaction,
+  ci,
+  type,
+}) => {
   const router = useRouter();
   const {
     register,
@@ -42,9 +49,13 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
       onSuccess: (response) => {
         const { data } = response;
         if (data.return_code === '00') {
-          setOpen(false);
+          setOpenModal(false);
+          dispatch(
+            open({ text: 'Recarga realizada con éxito', type: 'success' })
+          );
           router.push('/recharges');
         } else {
+          setOpenModal(false);
           dispatch(open({ text: 'Error inesperado', type: 'error' }));
         }
       },
@@ -60,14 +71,15 @@ const ConfirmationForm = ({ open, setOpen, transaction, ci, type }) => {
       transaction_id: transaction,
       identification: `${type}${ci}`,
       sms_code,
+      channel: 'web_site',
     });
   };
 
   return (
     <>
       <Modal
-        open={open}
-        setOpen={setOpen}
+        open={openModal}
+        setOpen={setOpenModal}
         handleAccept={handleSubmit(onSubmit)}
         title="Código de confirmación"
         acceptButtonText="Proceder"
