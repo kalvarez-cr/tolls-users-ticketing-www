@@ -26,6 +26,7 @@ const ConfirmationForm = ({
   transaction,
   ci,
   type,
+  charge_amount,
 }) => {
   const router = useRouter();
   const {
@@ -60,6 +61,7 @@ const ConfirmationForm = ({
         }
       },
       onError: (error: AxiosError) => {
+        setOpenModal(false);
         dispatch(open({ text: 'Error inesperado', type: 'error' }));
       },
     }
@@ -72,6 +74,7 @@ const ConfirmationForm = ({
       identification: `${type}${ci}`,
       sms_code,
       channel: 'web_site',
+      charge_amount,
     });
   };
 

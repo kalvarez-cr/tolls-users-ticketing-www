@@ -13,14 +13,10 @@ const CancelForm = ({ open, setOpen, idTag }) => {
       return requester({
         method: 'POST',
         data: id,
-        url: '/registered-vehicle/block/',
+        url: '/vehicle-account/update/',
       });
     },
     {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },

@@ -75,18 +75,14 @@ const Vehicles = () => {
       key: 'category_title',
       header: 'Categoría',
     },
+
     {
       id: '4',
-      key: 'tag_serial',
-      header: 'Vin',
-    },
-    {
-      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
     {
-      id: '6',
+      id: '5',
       key: 'actions',
       header: 'Acciones',
     },

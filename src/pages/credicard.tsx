@@ -134,6 +134,7 @@ const credicard = () => {
           transaction={transaction}
           ci={watch('ci')}
           type={watch('type')}
+          charge_amount={watch('charge_amount')}
         />
       ) : null}
 
