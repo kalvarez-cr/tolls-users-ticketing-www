@@ -1,5 +1,5 @@
 import InputV2 from '@components/inputs/InputV2';
-import { CreditCardIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { CreditCardIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,11 +10,8 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { open } from '@store/counter/snackbarReducer';
 import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import { useGuard } from 'hooks/useGuard';
-import ConfirmationSmsForm from '@components/modalForms/ConfirmationSmsForm';
-import { useSelector } from 'react-redux';
 import Logo from '@components/icons/Logo';
+import { UseApiCall } from 'hooks/useApiCall';
 
 interface Inputs {
   letter: string;
@@ -28,8 +25,11 @@ interface Inputs {
   cellphone: string;
   channel?: string;
   paymentMethod: string;
+  state?:string 
 }
-
+interface TConfirmationFormInputs {
+  smsCode: string 
+}
 const Schema = yup.object().shape({
   letter: yup.string().required('Este campo es requerido'),
   number: yup
@@ -47,7 +47,14 @@ const Schema = yup.object().shape({
   code: yup.string().required('Este campo es obligatorio'),
   phone: yup.string().required('Este campo es obligatorio'),
   paymentMethod: yup.string().required('Este campo es requerido'),
+  state: yup.string().required('Este campo es requerido'),
 });
+
+const ConfirmationFormSchema = yup.object().shape({
+  smsCode: yup.string().required('Este campo es requerido'),
+})
+
+
 
 const methods = [
   {
@@ -113,22 +120,50 @@ const payments = [
 const prepay = () => {
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [token, SetToken] = React.useState('');
-  const [modal, setModal] = React.useState('');
-  const account = useSelector(
-    (state: any) => state.loginUser?.account_info?.account_number
-  );
+
+  const { useGet, usePost } = UseApiCall();
+
+  const { data  } = useGet({
+    queryKey: 'getState',
+    url: 'state/list/',
+  });
+ const states = data?.data
+
+//  const stateFilter = states?.map((state) => {
+//   return {
+//       label: state.label,
+//       value: state.value
+//   }
+//  })
+
+const { mutate : mutateToll } = usePost({
+  url: 'toll-sites/list/',
+  
+});
+
+
 
   const {
     register,
     handleSubmit,
     watch,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
 
+
+  React.useEffect(() => {
+    mutateToll({
+      state: getValues('state')
+    })
+    },[watch('state')])
+
+  const confirmCode = useForm<TConfirmationFormInputs>({
+    resolver: yupResolver(ConfirmationFormSchema),
+  })
   const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
@@ -151,7 +186,7 @@ const prepay = () => {
     }
   );
 
-  const onSubmit: SubmitHandler<any> = async (data) => {
+  const onSubmitCreateForm: SubmitHandler<Inputs> = async (data) => {
     const {
       letter,
       number,
@@ -177,6 +212,10 @@ const prepay = () => {
     });
   };
 
+  const onSubmit: SubmitHandler<TConfirmationFormInputs> = async (inputsData : TConfirmationFormInputs) => {
+    const { smsCode } = inputsData
+  }
+  
   return (
     <>
       <div className="container m-10 mx-auto mt-24 rounded-xl bg-gray-100 p-12 px-4 shadow-xl">
@@ -234,10 +273,20 @@ const prepay = () => {
               register={register}
             />
           </div>
+
+          <div className=" w-full pr-4 md:w-1/2">
+            <Select
+              label="Estado"
+              name="state"
+              options={payments}
+              // errorMessage={errors.nif_type?.message}
+              register={register}
+            />
+          </div>
           <div className=" w-full pr-4 md:w-1/2">
             <Select
               label="Peaje"
-              name="paymentMethod"
+              name="toll_site"
               options={payments}
               // errorMessage={errors.nif_type?.message}
               register={register}
@@ -247,7 +296,7 @@ const prepay = () => {
           <div className="w-full pr-4 md:w-1/2">
             <Select
               label="Tarifa"
-              name="paymentMethod"
+              name="vehicle_category"
               options={payments}
               // errorMessage={errors.nif_type?.message}
               register={register}
@@ -269,11 +318,11 @@ const prepay = () => {
             <input
               type="button"
               value="Enviar"
-              onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit(onSubmitCreateForm)}
               className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
           ${
             isLoading
-              ? 'animate-pulse bg-slate-400 '
+              ? 'animate-pulse bg-slate-400 pointer-events-none '
               : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
           }`}
             />
@@ -292,7 +341,7 @@ const prepay = () => {
             <div className="mt-10 w-full md:w-1/2 md:pl-4">
               <InputV2
                 label="Código"
-                name="amount"
+                name="smsCode"
                 type="text"
                 errorMessage={errors.amount?.message}
                 register={register}
@@ -304,7 +353,7 @@ const prepay = () => {
           <input
             type="button"
             value="Confirmar"
-            onClick={handleSubmit(onSubmit)}
+            onClick={confirmCode.handleSubmit(onSubmit)}
             className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
           ${
             isLoading
