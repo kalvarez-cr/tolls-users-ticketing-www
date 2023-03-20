@@ -216,7 +216,7 @@ const Table = ({
             })} */}
             </div>
           </div>
-          {data.length == 0 && !isLoading ? (
+          {data?.length == 0 && !isLoading ? (
             <div className="flex items-center justify-center border-t bg-white py-6 font-medium text-gray-500/70">
               {errorMessage}
             </div>
@@ -258,7 +258,7 @@ const Table = ({
       <div className="grid grid-cols-1 md:hidden">
         <div className="rounded-lg">
           <div className="flex flex-col justify-between">
-            {data.map((row, index) => {
+            {data?.map((row, index) => {
               return (
                 <div
                   className={`my-2 flex flex-col rounded-lg bg-white p-4  `}

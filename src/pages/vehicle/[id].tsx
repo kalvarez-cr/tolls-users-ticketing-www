@@ -72,6 +72,16 @@ const VehicleDetail = () => {
 
   const { mutate, data: response } = usePost({
     url: 'vehicle-account/get/',
+
+    options : {
+      onSuccess : ({data}) => {
+      mutateTransit({
+            tag_serial: data?.tag?.tag_serial,
+            page: pageParam,
+            per_page: 10,
+          });
+      }
+    }
   });
 
   const {
@@ -95,11 +105,10 @@ const VehicleDetail = () => {
       id,
     });
   }, [id]);
-  console.log(response?.data?.tag?.tag_serial);
-  console.log('todo', response?.data);
+
   React.useEffect(() => {
     mutateTransit({
-      tag_serial: '002',
+      tag_serial: response?.data?.tag?.tag_serial,
       page: pageParam,
       per_page: 10,
     });

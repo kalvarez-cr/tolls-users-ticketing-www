@@ -5,7 +5,7 @@ import { useGuard } from 'hooks/useGuard';
 import Card from '@components/Card';
 import BlockForm from '@components/modalForms/BlockForm';
 import { UseApiCall } from 'hooks/useApiCall';
-import { EyeIcon, FilterIcon, MinusCircleIcon } from '@heroicons/react/outline';
+import { EyeIcon, FilterIcon, MinusCircleIcon, RewindIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import SimpleContainer from '@components/SimpleContainer';
 import Modal from '@components/Modal';
@@ -84,15 +84,7 @@ const Vehicles = () => {
     },
   });
 
-  const { mutate: mutateFilter } = usePost({
-    url: '/vehicle-account/list/',
-    options: {
-      onSuccess: (data) => {
-        setResponseData(data);
-        setOpenFilter(false);
-      },
-    },
-  });
+  
 
   const filterHookForm = useForm<TFilterVehiclesFormInputs>({
     resolver: yupResolver(FilterVehiclesFormSchema),
@@ -117,17 +109,29 @@ const Vehicles = () => {
     setOpenFilter(true);
   };
 
+  const handleCleanFilter = (e) => {
+    e.preventDefault();
+    mutate({
+      per_page:10,
+      page: pageParam
+    })
+    filterHookForm.reset()
+    setOpenFilter(false)
+  }
+
   const onSubmit: SubmitHandler<TFilterVehiclesFormInputs> = async (
     inputsData: TFilterVehiclesFormInputs
   ) => {
     const { nickname, status } = inputsData;
 
-    mutateFilter({
+    mutate({
       nickname,
       status,
       per_page: 10,
       page: pageParam,
     });
+    setOpenFilter(false);
+  
   };
 
   React.useEffect(() => {
@@ -278,9 +282,23 @@ const Vehicles = () => {
         <SimpleContainer
           title={'Vehículos Asociados'}
           rightComponent={
+            <div className='flex space-x-3 '>
             <button onClick={handleOpenFilter}>
+
+              
               <FilterIcon className="w-4" />
+              
+
             </button>
+
+            <button onClick={handleCleanFilter}>
+            <img
+            src="/broomIcon.png"
+            alt="clean-icon"
+            className="w-6 "
+          />
+            </button>
+            </div>
           }
         >
           <Table
