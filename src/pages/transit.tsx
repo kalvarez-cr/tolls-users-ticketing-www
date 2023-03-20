@@ -52,24 +52,23 @@ const Transit = () => {
     },
     {
       id: '2',
-      key: 'collected_amount',
-      header: 'Monto',
-    },
-
-    {
-      id: '3',
-      key: 'lane',
-      header: 'Canal',
-    },
-    {
-      id: '4',
       key: 'tag_serial',
       header: 'Tag',
     },
     {
-      id: '5',
+      id: '3',
       key: 'toll_site',
       header: 'Peaje',
+    },
+    {
+      id: '4',
+      key: 'lane',
+      header: 'Canal',
+    },
+    {
+      id: '5',
+      key: 'collected_amount',
+      header: 'Monto',
     },
   ];
 
@@ -122,7 +121,7 @@ const Transit = () => {
             data={
               dataTransit?.data?.data?.transits
                 ? dataTransit?.data?.data?.transits
-                : 'No hay data'
+                : 'Sin tránsitos '
             }
             isLoading={isLoadingTransit}
             icon={
@@ -142,7 +141,7 @@ const Transit = () => {
             data={
               dataTotalConsumed?.data?.data?.total
                 ? currencyFormatter.format(dataTotalConsumed?.data?.data?.total)
-                : 'No hay data'
+                : 'No hay consumo'
             }
             isLoading={isLoadingTotalConsumed}
             icon={
@@ -162,7 +161,7 @@ const Transit = () => {
             data={
               dataTotalTransit?.data?.data?.last_transit?.toll_site
                 ? dataTotalTransit?.data?.data?.last_transit?.toll_site
-                : 'No hay data'
+                : 'No hay pasos aún'
             }
             isLoading={isLoadingTotalTransit}
             icon={

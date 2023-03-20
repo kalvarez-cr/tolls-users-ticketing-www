@@ -3,9 +3,9 @@ import React from 'react';
 
 const qr = () => {
   return (
-    <div className="m-10 mt-24 rounded-xl bg-gray-100 p-12 shadow-xl">
+    <div className="m-10 mt-24   rounded-xl bg-gray-100 p-12 shadow-xl">
       <div className="mb-5 flex w-full items-center justify-center">
-        <Logo className="w-36" />
+        <Logo className="w-40" />
       </div>
 
       <div className="flex items-center justify-center">
@@ -15,9 +15,10 @@ const qr = () => {
         />
       </div>
 
-      <span className=" items-center text-center">
-        Muestre este codigo QR en el peaje{' '}
-      </span>
+      <p className="text-center">
+        Su pago se ha realizado con éxito, puede transitar con su vehículo por
+        el peaje, presentando este código QR{' '}
+      </p>
     </div>
   );
 };

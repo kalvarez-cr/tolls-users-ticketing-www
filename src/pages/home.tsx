@@ -195,7 +195,7 @@ const Home = () => {
               data={
                 dataVehicle?.data?.data?.vehicles
                   ? dataVehicle?.data?.data?.vehicles
-                  : 'No hay data'
+                  : 'No hay Vehículo'
               }
               isLoading={isLoadingVehicle}
               icon={
@@ -211,7 +211,7 @@ const Home = () => {
               data={
                 dataTransit?.data?.data?.transits
                   ? dataTransit?.data?.data?.transits
-                  : 'Sin tránsitos aún'
+                  : 'Sin tránsitos '
               }
               isLoading={isLoadingTransit}
               icon={

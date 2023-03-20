@@ -79,7 +79,6 @@ const Vehicles = () => {
     url: '/vehicle-account/list/',
     options: {
       onSuccess: (data) => {
-        console.log('data', data);
         setResponseData(data);
       },
     },
@@ -188,7 +187,7 @@ const Vehicles = () => {
       );
       setRows(rows);
     }
-  }, [responseData]);
+  }, [responseData, active]);
 
   return (
     <>
@@ -219,7 +218,7 @@ const Vehicles = () => {
               data={
                 dataVehicle?.data?.data?.vehicles
                   ? dataVehicle?.data?.data?.vehicles
-                  : 'No hay data'
+                  : 'No hay vehículo'
               }
               isLoading={isLoadingVehicle}
               icon={
@@ -239,7 +238,7 @@ const Vehicles = () => {
               data={
                 dataTotal?.data?.data?.last_transit?.tag_serial
                   ? dataTotal?.data?.data?.last_transit?.tag_serial
-                  : 'No hay data'
+                  : 'No se ha usado'
               }
               isLoading={isLoadingTotal}
               icon={
@@ -259,7 +258,7 @@ const Vehicles = () => {
               data={
                 dataTotal?.data?.data?.last_transit?.toll_site
                   ? dataTotal?.data?.data?.last_transit?.toll_site
-                  : 'No hay data'
+                  : 'No hay tránsitos'
               }
               isLoading={isLoadingTotal}
               icon={

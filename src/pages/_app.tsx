@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           rel="icon"
           type="image/svg"
           sizes="32x32"
-          href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Venezuela.svg/1920px-Flag_of_Venezuela.svg.png"
+          href="https://cdn-icons-png.flaticon.com/512/2554/2554922.png"
         />
         <title>VenVías</title>
       </Head>

@@ -39,12 +39,18 @@ const CancelForm = ({ open, setOpen, idTag, status }) => {
         open={open}
         setOpen={setOpen}
         handleAccept={() => handleAccept()}
-        title="Bloquear vehículo"
+        title={
+          status === 'false' ? 'Bloquear vehículo' : 'Desbloquear vehículo'
+        }
         acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<MinusCircleIcon />}
       >
-        <p>¿Usted desea bloquear este vehículo?</p>
+        <p>
+          {status === 'false'
+            ? '¿Usted desea bloquear este vehículo?'
+            : '¿Usted desea desbloquear este vehículo?'}
+        </p>
       </Modal>
     </>
   );

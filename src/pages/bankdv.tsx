@@ -69,6 +69,10 @@ const methods = [
     value: 'E',
     label: 'E',
   },
+  {
+    value: 'G',
+    label: 'G',
+  },
 ];
 
 const codes = [

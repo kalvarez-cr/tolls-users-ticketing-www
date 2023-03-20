@@ -179,7 +179,7 @@ const prepay = () => {
 
   return (
     <>
-      <div className="m-10 mt-24 rounded-xl bg-gray-100 p-12 shadow-xl">
+      <div className="container m-10 mx-auto mt-24 rounded-xl bg-gray-100 p-12 px-4 shadow-xl">
         <div className="mb-5 flex w-full items-center justify-center">
           <Logo className="w-36" />
         </div>

@@ -66,11 +66,6 @@ const Recharges = () => {
       key: 'facial_amount',
       header: 'Monto',
     },
-    {
-      id: '5',
-      key: 'status',
-      header: 'Estado',
-    },
   ];
   React.useEffect(() => {
     mutate({ page: pageParam, per_page: 10 });
@@ -84,7 +79,6 @@ const Recharges = () => {
         ({
           external_reference_id,
           amount,
-          status,
           payment_method,
           created_on,
           issuer_company,
@@ -95,18 +89,6 @@ const Recharges = () => {
             payment_method,
             issuer_company,
             created_on: new Date(created_on).toLocaleDateString('es-VE'),
-            status:
-              status === 'created' ? (
-                <div className="w-32 rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
-                  {' '}
-                  Exitosa{' '}
-                </div>
-              ) : status === 'cancelled' ? (
-                <div className=" w-32 rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
-                  {' '}
-                  Cancelada{' '}
-                </div>
-              ) : null,
           };
         }
       );
@@ -171,7 +153,7 @@ const Recharges = () => {
                   ? currencyFormatter.format(
                       dataRecharge?.data?.data?.last_recharge?.amount
                     )
-                  : 'No hay data'
+                  : 'No hay recargas'
               }
               isLoading={isLoadingRecharge}
               icon={
