@@ -15,9 +15,6 @@ const qr = () => {
 
     
     try {
-        
-       
-
         const headers = {
             'Content-Type': 'application/json',
         }
@@ -26,24 +23,23 @@ const qr = () => {
           `${process.env.NEXT_PUBLIC_APP_BASE_URL}venpass/qr/`,
             body, {
               headers, 
-              // responseType
+              
             }
-            
+
         )
 
-        const base64data = new Buffer(data.data.data.qr_code).toString('base64')
         setBase64(data.data.data.qr_code)
         
         
     } catch (error) {
         console.log(error)
-        
+
     }
 }
  React.useEffect(() => {
  handleClick()
 
- },[id])  
+ },[id])
   return (
     <div className="m-10 mt-24   rounded-xl bg-gray-100 p-12 shadow-xl">
       <div className="mb-5 flex w-full items-center justify-center">
