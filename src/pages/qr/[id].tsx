@@ -14,39 +14,42 @@ const qr = () => {
       pass_id: id
     }
 
-    console.log(body)
-    
     try {
-        
-       
-
         const headers = {
             'Content-Type': 'application/json',
         }
         const responseType = 'arraybuffer'
-        
+
+        // Config timeout
+        let timeout = Number.parseInt(process.env.NEXT_PUBLIC_APP_AXIOS_TIMEOUT)
+        if (!Number.isInteger(timeout)) {
+            timeout = 5000
+        }
+
         const data = await axios.post(
           `${process.env.NEXT_PUBLIC_APP_BASE_URL}venpass/qr/`,
-            body, {
-              headers, 
-              responseType
+            body,
+            {
+                headers,
+                responseType,
+                timeout
             }
-            
+
         )
         console.log('data',data.data)
         const base64data = new Buffer(data.data.qr_code).toString('base64')
         setBase64(base64data)
-        
-        
+
+
     } catch (error) {
         console.log(error)
-        
+
     }
 }
  React.useEffect(() => {
  handleClick()
 
- },[id])  
+ },[id])
   return (
     <div className="m-10 mt-24   rounded-xl bg-gray-100 p-12 shadow-xl">
       <div className="mb-5 flex w-full items-center justify-center">
