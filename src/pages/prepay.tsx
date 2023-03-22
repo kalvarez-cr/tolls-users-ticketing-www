@@ -2,7 +2,7 @@ import InputV2 from '@components/inputs/InputV2';
 import { CreditCardIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import Select from '@components/inputs/Select';
 import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';
@@ -12,6 +12,9 @@ import { open } from '@store/counter/snackbarReducer';
 import * as yup from 'yup';
 import Logo from '@components/icons/Logo';
 import { UseApiCall } from 'hooks/useApiCall';
+import { Router, useRouter } from 'next/router';
+
+
 
 interface Inputs {
   letter: string;
@@ -26,9 +29,22 @@ interface Inputs {
   channel?: string;
   paymentMethod: string;
   state?:string 
+  toll_site?:string 
+  vehicle_category?:string 
 }
 interface TConfirmationFormInputs {
   smsCode: string 
+  token?:string 
+  vehicle_category?:string
+  bank?:string
+  paymentMethod?:string 
+  code?:string 
+  phone?:string 
+  phone_number?:string 
+  toll_site?:string 
+  payment_method?:string 
+  status_reason?:string 
+
 }
 const Schema = yup.object().shape({
   letter: yup.string().required('Este campo es requerido'),
@@ -38,20 +54,16 @@ const Schema = yup.object().shape({
     .max(8, 'Máximo 8 caracteres')
     .required('Este campo es requerido'),
   amount: yup.string().required('Este campo es requerido'),
-  title: yup.string().required('Este campo es requerido'),
-  email: yup
-    .string()
-    .email('Debe ser un correo valido')
-    .required('Este campo es requerido'),
-  description: yup.string().required('Este campo es requerido'),
   code: yup.string().required('Este campo es obligatorio'),
   phone: yup.string().required('Este campo es obligatorio'),
   paymentMethod: yup.string().required('Este campo es requerido'),
   state: yup.string().required('Este campo es requerido'),
+  toll_site: yup.string().required('Este campo es obligatorio'),
+  vehicle_category: yup.string().required('Este campo es requerido')
 });
 
 const ConfirmationFormSchema = yup.object().shape({
-  smsCode: yup.string().required('Este campo es requerido'),
+  smsCode: yup.string(),
 })
 
 
@@ -121,49 +133,89 @@ const prepay = () => {
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   const [token, SetToken] = React.useState('');
+  const router = useRouter()
 
   const { useGet, usePost } = UseApiCall();
 
-  const { data  } = useGet({
+  const { data, isLoading : isLoadingState  } = useGet({
     queryKey: 'getState',
     url: 'state/list/',
   });
- const states = data?.data
 
-//  const stateFilter = states?.map((state) => {
-//   return {
-//       label: state.label,
-//       value: state.value
-//   }
-//  })
 
-const { mutate : mutateToll } = usePost({
+
+const { mutate : mutateToll, data: tollData, isLoading: isLoadingToll } = usePost({
   url: 'toll-sites/list/',
   
 });
 
+
+const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePost({
+  url: '/fare-products/list/',
+  
+});
 
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     getValues,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
 
-
-  React.useEffect(() => {
-    mutateToll({
-      state: getValues('state')
-    })
-    },[watch('state')])
-
-  const confirmCode = useForm<TConfirmationFormInputs>({
+  const { register: registerCode , formState: formStateCode , handleSubmit: handleSubmitCode}  = useForm<TConfirmationFormInputs>({
     resolver: yupResolver(ConfirmationFormSchema),
+
   })
+ 
+ const handleSelectState = (e) => {
+    setValue('toll_site', '')
+    setValue('vehicle_category', '')
+    setValue('amount', '')
+    const value = e.target.value
+    mutateToll({
+      state: value
+    })
+  }
+
+  
+  
+  const fares = tollFare?.data?.map((fare) => {
+    return {
+        label: fare.name,
+        value: fare.category.category,
+        amount : fare.nominal_amount 
+    }
+  })
+
+  
+  const handleSelectToll = (e) => {
+    setValue('vehicle_category', '')
+    setValue('amount', '')
+    const value = e.target.value
+    mutateFare({
+      toll_site: value 
+    })
+  }
+
+  const handleSelectAmount = (e) => {
+    const value = e.target.value
+    const amount = fares.find((fare) => fare.value === value).amount
+    setValue('amount', amount)
+   
+  }
+
+
+  const value = getValues('toll_site')
+  const siteCode = tollData?.data?.find((toll) => toll.value === value)?.site_code
+  
+
+
+  
   const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
@@ -186,15 +238,40 @@ const { mutate : mutateToll } = usePost({
     }
   );
 
+  const { mutate: mutateConfirm, } = useMutation(
+    (Data: TConfirmationFormInputs ) => {
+      return requester({
+        method: 'POST',
+        data: Data,
+        url: 'external-recharge/confirm_bdv_sms_venpass/',
+      });
+    },
+    {
+      onSuccess: (response) => {
+        const { data } = response;
+        console.log(data?.data)
+
+        if (data) {
+          const id = data?.data?.venpass?.pass_id
+          setTimeout(() => {
+            router.push(`/qr/${id}`)
+          },500000)
+        }
+      },
+      onError: (error: AxiosError) => {
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
+      },
+    }
+  );
+
+
   const onSubmitCreateForm: SubmitHandler<Inputs> = async (data) => {
     const {
       letter,
       number,
       amount,
-      description,
       code,
       phone,
-      title,
       email,
       paymentMethod,
     } = data;
@@ -202,20 +279,31 @@ const { mutate : mutateToll } = usePost({
     mutate({
       letter,
       number,
-      amount,
-
-      title,
-      description,
-      email,
+      amount:'0.1',
+      title: 'Venpass',
+      description: 'Venpass',
+      email:'prueba@prueba.com',
       cellphone: `${code}${phone}`,
       paymentMethod,
     });
   };
 
+
+
   const onSubmit: SubmitHandler<TConfirmationFormInputs> = async (inputsData : TConfirmationFormInputs) => {
     const { smsCode } = inputsData
+    mutateConfirm({
+      token: token,
+      smsCode: smsCode,
+      bank:'1',
+      paymentMethod: getValues('paymentMethod'),
+      phone_number: `${getValues('code')}${getValues('phone')}`,
+      toll_site: siteCode,
+      vehicle_category: getValues('vehicle_category'),
+      payment_method: "debit/credit",
+      status_reason: 'active'
+    })
   }
-  
   return (
     <>
       <div className="container m-10 mx-auto mt-24 rounded-xl bg-gray-100 p-12 px-4 shadow-xl">
@@ -230,7 +318,7 @@ const { mutate : mutateToll } = usePost({
                 label="Tipo"
                 name="letter"
                 options={methods}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.letter?.message}
                 register={register}
               />
             </div>
@@ -250,7 +338,7 @@ const { mutate : mutateToll } = usePost({
                 label="04XX"
                 name="code"
                 options={codes}
-                // errorMessage={errors.nif_type?.message}
+                errorMessage={errors.code?.message}
                 register={register}
               />
             </div>
@@ -269,7 +357,7 @@ const { mutate : mutateToll } = usePost({
               label="Tipo de cuenta"
               name="paymentMethod"
               options={payments}
-              // errorMessage={errors.nif_type?.message}
+              errorMessage={errors.paymentMethod?.message}
               register={register}
             />
           </div>
@@ -278,18 +366,23 @@ const { mutate : mutateToll } = usePost({
             <Select
               label="Estado"
               name="state"
-              options={payments}
-              // errorMessage={errors.nif_type?.message}
+              options={data?.data?.data}
+              errorMessage={errors.state?.message}
               register={register}
+              onChange={handleSelectState}
+              isLoading={isLoadingState}
             />
           </div>
           <div className=" w-full pr-4 md:w-1/2">
             <Select
               label="Peaje"
               name="toll_site"
-              options={payments}
-              // errorMessage={errors.nif_type?.message}
+              options={tollData?.data}
+              errorMessage={errors.toll_site?.message}
               register={register}
+              onChange={handleSelectToll}
+              isLoading={isLoadingToll}
+              disabled={!watch('state')}
             />
           </div>
 
@@ -297,24 +390,29 @@ const { mutate : mutateToll } = usePost({
             <Select
               label="Tarifa"
               name="vehicle_category"
-              options={payments}
-              // errorMessage={errors.nif_type?.message}
+              options={fares}
+              errorMessage={errors.vehicle_category?.message}
               register={register}
+              onChange={handleSelectAmount}
+              isLoading={isLoadingFare}
+              disabled={!watch('toll_site')}
             />
           </div>
-          <div className="my-2 w-1/2  items-center  md:w-1/2">
+          <div className="my-4 w-full items-center  md:w-1/2">
             <InputV2
               label="Monto"
-              name="phone"
+              name="amount"
               type="text"
-              errorMessage={errors.phone?.message}
+              errorMessage={errors.amount?.message}
               register={register}
-              defaultValue={'monto'}
+    
               disabled={true}
             />
           </div>
-
-          <div className="-mt-8 ml-6 justify-end">
+         
+         
+        </div>
+        <div className="-mt-14 mr-16 flex justify-center md:justify-end md:gap-10">
             <input
               type="button"
               value="Enviar"
@@ -327,7 +425,6 @@ const { mutate : mutateToll } = usePost({
           }`}
             />
           </div>
-        </div>
         <div className="mt-4 flex items-center justify-between md:px-16">
           <div className="border-r-2">
             <CreditCardIcon className="mr-16 h-10 text-red-700" />
@@ -343,8 +440,8 @@ const { mutate : mutateToll } = usePost({
                 label="Código"
                 name="smsCode"
                 type="text"
-                errorMessage={errors.amount?.message}
-                register={register}
+                errorMessage={formStateCode?.errors?.smsCode?.message}
+                register={registerCode}
               />
             </div>
           </div>
@@ -353,11 +450,11 @@ const { mutate : mutateToll } = usePost({
           <input
             type="button"
             value="Confirmar"
-            onClick={confirmCode.handleSubmit(onSubmit)}
+            onClick={handleSubmitCode(onSubmit)}
             className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
           ${
             isLoading
-              ? 'animate-pulse bg-slate-400 '
+              ? 'animate-pulse bg-slate-400 pointer-events-none'
               : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
           }`}
           />
