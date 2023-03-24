@@ -2,17 +2,15 @@ import InputV2 from '@components/inputs/InputV2';
 import { CreditCardIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { SubmitHandler, useForm  } from 'react-hook-form';
 import Select from '@components/inputs/Select';
 import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
-import { useAppDispatch } from '@store/hooks';
-import { open } from '@store/counter/snackbarReducer';
 import * as yup from 'yup';
 import Logo from '@components/icons/Logo';
 import { UseApiCall } from 'hooks/useApiCall';
-import { Router, useRouter } from 'next/router';
+import ModalForm from '@components/modalForms/ModalForm';
 
 
 
@@ -63,7 +61,7 @@ const Schema = yup.object().shape({
 });
 
 const ConfirmationFormSchema = yup.object().shape({
-  smsCode: yup.string(),
+  smsCode: yup.string().required('Este campo es requerido'),
 })
 
 
@@ -131,10 +129,12 @@ const payments = [
 
 const prepay = () => {
   const { requester } = useAxios();
-  const dispatch = useAppDispatch();
   const [token, SetToken] = React.useState('');
-  const router = useRouter()
-
+  const [ open, setOpen ] = React.useState(false)
+  const [modal , setModal ] = React.useState('')
+  const [ message , setMessage ] = React.useState('')
+  const [ pass , setPass ] = React.useState('')
+  
   const { useGet, usePost } = UseApiCall();
 
   const { data, isLoading : isLoadingState  } = useGet({
@@ -230,15 +230,20 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
 
         if (data) {
           SetToken(data.data.paymentId);
+          setOpen(true)
+          setModal('prepay')
+          setMessage('Su pago esta siendo procesado, recibirá un código por mensaje de texto.')
         }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
+        setOpen(true)
+        setModal('prepay')
+        setMessage('Ha ocurrido un error,  intente nuevamente')
       },
     }
   );
 
-  const { mutate: mutateConfirm, } = useMutation(
+  const { mutate: mutateConfirm, data: dataVenpass, isLoading: isLoadingConfirm} = useMutation(
     (Data: TConfirmationFormInputs ) => {
       return requester({
         method: 'POST',
@@ -249,27 +254,42 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
     {
       onSuccess: (response) => {
         const { data } = response;
-        console.log(data?.data)
 
         if (data) {
-          const id = data?.data?.venpass?.pass_id
-          setTimeout(() => {
-            router.push(`/qr/${id}`)
-          },500000)
+          setPass(data?.data?.venpass?.pass_id)
+          setOpen(true)
+          setModal('confirm')
+          setMessage('¡Hemos enviado un SMS donde podrás obtener tu código QR! Si no te llego, por favor pulsa en reenviar mensaje y así podrás disfrutar de tu pase.')
         }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
+        setOpen(true)
+        setModal('confirm')
+        setMessage('Ha ocurrido un error, intente de nuevo')
       },
     }
   );
+
+
+  const { mutate: mutateSms, isLoading: isLoadingSms } = useMutation(
+    (Data: any ) => {
+      return requester({
+        method: 'POST',
+        data: Data,
+        url: 'venpass/resend_sms/',
+      });
+    },
+   
+  );
+
+
+  
 
 
   const onSubmitCreateForm: SubmitHandler<Inputs> = async (data) => {
     const {
       letter,
       number,
-      amount,
       code,
       phone,
       email,
@@ -282,7 +302,7 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
       amount:'0.1',
       title: 'Venpass',
       description: 'Venpass',
-      email:'prueba@prueba.com',
+      email,
       cellphone: `${code}${phone}`,
       paymentMethod,
     });
@@ -304,8 +324,67 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
       status_reason: 'active'
     })
   }
+
+
+  const handleResendSms = () => {
+    mutateSms({
+      phone_number: `${getValues('code')}${getValues('phone')}`,
+      pass_id: pass
+    })
+  }
+
+  
   return (
     <>
+
+    {modal === 'prepay' ?
+
+    <ModalForm
+    open={open}
+    setOpen={setOpen}
+    handleAccept={() => setOpen(false)}
+    title={'Información'}
+    >
+
+     <p>{message}</p> 
+
+    </ModalForm>
+
+    : null}
+
+
+    {modal === 'confirm' ?
+
+    <ModalForm
+    open={open}
+    setOpen={setOpen}
+    handleAccept={() => setOpen(false)}
+    title={'Advertencia'}
+
+  
+    >
+
+      <p className='text-red-500 text-lg'>{message}</p>
+     <div className='flex justify-center'>
+     {dataVenpass?.data?.return_code === '9000' ? 
+     <input
+            type="button"
+            value="Reenviar mensaje"
+            onClick={handleResendSms}
+            className={`mt-14 cursor-pointer rounded bg-red-600/50 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-red-600/25
+          ${
+            isLoadingSms
+              ? 'animate-pulse bg-slate-400 pointer-events-none'
+              : ' font-bold transition-all delay-100 duration-200 hover:bg-red-600/50 hover:text-white  '
+          }`}
+          />
+          : null}
+     </div>
+
+    </ModalForm>
+
+   : null }
+
       <div className="container m-10 mx-auto mt-24 rounded-xl bg-gray-100 p-12 px-4 shadow-xl">
         <div className="mb-5 flex w-full items-center justify-center">
           <Logo className="w-36" />
@@ -352,7 +431,18 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
               />
             </div>
           </div>
-          <div className="my-2 w-full">
+
+
+          <div className="my-4 w-full pr-4 items-center  md:w-1/2">
+          <InputV2
+                label="Correo"
+                name="email"
+                type="text"
+                errorMessage={errors.email?.message}
+                register={register}
+              />
+          </div>
+          <div className="w-full pr-4 md:w-1/2">
             <Select
               label="Tipo de cuenta"
               name="paymentMethod"
@@ -361,6 +451,8 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
               register={register}
             />
           </div>
+
+          
 
           <div className=" w-full pr-4 md:w-1/2">
             <Select
@@ -453,7 +545,7 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
             onClick={handleSubmitCode(onSubmit)}
             className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
           ${
-            isLoading
+            isLoadingConfirm
               ? 'animate-pulse bg-slate-400 pointer-events-none'
               : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
           }`}
