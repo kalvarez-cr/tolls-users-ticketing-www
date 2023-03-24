@@ -293,13 +293,14 @@ const { mutate : mutateFare, data: tollFare, isLoading: isLoadingFare } = usePos
       code,
       phone,
       email,
+      amount,
       paymentMethod,
     } = data;
 
     mutate({
       letter,
       number,
-      amount:'0.1',
+      amount,
       title: 'Venpass',
       description: 'Venpass',
       email,
