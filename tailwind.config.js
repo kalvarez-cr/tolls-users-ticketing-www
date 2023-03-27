@@ -25,6 +25,7 @@ module.exports = {
         bdv: "url('/bdv.png')",
         petro: "url('/petro.png')",
         banesco: "url('/banesco.png')",
+        // qr: "url('/qr.png')",
       },
       colors: {
         'bg-primary-light': '#fff',

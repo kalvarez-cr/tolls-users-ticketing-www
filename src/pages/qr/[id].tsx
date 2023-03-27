@@ -40,24 +40,27 @@ const qr = () => {
 
  },[id])
   return (
-    <div className="m-10 mt-24   rounded-xl bg-gray-100 p-12 shadow-xl">
+    <div className="bg-cel  p-12 ">
       <div className="mb-5 flex w-full items-center justify-center">
         <Logo className="w-40" />
       </div>
 
-      <div className="flex items-center justify-center">
-        <img
-          src={`data:image/png;base64,${base64}`}
-          className="w-52"
-          alt='qr'
-        />
-        
-      </div>
-
-      <p className="text-center mt-5">
+    <p className="text-center font-semibold  text-lg ">
         Su pago se ha realizado con éxito, puede transitar con su vehículo por
         el peaje, presentando este código QR{' '}
       </p>
+
+      <div className="flex items-center justify-center mt-auto">
+        <img
+          src={`data:image/png;base64,${base64}`}
+          className="w-44 mt-80 mr-20 md:mt-80"
+          alt='qr'
+        />
+
+        
+      </div>
+
+     
     </div>
   );
 };
