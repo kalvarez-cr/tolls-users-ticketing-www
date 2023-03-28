@@ -237,7 +237,7 @@ const VehicleDetail = () => {
             </div>
             <div className="mt-14 w-full md:w-1/2 md:pl-4">
               <InputV2
-                label="Nickname"
+                label="Alias"
                 name="nickname"
                 type="text"
                 defaultValue={response?.data?.nickname}
@@ -250,7 +250,7 @@ const VehicleDetail = () => {
             {isEditable ? (
               <div className="mt-14 ml-2 w-1/3">
                 <Button
-                  text="Actualizar nickname"
+                  text="Actualizar alias"
                   type="button"
                   loading={false}
                   onClick={handleSubmit(onSubmit)}

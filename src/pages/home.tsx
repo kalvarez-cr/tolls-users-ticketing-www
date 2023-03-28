@@ -67,30 +67,35 @@ const Home = () => {
   const headers = [
     {
       id: '1',
+      key: 'nickname',
+      header: 'Alias',
+    },
+    {
+      id: '2',
       key: 'model',
       header: 'Modelo',
     },
     {
-      id: '2',
+      id: '3',
       key: 'license_plate',
       header: 'Placa',
     },
     {
-      id: '3',
+      id: '4',
       key: 'category_title',
       header: 'Categoría',
     },
 
     {
-      id: '4',
+      id: '5',
       key: 'active',
       header: 'Habilitado',
     },
-    {
-      id: '5',
-      key: 'actions',
-      header: 'Acciones',
-    },
+    // {
+    //   id: '5',
+    //   key: 'actions',
+    //   header: 'Acciones',
+    // },
   ];
 
   React.useEffect(() => {
@@ -101,8 +106,9 @@ const Home = () => {
     if (response) {
       setCountPage(response?.pagination?.count);
       const rows = response?.data?.map(
-        ({ id, model, plate, vehicle_category, vin, status }) => {
+        ({ id, model, plate, vehicle_category, vin, status, nickname }) => {
           return {
+            nickname,
             model,
             license_plate: plate,
             category_title: vehicle_category,
@@ -110,11 +116,11 @@ const Home = () => {
             enabled: true,
             active:
               status === 'active' ? (
-                <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
+                <div className="rounded-full bg-gray-100 py-0.5 text-center w-24 font-bold text-emerald-600">
                   &nbsp;Activo&nbsp;
                 </div>
               ) : (
-                <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
+                <div className="rounded-full bg-gray-100 py-0.5 w-24 text-center text-red-600">
                   &nbsp;Inactivo&nbsp;
                 </div>
               ),

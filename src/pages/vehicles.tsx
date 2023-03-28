@@ -19,30 +19,32 @@ import { yupResolver } from '@hookform/resolvers/yup';
 const headers = [
   {
     id: '1',
+    key: 'nickname',
+    header: 'Alias',
+  },
+  
+  {
+    id: '2',
     key: 'model',
     header: 'Modelo',
   },
   {
-    id: '2',
+    id: '3',
     key: 'license_plate',
     header: 'Placa',
   },
   {
-    id: '3',
+    id: '4',
     key: 'category_title',
     header: 'Categoría',
   },
 
   {
-    id: '4',
+    id: '5',
     key: 'active',
     header: 'Habilitado',
   },
-  {
-    id: '5',
-    key: 'nickname',
-    header: 'Nickname',
-  },
+
   {
     id: '6',
     key: 'actions',
