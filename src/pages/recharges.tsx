@@ -3,8 +3,6 @@ import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useGuard } from 'hooks/useGuard';
 import { useSelector } from 'react-redux';
-import { useAxios } from 'hooks/useAxios';
-import { useAppDispatch } from '@store/hooks';
 import RechargueForm from '@components/modalForms/RechargueForm';
 import Card from '@components/Card';
 import PaymentMethodCard from '@components/PaymentMethodCard';
@@ -22,6 +20,8 @@ const Recharges = () => {
     (state: any) => state.loginUser?.user_info?.account_number
   );
 
+  const lastLogin = useSelector((state: any ) => state?.loginUser?.user_info?.last_login)
+
   const { useGet, usePost } = UseApiCall();
 
   const { data, isLoading: isLoadingBalance } = useGet({
@@ -29,10 +29,10 @@ const Recharges = () => {
     url: '/dashboard/account_balance/',
   });
 
-  const { data: dataLogin, isLoading: isLoadingLogin } = useGet({
-    queryKey: 'getLastLogin',
-    url: '/dashboard/last_login/',
-  });
+  // const { data: dataLogin, isLoading: isLoadingLogin } = useGet({
+  //   queryKey: 'getLastLogin',
+  //   url: '/dashboard/last_login/',
+  // });
   const { data: dataRecharge, isLoading: isLoadingRecharge } = useGet({
     queryKey: 'getRecharge',
     url: '/dashboard/last_recharge/',
@@ -127,13 +127,13 @@ const Recharges = () => {
             <Card
               title={'Última visita'}
               data={
-                dataLogin?.data?.data?.last_login
+                lastLogin
                   ? new Date(
-                      dataLogin?.data?.data?.last_login
+                    lastLogin
                     ).toLocaleDateString('es-VE')
                   : 'No hay data'
               }
-              isLoading={isLoadingLogin}
+              // isLoading={isLoadingLogin}
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
