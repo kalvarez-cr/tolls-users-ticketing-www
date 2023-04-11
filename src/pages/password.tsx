@@ -164,23 +164,33 @@ const Index = () => {
                   type="text"
                   errorMessage={errors.username?.message}
                   register={register}
-                  defaultValue={'V123456'}
+                  defaultValue={'V'}
                 />
               </div>
-              {/* <div className="mt-16">
-                <InputV2
+             
+              
+              <div className="mt-10">
+                <Button loading={isLoading} type="submit" text="Enviar" />
+              </div>
+              <div className="mt-2 ">
+              <input
+              value="Volver"
+              onClick={() => router.back()}
+              className="cursor-pointer w-full rounded px-4 py-2 bg-transparent text-center font-semibold text-red-500 focus:bg-transparent focus:outline-none"
+            />
+              </div>
+
+              <div className="mt-12">
+                {/* <InputV2
                   label="Contraseña"
                   name="password"
                   type='text'
                   errorMessage={errors.password?.message}
                   register={register}
                   
-                />
-              </div> */}
-              
-              <div className="mt-8">
-                <Button loading={isLoading} type="submit" text="Enviar" />
+                /> */}
               </div>
+
             </form>
           
           </div>
