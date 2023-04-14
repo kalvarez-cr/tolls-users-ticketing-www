@@ -13,6 +13,8 @@ interface TSelectProps {
   onChange?: any;
   disabled?: boolean
   isLoading?: boolean
+  defaultValue?: string | number;
+
 }
 
 const Select = ({
@@ -23,7 +25,8 @@ const Select = ({
   options,
   onChange, 
   disabled,
-  isLoading
+  isLoading,
+  defaultValue,
 }: TSelectProps) => {
   return (
     <div className="relative my-4 flex flex-col">
@@ -45,10 +48,9 @@ const Select = ({
           register(name).onChange(e)
           onChange && onChange(e)
         }}
-
         disabled={disabled}
       >
-        <option value="" disabled selected hidden className='text-gray-300'>{isLoading ? 'cargando...': 'selecionar'}</option>
+        <option value="" disabled selected hidden className='text-gray-300'>{isLoading ? 'cargando...': defaultValue}</option>
         { options?.length < 1 && <option value="" disabled className='text-gray-300'>No hay opciones disponibles</option>}
         {options?.map((option) => (
           <option key={option.value} value={option.value}>

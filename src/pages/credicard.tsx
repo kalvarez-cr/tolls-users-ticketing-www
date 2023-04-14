@@ -107,7 +107,7 @@ const credicard = () => {
 
           setTimeout(() => {
             setOpenModal(false);
-          }, 60000);
+          }, 120000);
         }
       },
       onError: (error: AxiosError) => {
@@ -168,6 +168,8 @@ const credicard = () => {
                 options={methods}
                 // errorMessage={errors.nif?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_doc_type}
+
               />
             </div>
             <div className="mt-14 w-full md:w-1/3">

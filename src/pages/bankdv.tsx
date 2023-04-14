@@ -158,7 +158,7 @@ const MobilePay = () => {
 
           setTimeout(() => {
             setOpenModal(false);
-          }, 60000);
+          }, 120000);
         }
       },
       onError: (error: AxiosError) => {
@@ -230,6 +230,8 @@ const MobilePay = () => {
                 options={methods}
                 // errorMessage={errors.nif?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_doc_type}
+
               />
             </div>
             <div className="w-3/5 md:w-2/3">
@@ -251,6 +253,7 @@ const MobilePay = () => {
                 options={codes}
                 // errorMessage={errors.nif_type?.message}
                 register={register}
+                defaultValue={user_info?.phone_number?.substring(0, 4)}
               />
             </div>
             <div className="w-3/5 md:w-2/3">
