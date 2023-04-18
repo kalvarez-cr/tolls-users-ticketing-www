@@ -179,7 +179,7 @@ const Table = ({
                   </div>
                 </>
               ) : (
-                data.map((row) => {
+                data?.map((row) => {
                   return (
                     <div className="table-row" key={row.id}>
                       {headerKeys.map((headerKey) => {
