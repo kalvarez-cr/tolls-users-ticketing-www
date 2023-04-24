@@ -49,7 +49,7 @@ export default function FilterVehiclesForm({
       <div className="w-full">
         <InputV2
           errorMessage={formState?.errors?.nickname?.message}
-          label="Nickname"
+          label="Alias"
           name="nickname"
           register={register}
           type={'text'}
