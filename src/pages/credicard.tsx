@@ -166,7 +166,7 @@ const credicard = () => {
                 label="Tipo"
                 name="type"
                 options={methods}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.type?.message}
                 register={register}
                 defaultValue={user_info?.holder_id_doc_type}
 
@@ -197,7 +197,7 @@ const credicard = () => {
                 label="Banco"
                 name="bank_code"
                 options={banks}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.bank_code?.message}
                 register={register}
               />
             </div>

@@ -3,7 +3,7 @@ import { CreditCardIcon, UserCircleIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LandingLayout from '@layouts/LandingLayout';
 import React, { ReactElement } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import Select from '@components/inputs/Select';
 import { useAxios } from 'hooks/useAxios';
 import { useMutation } from 'react-query';
@@ -31,7 +31,7 @@ interface Inputs {
 }
 
 const Schema = yup.object().shape({
-  letter: yup.string().required('Este campo es requerido'),
+  letter: yup.string().required('Requerido'),
   number: yup
     .string()
     .min(7, 'Mínimo 7 caracteres')
@@ -47,7 +47,7 @@ const Schema = yup.object().shape({
     .email('Debe ser un correo valido')
     .required('Este campo es requerido'),
   description: yup.string().required('Este campo es requerido'),
-  code: yup.string().required('Este campo es obligatorio'),
+  code: yup.string().required('Requerido'),
   phone: yup.string().required('Este campo es obligatorio'),
   paymentMethod: yup.string().required('Este campo es requerido'),
 });
@@ -167,6 +167,10 @@ const MobilePay = () => {
     }
   );
 
+  const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
+    console.log(data);
+  };
+
   const onSubmit: SubmitHandler<any> = async (data) => {
     const {
       letter,
@@ -228,7 +232,7 @@ const MobilePay = () => {
                 label="Tipo"
                 name="letter"
                 options={methods}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.letter?.message}
                 register={register}
                 defaultValue={user_info?.holder_id_doc_type}
 
@@ -251,7 +255,7 @@ const MobilePay = () => {
                 label="04XX"
                 name="code"
                 options={codes}
-                // errorMessage={errors.nif_type?.message}
+                errorMessage={errors.code?.message}
                 register={register}
                 defaultValue={user_info?.phone_number?.substring(0, 4)}
               />
@@ -267,7 +271,7 @@ const MobilePay = () => {
               />
             </div>
           </div>
-          <div className="my-2 w-full">
+          <div className="my-5 w-full">
             <InputV2
               label="Correo"
               name="email"
@@ -293,7 +297,7 @@ const MobilePay = () => {
                 label="Tipo de pago"
                 name="paymentMethod"
                 options={payments}
-                // errorMessage={errors.nif_type?.message}
+                errorMessage={errors.paymentMethod?.message}
                 register={register}
               />
             </div>
@@ -335,7 +339,7 @@ const MobilePay = () => {
           <input
             type="button"
             value="Confirmar"
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit, onInvalid)}
             className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
           ${
             isLoading

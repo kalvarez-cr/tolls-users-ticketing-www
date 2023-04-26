@@ -1,6 +1,5 @@
 import LoaderSelect from '@components/loaders/LoaderSelect';
 import { UseFormRegister } from 'react-hook-form';
-import Loader2 from '../loaders/Loader2';
 
 
 interface TSelectProps {
@@ -49,6 +48,7 @@ const Select = ({
           onChange && onChange(e)
         }}
         disabled={disabled}
+        defaultValue={defaultValue}
       >
         <option value="" disabled selected hidden className='text-gray-300'>{isLoading ? 'cargando...': defaultValue}</option>
         { options?.length < 1 && <option value="" disabled className='text-gray-300'>No hay opciones disponibles</option>}
