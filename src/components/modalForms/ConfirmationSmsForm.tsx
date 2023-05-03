@@ -31,6 +31,7 @@ const ConfirmationSmsForm = ({
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
@@ -77,6 +78,8 @@ const ConfirmationSmsForm = ({
       bank: '1',
       paymentMethod,
     });
+
+    resetField('smsCode')
   };
 
   return (

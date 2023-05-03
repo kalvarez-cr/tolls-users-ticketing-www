@@ -33,6 +33,7 @@ const ConfirmationForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
@@ -76,6 +77,7 @@ const ConfirmationForm = ({
       channel: 'web_site',
       charge_amount,
     });
+    resetField('sms_code')
   };
 
   return (

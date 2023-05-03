@@ -98,7 +98,7 @@ const Index = () => {
     resolver: yupResolver(Schema),
   });
 
-  const { register: registerCode , formState: formStateCode , handleSubmit: handleSubmitCode}  = useForm<TCodeInputs>({
+  const { register: registerCode , formState: formStateCode , handleSubmit: handleSubmitCode , resetField: resetCode }  = useForm<TCodeInputs>({
     resolver: yupResolver(codeFormSchema),
 
   })
@@ -111,6 +111,7 @@ const Index = () => {
   const onSubmitCode: SubmitHandler<TCodeInputs> = async (inputsData : TCodeInputs ) => {
     const { code } = inputsData;
     mutateCode({confirmation_code: code, username : getValues('username') });
+    resetCode('code')
   };
   
 
