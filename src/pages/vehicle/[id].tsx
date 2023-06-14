@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { currencyFormatter } from 'utils/utils';
 import * as yup from 'yup';
 
 interface Inputs {
@@ -32,30 +33,26 @@ const Schema = yup.object().shape({
 const headers = [
   {
     id: '1',
-    key: 'created_on',
+    key: 'moment',
     header: 'Fecha',
   },
   {
     id: '2',
-    key: 'issuer_company',
-    header: 'Canal de pago ',
+    key: 'toll_site',
+    header: 'Peaje ',
   },
 
   {
     id: '3',
-    key: 'external_reference_id',
-    header: 'Referencia',
+    key: 'lane',
+    header: 'Canal',
   },
   {
     id: '4',
-    key: 'facial_amount',
+    key: 'collected_amount',
     header: 'Monto',
   },
-  {
-    id: '5',
-    key: 'status',
-    header: 'Estado',
-  },
+ 
 ];
 
 const VehicleDetail = () => {
@@ -133,38 +130,26 @@ const VehicleDetail = () => {
       },
     });
   };
-
   React.useEffect(() => {
-    if (response) {
+    if (responseTransit && response?.data?.tag !== 'Este vehiculo no posee TagAccount.') {
       setCountPage(responseTransit?.pagination?.count);
 
       const table = responseTransit?.data?.map(
         ({
-          external_reference_id,
-          amount,
-          status,
-          payment_method,
-          created_on,
-          issuer_company,
+         
+          moment,
+          toll_site, 
+          lane,
+          collected_amount, 
+
+          
         }) => {
           return {
-            external_reference_id,
-            // facial_amount: currencyFormatter.format(amount),
-            payment_method,
-            issuer_company,
-            created_on: new Date(created_on).toLocaleDateString('es-VE'),
-            status:
-              status === 'created' ? (
-                <div className="w-32 rounded-full bg-green-300/50 py-0.5 text-center text-emerald-600">
-                  {' '}
-                  Exitosa{' '}
-                </div>
-              ) : status === 'cancelled' ? (
-                <div className=" w-32 rounded-full bg-red-300/50 py-0.5 text-center text-red-600">
-                  {' '}
-                  Cancelada{' '}
-                </div>
-              ) : null,
+            collected_amount: currencyFormatter.format(collected_amount),
+            toll_site,
+            lane,
+            moment: new Date(moment).toLocaleDateString('es-VE'),
+            
           };
         }
       );

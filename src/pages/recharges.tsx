@@ -52,7 +52,7 @@ const Recharges = () => {
     },
     {
       id: '2',
-      key: 'issuer_company',
+      key: 'channel',
       header: 'Canal de pago ',
     },
 
@@ -81,13 +81,13 @@ const Recharges = () => {
           amount,
           payment_method,
           created_on,
-          issuer_company,
+          channel,
         }) => {
           return {
             external_reference_id,
             facial_amount: currencyFormatter.format(amount),
             payment_method,
-            issuer_company,
+            channel,
             created_on: new Date(created_on).toLocaleDateString('es-VE'),
           };
         }

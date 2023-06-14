@@ -9,9 +9,10 @@ interface TCardProps {
   moreInfo: boolean;
   link: string;
   isLoading?: boolean;
+  
 }
 
-const Card = ({ title, data, icon, moreInfo, link, isLoading }: TCardProps) => {
+const Card = ({ title, data, icon, moreInfo, link, isLoading  }: TCardProps) => {
   return (
     <div className="h-36 justify-center rounded-xl shadow-md">
       <div
@@ -19,18 +20,21 @@ const Card = ({ title, data, icon, moreInfo, link, isLoading }: TCardProps) => {
           moreInfo ? 'h-4/6 rounded-t-xl' : 'h-full rounded-xl'
         }`}
       >
-        <div></div>
+       
         {icon}
         <div>
+      
           <h2 className={`card-title ${moreInfo ? 'text-md' : 'text-lg'}`}>
             {title}
           </h2>
           {isLoading ? (
             <h2 className={` h-5 w-5 animate-spin bg-red-300 `}></h2>
           ) : (
+          
             <h2 className={`card-data ${moreInfo ? 'text-xl' : 'text-2xl'}`}>
               {data}
             </h2>
+            
           )}
         </div>
       </div>

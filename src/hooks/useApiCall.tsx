@@ -36,7 +36,7 @@ export const UseApiCall = () => {
         });
       },
       onError: ({ response }) => {
-        if (response.status === 403) {
+        if (response?.status === 403) {
           dispatch(open({ text: 'Sesión expirada', type: 'error' }));
           dispatch(logout());
         }
