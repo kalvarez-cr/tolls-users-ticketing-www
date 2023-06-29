@@ -2,28 +2,54 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@store/hooks';
-import RechargueForm from '@components/modalForms/RechargueForm';
 import { useGuard } from 'hooks/useGuard';
-import { useAxios } from 'hooks/useAxios';
 import Card from '@components/Card';
 import Chart from '@components/Chart'
-import CancelForm from '@components/modalForms/CancelForm';
 import { GreetingByTime } from '../utils/requester';
 import { currencyFormatter, getStatusClassName } from 'utils/utils';
 import { UseApiCall } from 'hooks/useApiCall';
 import BarChartComponent from '@components/BarChart';
+import Table from '@components/Table';
+
+const headers = [
+  {
+    id: '1',
+    key: 'nickname',
+    header: 'Alias',
+  },
+  
+  {
+    id: '2',
+    key: 'model',
+    header: 'Modelo',
+  },
+  {
+    id: '3',
+    key: 'license_plate',
+    header: 'Placa',
+  },
+  {
+    id: '4',
+    key: 'category_title',
+    header: 'Categoría',
+  },
 
 
+
+ 
+];
 
 
 const Home = () => {
   useGuard();
- 
+  const [pageParam, setPageParam] = useState(1);
+  const [countPage, setCountPage] = useState(1);
+  const [rows, setRows] = useState([]);
+  const [responseData, setResponseData] = React.useState<any>(null);
    
   const userInfo = useSelector((state: any) => state.loginUser?.user_info);
 
-  const { useGet  } = UseApiCall();
+  const { useGet, usePost  } = UseApiCall();
 
   const { data, isLoading: isLoadingBalance } = useGet({
     queryKey: 'getBalance',
@@ -45,9 +71,51 @@ const Home = () => {
     url: '/dashboard/site-transits/',
   });
 
+  const { mutate, isLoading } = usePost({
+    url: '/vehicle-account/list/',
+    options: {
+      onSuccess: (data) => {
+        setResponseData(data);
+      },
+    },
+  });
   
+  React.useEffect(() => {
+    mutate({ page: pageParam, per_page: 10 });
+  }, [pageParam, mutate]);
 
+  useEffect(() => {
+    if (responseData) {
+      setCountPage(responseData?.pagination?.count);
 
+      const rows = responseData?.data?.map(
+        ({
+          id,
+          make,
+          model,
+          plate,
+          vehicle_category,
+          vin,
+          status,
+          nickname,
+        }) => {
+          return {
+            make,
+            model,
+            license_plate: plate,
+            category_title: vehicle_category,
+            tag_serial: vin,
+            enabled: true,
+            nickname,
+           
+
+          
+          };
+        }
+      );
+      setRows(rows);
+    }
+  }, [responseData ]);
 
   return (
     <>
@@ -118,7 +186,7 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className='flex justify-between'>
+        {/* <div className='flex justify-between'>
           <div className='flex-col'>
             <div className={` h-auto p-2 rounded-md flex mb-6 ${getStatusClassName(data?.data?.data?.account_status)}`}>
                 
@@ -129,7 +197,19 @@ const Home = () => {
             <Chart dataPieChart={dataPieChart} isLoadingPieChart={isLoadingPieChart}/>
           </div>
             <BarChartComponent/>
-       </div>
+       </div> */}
+
+<Table
+            headers={headers}
+            data={rows}
+            isLoading={isLoading}
+            errorMessage={
+              'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+            }
+            countPage={countPage}
+            pageParam={pageParam}
+            setPageParam={setPageParam}
+          />
       
       </div>
     </>
