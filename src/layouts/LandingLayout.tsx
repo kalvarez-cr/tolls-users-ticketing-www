@@ -48,14 +48,14 @@ const LandingLayout = ({ children }: TLandingLayout) => {
         >
           {({ open, close }) => (
             <>
-              <div className="px-2 sm:px-20">
+              <div className="px-2 lg:px-20">
                 <div className="relative flex h-16 items-center justify-between">
                   <div className="ml-10">
                     <Logo className="w-36" />
                   </div>
-                  <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                  <div className="absolute inset-y-0 left-0 flex items-center lg:hidden">
                     {/* Mobile menu button*/}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -67,11 +67,11 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                       )}
                     </Disclosure.Button>
                   </div>
-                  <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex flex-1 items-center justify-center lg:items-stretch lg:justify-start">
                     <div className="flex flex-shrink-0 items-center">
                       <LogoDark className="mx-2 w-20" />
                     </div>
-                    <div className="hidden sm:ml-6 sm:block">
+                    <div className="hidden lg:ml-6 lg:block">
                       <div className="flex h-full space-x-0">
                         {navigation.map((item) => (
                           <Link href={item.href} key={item.name}>
@@ -93,7 +93,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute inset-y-0 right-0 flex items-center space-x-4 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <div className="absolute inset-y-0 right-0 flex items-center space-x-4 pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0">
                     <Link href="/user">
                       <button>
                         <UserCircleIcon className="h-7 text-slate-100 transition-colors delay-100 duration-200 hover:text-white" />
@@ -107,7 +107,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                 </div>
               </div>
 
-              <Disclosure.Panel className="sm:hidden">
+              <Disclosure.Panel className="lg:hidden">
                 <div
                   className="flex flex-col space-y-1 px-2 pt-2 pb-3"
                   onClick={() => close()}

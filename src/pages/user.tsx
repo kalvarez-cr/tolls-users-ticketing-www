@@ -14,6 +14,7 @@ import { useGuard } from 'hooks/useGuard';
 import { useAxios } from 'hooks/useAxios';
 import ResetPassword from '@components/modalForms/ResetPasswordForm';
 import Button from '@components/Button';
+import { updateUserInfo } from '@store/counter/loginReducer';
 
 interface Inputs {
   phone_number?: string;
@@ -58,8 +59,10 @@ const User = () => {
       });
     },
     {
-      onSuccess: () => {
+      onSuccess: ({data}) => {
+       
         dispatch(open({ text: 'Actualización exitosa', type: 'success' }));
+        dispatch(updateUserInfo(data.data[0]))
       },
       onError: (error: AxiosError) => {
         dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));

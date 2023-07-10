@@ -53,7 +53,7 @@ const BarChartComponent = () => {
     return (
       
         <>
-        <div className='flex flex-col p-6 rounded-xl shadow-md bg-[#fff] bg-opacity-100 '>
+        <div className='flex flex-col p-6 overflow-x-scroll rounded-xl shadow-md bg-[#fff] bg-opacity-100 '>
         <p className='mb-6 text-gray-500 text-center'>Recarga vs consumo</p>
         <BarChart
           width={600}

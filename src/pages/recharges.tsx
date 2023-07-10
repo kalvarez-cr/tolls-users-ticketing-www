@@ -110,7 +110,7 @@ const Recharges = () => {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <Card
               title={'Saldo actual'}
-              data={currencyFormatter.format(data?.data?.data?.account_balance)}
+             data={data?.data?.data?.account_balance ?    currencyFormatter.format(data?.data?.data?.account_balance) : 'No hay registro' }
               isLoading={isLoadingBalance}
               icon={
                 <div className="flex h-10 w-10 items-center">
