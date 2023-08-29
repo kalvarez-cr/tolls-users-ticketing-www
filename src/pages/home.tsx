@@ -128,7 +128,7 @@ const Home = () => {
               data={
                 data?.data?.data?.account_balance
                   ? currencyFormatter.format(data?.data?.data?.account_balance)
-                  : 'No hay registro'
+                  : 'Cuenta sin saldo'
               }
               isLoading={isLoadingBalance}
               icon={
