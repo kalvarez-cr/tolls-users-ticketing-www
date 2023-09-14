@@ -22,3 +22,15 @@ export const removeByKey = (
 // export const arrayUniqueByKey = (array: Array<any>, key: string) => {
 //   return [...new Map(array.map((it) => [it[key], it])).values()];
 // };
+
+export function getStatusClassName(account_status){
+  if(account_status === 'Inactiva'){
+    return 'bg-red-500'
+  }else if(account_status === 'Suspendida'){
+    return 'bg-yellow-400'
+  }else if(account_status === 'Activa'){
+  return 'bg-green-500'
+  }else {
+    return 'bg-white'
+  }
+  } 

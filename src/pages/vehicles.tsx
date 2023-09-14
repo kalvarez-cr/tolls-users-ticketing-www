@@ -2,127 +2,159 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import LandingLayout from '@layouts/LandingLayout';
 import Table from '@components/Table';
 import { useGuard } from 'hooks/useGuard';
-import { useAxios } from 'hooks/useAxios';
-import { useMutation, useQuery } from 'react-query';
-import { useAppDispatch } from '@store/hooks';
-import { AxiosError } from 'axios';
-import { open } from '@store/counter/snackbarReducer';
 import Card from '@components/Card';
-import CancelForm from '@components/modalForms/CancelForm';
 import BlockForm from '@components/modalForms/BlockForm';
+import { UseApiCall } from 'hooks/useApiCall';
+import { EyeIcon, FilterIcon, MinusCircleIcon, RewindIcon } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
+import SimpleContainer from '@components/SimpleContainer';
+import Modal from '@components/Modal';
+import FilterForm, {
+  FilterVehiclesFormSchema,
+  TFilterVehiclesFormInputs,
+} from '@components/vehicles/filterForm';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const headers = [
+  {
+    id: '1',
+    key: 'nickname',
+    header: 'Alias',
+  },
+  
+  {
+    id: '2',
+    key: 'model',
+    header: 'Modelo',
+  },
+  {
+    id: '3',
+    key: 'license_plate',
+    header: 'Placa',
+  },
+  {
+    id: '4',
+    key: 'category_title',
+    header: 'Categoría',
+  },
+
+  {
+    id: '5',
+    key: 'active',
+    header: 'Habilitado',
+  },
+
+  {
+    id: '6',
+    key: 'actions',
+    header: 'Acciones',
+  },
+];
 
 const Vehicles = () => {
   useGuard();
-  const { requester } = useAxios();
-  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
   const [rows, setRows] = useState([]);
   const [openModal, setOpenModal] = React.useState(false);
   const [modal, setModal] = React.useState('');
-  const [idVehicle, setIdVehicle] = React.useState('');
   const [idTag, setIdTag] = React.useState('');
+  const [active, setActive] = React.useState<string>();
+  const [openFilter, setOpenFilter] = React.useState<boolean>(false);
+  const [responseData, setResponseData] = React.useState<any>(null);
 
-  const { data: dataVehicle, isLoading: isLoadingVehicle } = useQuery({
-    queryKey: ['getVehicle'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/count_vehicle/',
-      });
-    },
+  const { useGet, usePost } = UseApiCall();
+
+  const { data: dataVehicle, isLoading: isLoadingVehicle } = useGet({
+    queryKey: 'getVehicle',
+    url: '/dashboard/count_vehicle/',
   });
 
-  const { data: dataTotal, isLoading: isLoadingTotal } = useQuery({
-    queryKey: ['getTotals'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/last_transit/',
-      });
-    },
+  const { data: dataTotal, isLoading: isLoadingTotal } = useGet({
+    queryKey: 'getTotals',
+    url: '/dashboard/last_transit/',
   });
 
-  const {
-    mutate,
-    data: response,
-    isLoading,
-  } = useMutation(
-    (account: any) => {
-      return requester({
-        method: 'POST',
-        data: account,
-        url: '/vehicle-account/list/',
-      });
-    },
-    {
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+  const { mutate, isLoading } = usePost({
+    url: '/vehicle-account/list/',
+    options: {
+      onSuccess: (data) => {
+        setResponseData(data);
       },
-    }
-  );
+    },
+  });
 
-  const handleCancel = (e) => {
-    setOpenModal(true);
-    setModal('cancel');
-    const id = e.currentTarget.dataset.tag;
-    setIdVehicle(id);
-  };
+  
+
+  const filterHookForm = useForm<TFilterVehiclesFormInputs>({
+    resolver: yupResolver(FilterVehiclesFormSchema),
+  });
 
   const handleDisabled = (e) => {
     setOpenModal(true);
     setModal('block');
     const id = e.currentTarget.dataset.id;
+    const active = e.currentTarget.dataset.active;
     setIdTag(id);
+    setActive(active === 'active' ? 'false' : 'active');
   };
 
-  const headers = [
-    // {
-    //   id: '1',
-    //   key: 'make',
-    //   header: 'Marca',
-    // },
-    {
-      id: '1',
-      key: 'model',
-      header: 'Modelo',
-    },
-    {
-      id: '2',
-      key: 'license_plate',
-      header: 'Placa',
-    },
-    {
-      id: '3',
-      key: 'category_title',
-      header: 'Categoría',
-    },
-    {
-      id: '4',
-      key: 'tag_serial',
-      header: 'Tag asociado',
-    },
-    {
-      id: '5',
-      key: 'active',
-      header: 'Habilitado',
-    },
-    {
-      id: '6',
-      key: 'actions',
-      header: 'Acciones',
-    },
-  ];
+  const handleEdit = (e) => {
+    const id = e.currentTarget.dataset.id;
+    router.push(`/vehicle/${id}`);
+  };
+
+  const handleOpenFilter = (e) => {
+    e.preventDefault();
+    setOpenFilter(true);
+  };
+
+  const handleCleanFilter = (e) => {
+    e.preventDefault();
+    mutate({
+      per_page:10,
+      page: pageParam
+    })
+    filterHookForm.reset()
+    setOpenFilter(false)
+  }
+
+  const onSubmit: SubmitHandler<TFilterVehiclesFormInputs> = async (
+    inputsData: TFilterVehiclesFormInputs
+  ) => {
+    const { nickname, status } = inputsData;
+
+    mutate({
+      nickname,
+      status,
+      per_page: 10,
+      page: pageParam,
+    });
+    setOpenFilter(false);
+  
+  };
 
   React.useEffect(() => {
     mutate({ page: pageParam, per_page: 10 });
   }, [pageParam, mutate]);
 
   useEffect(() => {
-    if (response) {
-      setCountPage(response.data.pagination.count);
-      const rows = response?.data?.data?.map(
-        ({ id, make, model, plate, vehicle_category, vin, active }) => {
+    if (responseData) {
+      setCountPage(responseData?.pagination?.count);
+
+      const rows = responseData?.data?.map(
+        ({
+          id,
+          make,
+          model,
+          plate,
+          vehicle_category,
+          vin,
+          status,
+          nickname,
+        }) => {
           return {
             make,
             model,
@@ -130,50 +162,60 @@ const Vehicles = () => {
             category_title: vehicle_category,
             tag_serial: vin,
             enabled: true,
-            active: active ? (
-              <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
-                &nbsp;Activo&nbsp;
-              </div>
-            ) : (
-              <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
-                &nbsp;Inactivo&nbsp;
+            nickname,
+            active:
+              status === 'active' ? (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center font-bold text-emerald-600">
+                  &nbsp;Activo&nbsp;
+                </div>
+              ) : (
+                <div className="rounded-full bg-gray-100 py-0.5 text-center text-red-600">
+                  &nbsp;Inactivo&nbsp;
+                </div>
+              ),
+
+            actions: (
+              <div className="flex items-center space-x-3">
+                <button onClick={handleEdit} data-id={id}>
+                  <EyeIcon className="h-6 text-gray-400 hover:text-gray-300" />
+                </button>
+                <button
+                  onClick={handleDisabled}
+                  data-id={id}
+                  data-active={status}
+                >
+                  <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
+                </button>
               </div>
             ),
-
-            // actions: (
-            //   <div className="flex items-center space-x-3">
-            //     <button onClick={handleDisabled} data-id={id}>
-            //       <MinusCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-            //     </button>
-            //     <button onClick={handleCancel} data-tag={tag_id.id}>
-            //       <XCircleIcon className="h-6 text-rose-400 hover:text-rose-300" />
-            //     </button>
-            //   </div>
-            // ),
           };
         }
       );
       setRows(rows);
     }
-  }, [response]);
-
-  // let lastTags = account?.last_use_tag?.tag_serial || '-';
+  }, [responseData, active]);
 
   return (
     <>
-      {modal === 'cancel' ? (
-        <CancelForm
+      {modal === 'block' ? (
+        <BlockForm
           open={openModal}
           setOpen={setOpenModal}
-          idVehicle={idVehicle}
+          idTag={idTag}
+          status={active}
         />
       ) : null}
-
-      {modal === 'block' ? (
-        <BlockForm open={openModal} setOpen={setOpenModal} idTag={idTag} />
-      ) : null}
-
-      <div className="mx-6 mt-24  w-full ">
+      <Modal
+        open={openFilter}
+        setOpen={setOpenFilter}
+        handleAccept={filterHookForm.handleSubmit(onSubmit)}
+        title="Filtro avanzado"
+        acceptButtonText="Buscar"
+        cancelButtonText="Cancelar"
+      >
+        <FilterForm useForm={filterHookForm} />
+      </Modal>
+      <div className="mx-6 mt-24 w-full ">
         <div className="mb-10 space-y-8">
           <h2 className="sub-header-text text-3xl">Vehículos Asociados</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -182,7 +224,7 @@ const Vehicles = () => {
               data={
                 dataVehicle?.data?.data?.vehicles
                   ? dataVehicle?.data?.data?.vehicles
-                  : 'No hay data'
+                  : 'No hay vehículo'
               }
               isLoading={isLoadingVehicle}
               icon={
@@ -202,7 +244,7 @@ const Vehicles = () => {
               data={
                 dataTotal?.data?.data?.last_transit?.tag_serial
                   ? dataTotal?.data?.data?.last_transit?.tag_serial
-                  : 'No hay data'
+                  : 'No se ha usado'
               }
               isLoading={isLoadingTotal}
               icon={
@@ -218,11 +260,11 @@ const Vehicles = () => {
               link=""
             />
             <Card
-              title={'Último Canal'}
+              title={'Último peaje transitado'}
               data={
-                dataTotal?.data?.data?.last_transit?.lane
-                  ? dataTotal?.data?.data?.last_transit?.lane
-                  : 'No hay data'
+                dataTotal?.data?.data?.last_transit?.toll_site
+                  ? dataTotal?.data?.data?.last_transit?.toll_site
+                  : 'No hay tránsitos'
               }
               isLoading={isLoadingTotal}
               icon={
@@ -239,17 +281,40 @@ const Vehicles = () => {
             />
           </div>
         </div>
-        <Table
-          headers={headers}
-          data={rows}
-          isLoading={isLoading}
-          errorMessage={
-            'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+        <SimpleContainer
+          title={'Vehículos Asociados'}
+          rightComponent={
+            <div className='flex space-x-3 '>
+            <button onClick={handleOpenFilter}>
+
+              
+              <FilterIcon className="w-4" />
+              
+
+            </button>
+
+            <button onClick={handleCleanFilter}>
+            <img
+            src="/broomIcon.png"
+            alt="clean-icon"
+            className="w-6 "
+          />
+            </button>
+            </div>
           }
-          countPage={countPage}
-          pageParam={pageParam}
-          setPageParam={setPageParam}
-        />
+        >
+          <Table
+            headers={headers}
+            data={rows}
+            isLoading={isLoading}
+            errorMessage={
+              'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
+            }
+            countPage={countPage}
+            pageParam={pageParam}
+            setPageParam={setPageParam}
+          />
+        </SimpleContainer>
       </div>
     </>
   );

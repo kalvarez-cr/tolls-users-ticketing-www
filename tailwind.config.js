@@ -25,6 +25,7 @@ module.exports = {
         bdv: "url('/bdv.png')",
         petro: "url('/petro.png')",
         banesco: "url('/banesco.png')",
+        // qr: "url('/qr.png')",
       },
       colors: {
         'bg-primary-light': '#fff',
@@ -47,7 +48,6 @@ module.exports = {
     //https://tailwindcss.com/docs/plugins#official-plugins
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
-    require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
   ],
 };

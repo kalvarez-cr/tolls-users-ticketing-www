@@ -13,27 +13,26 @@ import { useRouter } from 'next/router';
 import { open } from '@store/counter/snackbarReducer';
 
 interface Inputs {
-  sms_code: string;
+  smsCode: string;
+  paymentMethod: string;
 }
 
 const Schema = yup.object().shape({
-  sms_code: yup.string().required('Este campo es requerido'),
+  smsCode: yup.string().required('Este campo es requerido'),
 });
 
-const ConfirmationForm = ({
+const ConfirmationSmsForm = ({
   openModal,
   setOpenModal,
-  transaction,
-  ci,
-  type,
-  charge_amount,
+  token,
+  paymentMethod,
 }) => {
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors },
     resetField,
+    formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
@@ -44,40 +43,43 @@ const ConfirmationForm = ({
       return requester({
         method: 'POST',
         data: code,
-        url: 'punto-ya/confirm-code/',
+        url: 'external-recharge/confirm_bdv_sms/',
       });
     },
     {
       onSuccess: (response) => {
         const { data } = response;
-        if (data.return_code === '00') {
+
+        if (data.data?.bdv_response?.success === 1) {
           setOpenModal(false);
           dispatch(
-            open({ text: 'Recarga realizada con éxito', type: 'success' })
+            open({ text: data.data?.bdv_response?.message, type: 'success' })
           );
           router.push('/recharges');
         } else {
           setOpenModal(false);
-          dispatch(open({ text: 'Error inesperado', type: 'error' }));
+          dispatch(
+            open({ text: data.data?.bdv_response?.message, type: 'error' })
+          );
         }
       },
       onError: (error: AxiosError) => {
-        setOpenModal(false);
-        dispatch(open({ text: 'Error inesperado', type: 'error' }));
+        dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
     }
   );
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { sms_code } = data;
+    const { smsCode } = data;
     mutate({
-      transaction_id: transaction,
-      identification: `${type}${ci}`,
-      sms_code,
+      token,
+      smsCode,
       channel: 'web_site',
-      charge_amount,
+      bank: '1',
+      paymentMethod,
     });
-    resetField('sms_code')
+
+    resetField('smsCode')
   };
 
   return (
@@ -94,12 +96,12 @@ const ConfirmationForm = ({
       >
         <p className="">Introduzca el código de confirmación recibido</p>
         <form className="mt-12">
-          <div className="mt-12">
+          <div className="w-full">
             <InputV2
-              label=""
-              name="sms_code"
+              label="Código"
+              name="smsCode"
               type="text"
-              errorMessage={errors.sms_code?.message}
+              errorMessage={errors.smsCode?.message}
               register={register}
             />
           </div>
@@ -109,4 +111,4 @@ const ConfirmationForm = ({
   );
 };
 
-export default ConfirmationForm;
+export default ConfirmationSmsForm;

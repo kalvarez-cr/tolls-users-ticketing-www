@@ -11,65 +11,38 @@ import { AxiosError } from 'axios';
 import { open } from '@store/counter/snackbarReducer';
 import { useSelector } from 'react-redux';
 import { currencyFormatter } from 'utils/utils';
+import { UseApiCall } from 'hooks/useApiCall';
 
 const Transit = () => {
   useGuard();
-  const dispatch = useAppDispatch();
   const [rows, setRows] = useState([]);
   const [pageParam, setPageParam] = useState(1);
   const [countPage, setCountPage] = useState(1);
   const transits = useSelector((state: any) => state.loginUser);
 
-  const { data: dataTransit, isLoading: isLoadingTransit } = useQuery({
-    queryKey: ['getTransit'],
-    queryFn: async () => {
-      return await requester({
-        method: 'GET',
-        url: '/dashboard/count_transits/',
-      });
-    },
+  const { useGet, usePost } = UseApiCall();
+
+  const { data: dataTransit, isLoading: isLoadingTransit } = useGet({
+    queryKey: 'getTransit',
+    url: '/dashboard/count_transits/',
   });
 
-  const { data: dataTotalConsumed, isLoading: isLoadingTotalConsumed } =
-    useQuery({
-      queryKey: ['getTotalAmount'],
-      queryFn: async () => {
-        return await requester({
-          method: 'GET',
-          url: '/dashboard/total_consumed/',
-        });
-      },
-    });
-
-  const { data: dataTotalTransit, isLoading: isLoadingTotalTransit } = useQuery(
+  const { data: dataTotalConsumed, isLoading: isLoadingTotalConsumed } = useGet(
     {
-      queryKey: ['getTotalTransit'],
-      queryFn: async () => {
-        return await requester({
-          method: 'GET',
-          url: '/dashboard/last_transit/',
-        });
-      },
+      queryKey: 'getTotalAmount',
+      url: '/dashboard/total_consumed/',
     }
   );
+
+  const { data: dataTotalTransit, isLoading: isLoadingTotalTransit } = useGet({
+    queryKey: 'getTotalTransit',
+    url: '/dashboard/last_transit/',
+  });
   const {
     mutate,
     data: response,
     isLoading,
-  } = useMutation(
-    (account: any) => {
-      return requester({
-        method: 'POST',
-        data: account,
-        url: '/tag-account-movements/list/',
-      });
-    },
-    {
-      onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
-      },
-    }
-  );
+  } = usePost({ url: '/tag-account-movements/list/' });
 
   const headers = [
     {
@@ -79,45 +52,24 @@ const Transit = () => {
     },
     {
       id: '2',
-      key: 'collected_amount',
-      header: 'Monto',
-    },
-
-    {
-      id: '3',
-      key: 'lane',
-      header: 'Canal',
-    },
-    {
-      id: '4',
       key: 'tag_serial',
       header: 'Tag',
     },
     {
-      id: '5',
+      id: '3',
       key: 'toll_site',
       header: 'Peaje',
     },
-    // {
-    //   id: '7',
-    //   key: 'movements',
-    //   header: 'Movimientos',
-    // },
-    // {
-    //   id: '6',
-    //   key: 'ticket',
-    //   header: 'Ticket',
-    // },
-    // {
-    //   id: '6',
-    //   key: 'amount',
-    //   header: 'Monto',
-    // },
-    // {
-    //   id: '7',
-    //   key: 'actions',
-    //   header: 'Detalles',
-    // },
+    {
+      id: '4',
+      key: 'lane',
+      header: 'Canal',
+    },
+    {
+      id: '5',
+      key: 'collected_amount',
+      header: 'Monto',
+    },
   ];
 
   React.useEffect(() => {
@@ -126,8 +78,8 @@ const Transit = () => {
 
   useEffect(() => {
     if (response) {
-      setCountPage(response.data.pagination.count);
-      const rows = response?.data?.data?.map(
+      setCountPage(response?.pagination?.count);
+      const rows = response?.data?.map(
         ({
           id,
           moment,
@@ -169,7 +121,7 @@ const Transit = () => {
             data={
               dataTransit?.data?.data?.transits
                 ? dataTransit?.data?.data?.transits
-                : 'No hay data'
+                : 'Sin tránsitos '
             }
             isLoading={isLoadingTransit}
             icon={
@@ -189,7 +141,7 @@ const Transit = () => {
             data={
               dataTotalConsumed?.data?.data?.total
                 ? currencyFormatter.format(dataTotalConsumed?.data?.data?.total)
-                : 'No hay data'
+                : 'No hay consumo'
             }
             isLoading={isLoadingTotalConsumed}
             icon={
@@ -209,7 +161,7 @@ const Transit = () => {
             data={
               dataTotalTransit?.data?.data?.last_transit?.toll_site
                 ? dataTotalTransit?.data?.data?.last_transit?.toll_site
-                : 'No hay data'
+                : 'No hay pasos aún'
             }
             isLoading={isLoadingTotalTransit}
             icon={

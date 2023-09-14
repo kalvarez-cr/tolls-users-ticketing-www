@@ -2,9 +2,9 @@ interface TLoaderProps {
   className?:string
 }
 
-const Loader2 = ({className}: TLoaderProps) => {
+const LoaderSelect = ({className}: TLoaderProps) => {
   return (
-    <div className={`lds-ellipsis ${className ? className : ''}`}>
+    <div className={`lds-ring2 ${className ? className : ''}`}>
       <div></div>
       <div></div>
       <div></div>
@@ -13,4 +13,4 @@ const Loader2 = ({className}: TLoaderProps) => {
   );
 };
 
-export default Loader2;
+export default LoaderSelect;

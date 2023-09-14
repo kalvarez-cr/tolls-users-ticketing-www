@@ -4,10 +4,12 @@ import type { RootState } from '../index';
 // declaring the types for our state
 export type LoginState = {
   loggedIn: boolean;
+  user_info?: TLoginPayload
 };
 
 const initialState: LoginState = {
   loggedIn: false,
+
 };
 
 interface TLoginPayload {
@@ -49,16 +51,25 @@ export const counterSlice = createSlice({
   name: 'loginUser',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<TLoginPayload>) => {
+    login: (state, action: PayloadAction<LoginState>) => {
       return { loggedIn: true, ...action.payload };
     },
     logout: () => {
       return { loggedIn: false };
     },
+    updateUserInfo : (state, action) => {
+      return {
+        ...state ,
+        user_info: {
+          ...state.user_info,
+          ...action.payload
+        }
+      }
+    }
   },
 });
 
-export const { login, logout } = counterSlice.actions;
+export const { login, logout, updateUserInfo } = counterSlice.actions;
 
 export const loginUser = (state: RootState) => state.loginUser;
 

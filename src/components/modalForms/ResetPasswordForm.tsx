@@ -1,8 +1,6 @@
 import React from 'react';
 import Modal from '@components/Modal';
-import { CreditCardIcon } from '@heroicons/react/solid';
 import InputV2 from '@components/inputs/InputV2';
-import Select from '@components/inputs/Select';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
@@ -10,40 +8,57 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '@store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useRouter } from 'next/router';
+import { logout } from '@store/counter/loginReducer';
 
 interface Inputs {
   password: string;
+  old_password: string;
 }
 const Schema = yup.object().shape({
   password: yup
     .string()
-    .min(8, 'Mínimo 8 caracteres')
-    .max(8, 'Máximo 8 caracteres')
+    .min(6, 'Mínimo 6 caracteres')
+    .max(12, 'Máximo 12 caracteres')
     .required('Este campo es requerido'),
   confirm_password: yup
     .string()
     .required('Este campo es requerido')
     .oneOf([yup.ref('password'), 'Las contraseñas deben coincidir']),
+  old_password: yup.string().required('Este campo es requerido'),
 });
 
-const ResetPassword = ({ open, setOpen }) => {
+const ResetPassword = ({ open, setOpen, loading }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { mutate } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
         data: formData,
-        url: '/recharge-module/create/',
+        url: 'account-holder/update-password/',
       });
     },
     {
       onSuccess: (response) => {
         const { data } = response;
-        console.log(data);
-        setOpen(false);
+        if (data) {
+          setOpen(false);
+          dispatch(
+            open({
+              text: 'Actualización exitosa, sera redirido al login',
+              type: 'success',
+            })
+          );
+          setTimeout(() => {
+            dispatch(logout());
+            router.push('/');
+          }, 5000);
+        }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        setOpen(false);
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -51,16 +66,15 @@ const ResetPassword = ({ open, setOpen }) => {
   const {
     register,
     handleSubmit,
-    getValues,
-    watch,
+
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { password } = data;
-    mutate({ password });
+    const { password, old_password } = data;
+    mutate({ password, old_password });
   };
 
   return (
@@ -72,6 +86,7 @@ const ResetPassword = ({ open, setOpen }) => {
         title="Cambiar contraseña"
         acceptButtonText="Aceptar"
         cancelButtonText="Cancelar"
+        loading={loading}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,17 +105,28 @@ const ResetPassword = ({ open, setOpen }) => {
         }
       >
         <form className="mr-auto" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col items-start">
-            <div className="flex gap-4 py-6">
+          <div className="mt-5 flex flex-col items-center">
+            <div className=" mt-5">
               <InputV2
-                label="Contraseña"
+                label="Antigua contraseña"
+                name="old_password"
+                type="text"
+                errorMessage={errors.password?.message}
+                register={register}
+              />
+            </div>
+            <div className="mt-5">
+              <InputV2
+                label="Nueva contraseña"
                 name="password"
                 type="text"
                 errorMessage={errors.password?.message}
                 register={register}
               />
+            </div>
+            <div className="mt-5">
               <InputV2
-                label="Confirmar Contraseña"
+                label="Confirmar contraseña"
                 name="confirm_password"
                 type="text"
                 errorMessage={

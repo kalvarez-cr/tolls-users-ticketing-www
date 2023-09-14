@@ -30,7 +30,11 @@ interface Inputs {
 const Schema = yup.object().shape({
   charge_amount: yup.string().required('Este campo es requerido'),
   type: yup.string().required('Este campo es requerido'),
-  ci: yup.string().required('Este campo es requerido'),
+  ci: yup
+    .string()
+    .min(7, 'Mínimo 7 caracteres')
+    .max(9, 'Máximo 9 caracteres')
+    .required('Este campo es requerido'),
   bank_code: yup.string().required('Este campo es requerido'),
   phone: yup
     .string()
@@ -56,6 +60,10 @@ const methods = [
     value: 'E',
     label: 'E',
   },
+  {
+    value: 'G',
+    label: 'G',
+  },
 ];
 
 const credicard = () => {
@@ -68,6 +76,7 @@ const credicard = () => {
   const [modal, setModal] = React.useState('');
 
   const banks = useSelector((state: any) => state.loginUser?.banks);
+  const user_info = useSelector((state: any) => state.loginUser?.user_info);
 
   const {
     register,
@@ -76,9 +85,10 @@ const credicard = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
+    mode: 'onChange',
   });
 
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
         method: 'POST',
@@ -89,15 +99,19 @@ const credicard = () => {
     {
       onSuccess: (response) => {
         const { data } = response;
-
+        console.log(response);
         if (data) {
           setOpenModal(true);
           setModal('confirmation');
           SetTransaction(data.data.transactionId);
+
+          setTimeout(() => {
+            setOpenModal(false);
+          }, 120000);
         }
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: error.response.statusText, type: 'error' }));
+        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
       },
     }
   );
@@ -119,11 +133,12 @@ const credicard = () => {
     <>
       {modal === 'confirmation' ? (
         <ConfirmationForm
-          open={openModal}
-          setOpen={setOpenModal}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
           transaction={transaction}
           ci={watch('ci')}
           type={watch('type')}
+          charge_amount={watch('charge_amount')}
         />
       ) : null}
 
@@ -151,17 +166,20 @@ const credicard = () => {
                 label="Tipo"
                 name="type"
                 options={methods}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.type?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_doc_type}
+
               />
             </div>
             <div className="mt-14 w-full md:w-1/3">
               <InputV2
-                label="Cédula"
+                label="Documento"
                 name="ci"
                 type="text"
                 errorMessage={errors.ci?.message}
                 register={register}
+                defaultValue={user_info?.holder_id_number}
               />
             </div>
             <div className="mt-14 w-full md:w-1/3 md:pl-4">
@@ -171,24 +189,26 @@ const credicard = () => {
                 type="text"
                 errorMessage={errors.phone?.message}
                 register={register}
+                defaultValue={user_info?.phone_number}
               />
             </div>
-            <div className="mt-10 w-full md:w-1/3 md:pl-4">
+            <div className="mt-10 w-full md:w-1/3 ">
               <Select
                 label="Banco"
                 name="bank_code"
                 options={banks}
-                // errorMessage={errors.nif?.message}
+                errorMessage={errors.bank_code?.message}
                 register={register}
               />
             </div>
-            <div className="mt-14 w-full md:w-1/2 md:pl-9">
+            <div className="mt-14 w-full md:w-1/2 md:pl-8">
               <InputV2
                 label="Monto"
                 name="charge_amount"
                 type="text"
                 errorMessage={errors.charge_amount?.message}
                 register={register}
+                defaultValue={'1.0'}
               />
             </div>
           </div>
@@ -198,7 +218,14 @@ const credicard = () => {
             type="button"
             value="Confirmar"
             onClick={handleSubmit(onSubmit)}
-            className="mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 focus:outline-none focus:ring focus:ring-emerald-600/50 focus:ring-opacity-80 focus:ring-offset-2"
+            className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50 
+            ${
+              isLoading
+                ? 'animate-pulse bg-slate-400 '
+                : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
+            }
+            
+            `}
           />
           <input
             onClick={() => router.back()}

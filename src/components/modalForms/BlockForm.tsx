@@ -6,21 +6,17 @@ import { useMutation } from 'react-query';
 import { requester } from 'utils/requester';
 import { MinusCircleIcon } from '@heroicons/react/outline';
 
-const CancelForm = ({ open, setOpen, idTag }) => {
+const CancelForm = ({ open, setOpen, idTag, status }) => {
   const dispatch = useAppDispatch();
   const { mutate } = useMutation(
     (id: any) => {
       return requester({
         method: 'POST',
         data: id,
-        url: '/registered-vehicle/block/',
+        url: '/vehicle-account/update/',
       });
     },
     {
-      onSuccess: (response) => {
-        const { data } = response;
-        return data.data;
-      },
       onError: (error: AxiosError) => {
         dispatch(open({ text: error.response.statusText, type: 'error' }));
       },
@@ -28,7 +24,12 @@ const CancelForm = ({ open, setOpen, idTag }) => {
   );
 
   const handleAccept = () => {
-    mutate({ id: idTag });
+    mutate({
+      id: idTag,
+      data: {
+        status,
+      },
+    });
     setOpen(false);
   };
 
@@ -38,12 +39,18 @@ const CancelForm = ({ open, setOpen, idTag }) => {
         open={open}
         setOpen={setOpen}
         handleAccept={() => handleAccept()}
-        title="Bloquear vehículo"
+        title={
+          status === 'false' ? 'Bloquear vehículo' : 'Desbloquear vehículo'
+        }
         acceptButtonText="Proceder"
         cancelButtonText="Cancelar"
         icon={<MinusCircleIcon />}
       >
-        <p>¿Usted desea bloquear este vehículo?</p>
+        <p>
+          {status === 'false'
+            ? '¿Usted desea bloquear este vehículo?'
+            : '¿Usted desea desbloquear este vehículo?'}
+        </p>
       </Modal>
     </>
   );
