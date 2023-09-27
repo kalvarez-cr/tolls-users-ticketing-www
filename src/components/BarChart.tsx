@@ -33,10 +33,11 @@ const BarChartComponent = () => {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="x_axis" />
-          <YAxis dataKey="recharge" />
+          <YAxis dataKey="Recarga" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="recharge" fill="#8884d8" />
+          <Bar dataKey="Recarga" fill="#8884d8" />
+          <Bar dataKey="Transito" fill="#82ca9d" />
          
         </BarChart>
         </div>
