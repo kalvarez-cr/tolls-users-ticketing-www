@@ -15,7 +15,7 @@ const Snackbar = () => {
     if (open) {
       setTimeout(() => {
         dispatch(close());
-      }, 3000);
+      }, 5000);
     }
   }, [open, dispatch]);
 

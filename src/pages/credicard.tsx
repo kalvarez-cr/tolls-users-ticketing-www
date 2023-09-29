@@ -40,7 +40,7 @@ const Schema = yup.object().shape({
     .string()
     .required('Este campo es requerido')
     .min(11, 'Mínimo 11 caracteres')
-    .max(11, 'Máximo 11 caracteres'),
+    .max(20, 'Máximo 20 caracteres'),
 });
 
 const methods = [

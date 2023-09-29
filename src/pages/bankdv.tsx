@@ -35,7 +35,7 @@ const Schema = yup.object().shape({
   number: yup
     .string()
     .min(7, 'Mínimo 7 caracteres')
-    .max(9, 'Máximo 9 caracteres')
+    .max(11, 'Máximo 11 caracteres')
     .required('Este campo es requerido'),
   amount: yup
     .string()

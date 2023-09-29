@@ -56,7 +56,12 @@ const ConfirmationSmsForm = ({
             open({ text: data.data?.bdv_response?.message, type: 'success' })
           );
           router.push('/recharges');
-        } else {
+        } else if(data.data?.bdv_response?.success === 4){
+          setOpenModal(false);
+          dispatch(
+            open({ text: data.data?.bdv_response?.message, type: 'error' })
+          );
+        }else {
           setOpenModal(false);
           dispatch(
             open({ text: data.data?.bdv_response?.message, type: 'error' })
