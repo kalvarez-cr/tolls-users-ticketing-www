@@ -30,14 +30,14 @@ const Schema = yup.object().shape({
   phone_number: yup
     .string()
     .min(11, 'Mínimo 11 caracteres')
-    .max(14, 'Máximo 14 caracteres'),
+    .max(20, 'Máximo 20 caracteres'),
 
   first_name: yup.string(),
   last_name: yup.string(),
   phone_legal: yup
     .string()
     .min(11, 'Mínimo 11 caracteres')
-    .max(14, 'Máximo 14 caracteres'),
+    .max(20, 'Máximo 20 caracteres'),
   last_legal: yup.string(),
   name_legal: yup.string(),
 });

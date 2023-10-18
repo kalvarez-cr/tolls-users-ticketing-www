@@ -128,7 +128,7 @@ const Home = () => {
               data={
                 data?.data?.data?.account_balance
                   ? currencyFormatter.format(data?.data?.data?.account_balance)
-                  : 'No hay registro'
+                  : 'Cuenta sin saldo'
               }
               isLoading={isLoadingBalance}
               icon={
@@ -176,7 +176,7 @@ const Home = () => {
               link="/transit"
             />
           </div>
-          {/* <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-1  md:grid-cols-3 md:gap-x-6">
+          { <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-1  md:grid-cols-3 md:gap-x-6">
             <div className="">
               <div
                 className={` mb-6 flex h-auto rounded-md p-2 ${getStatusClassName(
@@ -196,10 +196,10 @@ const Home = () => {
             <div className="col-span-2 grid">
               <BarChartComponent />
             </div>
-          </div> */}
+          </div> }
         </div>
 
-        <Table
+        {/* <Table
           headers={headers}
           data={rows}
           isLoading={isLoading}
@@ -209,7 +209,7 @@ const Home = () => {
           countPage={countPage}
           pageParam={pageParam}
           setPageParam={setPageParam}
-        />
+        /> */}
       </div>
     </>
   );

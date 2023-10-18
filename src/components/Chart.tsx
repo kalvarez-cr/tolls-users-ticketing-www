@@ -62,7 +62,7 @@ const Chart = ({ isLoadingPieChart, dataPieChart }) => {
           <PieChart width={200} height={200}>
             <Pie
               data={dataPieChart?.data?.data}
-              cx="50%"
+              cx="60%"
               cy="50%"
               labelLine={false}
               label={renderCustomizedLabel}
