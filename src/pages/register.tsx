@@ -44,7 +44,7 @@ const Schema = yup.object().shape({
   // captcha: yup.boolean().required('Este c'),
 });
 
-const Index = () => {
+const Register = () => {
   const router = useRouter();
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
@@ -117,8 +117,8 @@ const Index = () => {
               <img src="/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
-            <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-10">
+            <form className="mt-11" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-8">
                 <InputV2
                   label="Documento de identidad"
                   name="usernameOrEmail"
@@ -128,7 +128,28 @@ const Index = () => {
                   defaultValue={items.name}
                 />
               </div>
-              <div className="mt-10">
+              <div className="mt-8">
+                <InputV2
+                  label="Correo "
+                  name="usernameOrEmail"
+                  type="text"
+                  errorMessage={errors.usernameOrEmail?.message}
+                  register={register}
+                  defaultValue={items.name}
+                />
+              </div>
+
+              <div className="mt-8">
+                <InputV2
+                  label="Número de teléfono"
+                  name="usernameOrEmail"
+                  type="text"
+                  errorMessage={errors.usernameOrEmail?.message}
+                  register={register}
+                  defaultValue={items.name}
+                />
+              </div>
+              <div className="mt-8">
                 <InputV2
                   label="Contraseña"
                   name="password"
@@ -144,31 +165,20 @@ const Index = () => {
                   }
                 />
               </div>
-
-              <div className="mt-8">
-                <Button loading={isLoading} type="submit" text="Ingresar" />
+             
+              <div className="mt-6">
+                <Button loading={isLoading} type="submit" text="Registrarse" />
               </div>
             </form>
             {
-              <>
-                <Link href="register">
-                  <p className="mt-5 cursor-pointer text-center text-sm">
-                    ¿No tienes una cuenta?{' '}
-                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
-                      Registrate
-                    </span>
-                  </p>
-                </Link>
-
-                <Link href="password">
-                  <p className="mt-4 cursor-pointer text-center text-sm">
-                    ¿Olvidaste tu contraseña?{' '}
-                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
-                      Click aquí
-                    </span>
-                  </p>
-                </Link>
-              </>
+              <Link href="/">
+                <p className="mt-1 cursor-pointer text-center text-sm">
+                ¿Ya tienes una cuenta?{' '}
+                  <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
+                   Ingresa 
+                  </span>
+                </p>
+              </Link>
             }
           </div>
           <div className="footer"></div>
@@ -193,4 +203,4 @@ const Index = () => {
 };
 
 // noinspection JSUnusedGlobalSymbols
-export default Index;
+export default Register;

@@ -207,6 +207,7 @@
 
 .login-form .left-column {
     margin-left: -35px;
+    height: 70%;
 
     /*noinspection CssUnknownTarget*/
     background: url("/movil-diagrama-col-izq.png") repeat-y;
@@ -214,6 +215,7 @@
 
 .login-form .right-column {
     margin-left: 328px;
+    height: 70%;
 
     /*noinspection CssUnknownTarget*/
     background: url("/movil-diagrama-col-der.png") repeat-y;
@@ -236,7 +238,7 @@
 
 .login-right-panel {
     z-index: 1;
-    margin-bottom: 42%;
+    margin-bottom: 40%;
 }
 
 .login-right-panel img {
