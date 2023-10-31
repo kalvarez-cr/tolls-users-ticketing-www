@@ -6,13 +6,15 @@ interface ButtonProps {
   text: string;
   type: 'button' | 'submit' | 'reset';
   onClick?: React.MouseEventHandler;
+  disabled?: boolean
 }
 
-const Button = ({ loading, text, type, onClick }: ButtonProps) => {
+const Button = ({ loading, text, type, onClick, disabled }: ButtonProps) => {
   return (
     <button
       type={type}
-      disabled={loading}
+      disabled={disabled || loading}
+
       onClick={onClick}
       className={`focus:ring-blueLight relative inline-flex h-10 w-full items-center justify-center rounded-md 
       bg-red-600 py-1 px-4 align-middle text-white  shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${

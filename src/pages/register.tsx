@@ -13,29 +13,53 @@ import { useAxios } from 'hooks/useAxios';
 import Button from '@components/Button';
 import { EyeIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
+import Select from '@components/inputs/Select';
 // import Link from 'next/link';
 // import Captcha from 'demos-react-captcha';
 
-const IS_PROD = process.env.NODE_ENV == 'production';
-const DEFAULT_USERNAME = IS_PROD
-  ? ''
-  : process.env.NEXT_PUBLIC_DEFAULT_USERNAME;
-const DEFAULT_PASSWORD = IS_PROD
-  ? ''
-  : process.env.NEXT_PUBLIC_DEFAULT_PASSWORD;
+
 
 interface Inputs {
-  usernameOrEmail: string;
+  email: string;
   password: string;
+  doc_number:string 
+  phone_number: string 
+  doc_type: string
 }
 
-const initialValues = {
-  name: IS_PROD ? '' : DEFAULT_USERNAME,
-  password: IS_PROD ? '' : DEFAULT_PASSWORD,
-};
+const methodsP = [
+  {
+    value: 'V',
+    label: 'V',
+  },
+  {
+    value: 'J',
+    label: 'J',
+  },
+  {
+    value: 'G',
+    label: 'G',
+  },
+];
+
+
+
 
 const Schema = yup.object().shape({
-  usernameOrEmail: yup.string().required('Este campo es requerido'),
+  phone_number: yup
+  .string()
+  .matches(/[0-9]\d*$/, "Debe ser un número válido ")
+  .min(11, "Mínimo 11 carácteres")
+  .max(20, "Máximo 20 carácteres")
+  .required("Este campo es requerido"),
+  doc_type: yup.string().required('Este campo es requerido'),
+  doc_number: yup
+  .string()
+  .matches(/[0-9]\d*$/, "Debe ser un número válido ")
+  .min(7, "Debe tener mínimo 7 caracteres")
+  .max(12, "Debe tener máximo 12 caracteres")
+  .required("Este campo es requerido"),
+  email: yup.string().email('Debe ser un email').required('Este campo es requerido'),
   password: yup
     .string()
     .min(6, 'Mínimo 6 caracteres')
@@ -44,12 +68,10 @@ const Schema = yup.object().shape({
   // captcha: yup.boolean().required('Este c'),
 });
 
-const Index = () => {
+const Register = () => {
   const router = useRouter();
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
-  const [items] = React.useState(initialValues);
-  const { loggedIn } = useAppSelector(loginUser);
   // const [captcha, setCaptcha] = useState(false);
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const handleShowPassword = () => {
@@ -61,25 +83,26 @@ const Index = () => {
       return requester({
         method: 'POST',
         data: formData,
-        url: '/login/',
+        url: '/account-holder/create/',
       });
     },
     {
-      onSuccess: (response) => {
-        const { data } = response;
+      onSuccess: () => {
+       
 
-        dispatch(login(data));
-        router.push('/home').then();
+        dispatch(open({ text: 'Registro exitoso', type: 'success' }));
+        router.push('/').then();
       },
       onError: (error: AxiosError) => {
-        dispatch(open({ text: 'Ha ocurrido un error', type: 'error' }));
+        //@ts-ignore
+        dispatch(open({ text: error?.response?.data?.message  , type: 'error' }));
       },
     }
   );
 
-  useEffect(() => {
-    loggedIn ? router.push('/home') : null;
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   loggedIn ? router.push('/home') : null;
+  // }, [loggedIn]);
 
   const {
     register,
@@ -90,8 +113,14 @@ const Index = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { usernameOrEmail, password } = data;
-    mutate({ usernameOrEmail, password });
+    const { email, password, doc_number, phone_number, doc_type } = data;
+    //@ts-ignore
+    mutate({
+      email, 
+      password, 
+      doc_number: `${doc_type}${doc_number} `,
+      phone_number
+    });
   };
 
   // const handleCaptcha = (value: boolean) => {
@@ -117,25 +146,54 @@ const Index = () => {
               <img src="/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
-            <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-10">
+            <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
+              <div className='flex justify-between'>
+            <div className=" ">
+            <Select
+                label="Tipo"
+                name="doc_type"
+                options={methodsP}
+                errorMessage={errors.doc_type?.message}
+                register={register}
+              />
+              </div>
+              
+              <div className="mt-4">
                 <InputV2
-                  label="Documento de identidad"
-                  name="usernameOrEmail"
+                  label="Documento"
+                  name="doc_number"
                   type="text"
-                  errorMessage={errors.usernameOrEmail?.message}
+                  errorMessage={errors.doc_number?.message}
                   register={register}
-                  defaultValue={items.name}
                 />
               </div>
-              <div className="mt-10">
+              </div>
+              <div className="mt-4">
+                <InputV2
+                  label="Correo "
+                  name="email"
+                  type="text"
+                  errorMessage={errors.email?.message}
+                  register={register}
+                />
+              </div>
+
+              <div className="mt-8">
+                <InputV2
+                  label="Número de teléfono"
+                  name="phone_number"
+                  type="text"
+                  errorMessage={errors.phone_number?.message}
+                  register={register}
+                />
+              </div>
+              <div className="mt-8">
                 <InputV2
                   label="Contraseña"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   errorMessage={errors.password?.message}
                   register={register}
-                  defaultValue={items.password}
                   icon={
                     <EyeIcon
                       className="h-5 w-full"
@@ -144,31 +202,20 @@ const Index = () => {
                   }
                 />
               </div>
-
-              <div className="mt-8">
-                <Button loading={isLoading} type="submit" text="Ingresar" />
+             
+              <div className="mt-6">
+                <Button loading={isLoading} type="submit" text="Registrarse" />
               </div>
             </form>
             {
-              <>
-                <Link href="register">
-                  <p className="mt-5 cursor-pointer text-center text-sm">
-                    ¿No tienes una cuenta?{' '}
-                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
-                      Registrate
-                    </span>
-                  </p>
-                </Link>
-
-                <Link href="password">
-                  <p className="mt-4 cursor-pointer text-center text-sm">
-                    ¿Olvidaste tu contraseña?{' '}
-                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
-                      Click aquí
-                    </span>
-                  </p>
-                </Link>
-              </>
+              <Link href="/">
+                <p className="mt-1 cursor-pointer text-center text-sm">
+                ¿Ya tienes una cuenta?{' '}
+                  <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
+                   Ingresa 
+                  </span>
+                </p>
+              </Link>
             }
           </div>
           <div className="footer"></div>
@@ -193,4 +240,4 @@ const Index = () => {
 };
 
 // noinspection JSUnusedGlobalSymbols
-export default Index;
+export default Register;

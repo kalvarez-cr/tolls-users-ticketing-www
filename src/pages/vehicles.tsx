@@ -5,7 +5,13 @@ import { useGuard } from 'hooks/useGuard';
 import Card from '@components/Card';
 import BlockForm from '@components/modalForms/BlockForm';
 import { UseApiCall } from 'hooks/useApiCall';
-import { EyeIcon, FilterIcon, MinusCircleIcon, RewindIcon } from '@heroicons/react/outline';
+import {
+  EyeIcon,
+  FilterIcon,
+  MinusCircleIcon,
+  RewindIcon,
+  PlusIcon,
+} from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import SimpleContainer from '@components/SimpleContainer';
 import Modal from '@components/Modal';
@@ -22,7 +28,7 @@ const headers = [
     key: 'nickname',
     header: 'Alias',
   },
-  
+
   {
     id: '2',
     key: 'model',
@@ -86,8 +92,6 @@ const Vehicles = () => {
     },
   });
 
-  
-
   const filterHookForm = useForm<TFilterVehiclesFormInputs>({
     resolver: yupResolver(FilterVehiclesFormSchema),
   });
@@ -114,12 +118,16 @@ const Vehicles = () => {
   const handleCleanFilter = (e) => {
     e.preventDefault();
     mutate({
-      per_page:10,
-      page: pageParam
-    })
-    filterHookForm.reset()
-    setOpenFilter(false)
-  }
+      per_page: 10,
+      page: pageParam,
+    });
+    filterHookForm.reset();
+    setOpenFilter(false);
+  };
+
+  const handleCreateVehicle = () => {
+    router.push('/vehicle-create');
+  };
 
   const onSubmit: SubmitHandler<TFilterVehiclesFormInputs> = async (
     inputsData: TFilterVehiclesFormInputs
@@ -133,7 +141,6 @@ const Vehicles = () => {
       page: pageParam,
     });
     setOpenFilter(false);
-  
   };
 
   React.useEffect(() => {
@@ -284,22 +291,14 @@ const Vehicles = () => {
         <SimpleContainer
           title={'Vehículos Asociados'}
           rightComponent={
-            <div className='flex space-x-3 '>
-            <button onClick={handleOpenFilter}>
+            <div className="flex space-x-3 ">
+              <button onClick={handleOpenFilter}>
+                <FilterIcon className="w-4" />
+              </button>
 
-              
-              <FilterIcon className="w-4" />
-              
-
-            </button>
-
-            <button onClick={handleCleanFilter}>
-            <img
-            src="/broomIcon.png"
-            alt="clean-icon"
-            className="w-6 "
-          />
-            </button>
+              <button onClick={handleCleanFilter}>
+                <img src="/broomIcon.png" alt="clean-icon" className="w-6 " />
+              </button>
             </div>
           }
         >
@@ -315,6 +314,18 @@ const Vehicles = () => {
             setPageParam={setPageParam}
           />
         </SimpleContainer>
+        <div className="fixed bottom-10 right-12 z-20">
+  <div className="relative">
+    <button
+      className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 p-4"
+      onClick={handleCreateVehicle}
+    >
+      <PlusIcon className="w-10 text-white" />
+    </button>
+    
+  </div>
+</div>
+
       </div>
     </>
   );

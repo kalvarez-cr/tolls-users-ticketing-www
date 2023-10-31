@@ -158,7 +158,7 @@ const Index = () => {
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-16">
+              <div className="mt-20">
                 <InputV2
                   label="Documento de identidad"
                   name="username"
@@ -170,10 +170,10 @@ const Index = () => {
               </div>
              
               
-              <div className="mt-10">
+              <div className="mt-12">
                 <Button loading={isLoading} type="submit" text="Enviar" />
               </div>
-              <div className="mt-2 ">
+              <div className="mt-6 ">
               <input
               value="Volver"
               onClick={() => router.back()}

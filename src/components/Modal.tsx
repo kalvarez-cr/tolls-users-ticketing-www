@@ -6,9 +6,9 @@ interface modalProps {
   setOpen: any;
   title: string;
   handleAccept: any;
-  acceptButtonText: string;
+  acceptButtonText?: string;
   icon?: ReactNode;
-  cancelButtonText: string;
+  cancelButtonText?: string;
   loading?: boolean;
   children?: any;
 }
