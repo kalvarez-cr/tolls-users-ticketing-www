@@ -22,13 +22,13 @@ const BarChartComponent = () => {
         <p className='mb-6 text-gray-500 text-center'>Recarga vs consumo</p>
         <BarChart
           width={600}
-          height={250}
+          height={500}
           data={data?.data?.data}
           margin={{
-            top: 5,
-            right: 30,
+            top: 15,
+            right: 35,
             left: 20,
-            bottom: 5,
+            bottom: 15,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -36,8 +36,8 @@ const BarChartComponent = () => {
           <YAxis dataKey="Recarga" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Recarga" fill="#8884d8" />
-          <Bar dataKey="Transito" fill="#82ca9d" />
+          <Bar dataKey="Recarga" fill="#82ca9d" />
+          <Bar dataKey="Transito" fill="#F87171" />
          
         </BarChart>
         </div>

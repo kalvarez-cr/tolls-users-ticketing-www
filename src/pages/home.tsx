@@ -11,40 +11,18 @@ import { UseApiCall } from 'hooks/useApiCall';
 import BarChartComponent from '@components/BarChart';
 import Table from '@components/Table';
 
-const headers = [
-  {
-    id: '1',
-    key: 'nickname',
-    header: 'Alias',
-  },
 
-  {
-    id: '2',
-    key: 'model',
-    header: 'Modelo',
-  },
-  {
-    id: '3',
-    key: 'license_plate',
-    header: 'Placa',
-  },
-  {
-    id: '4',
-    key: 'category_title',
-    header: 'Categoría',
-  },
-];
 
 const headersTable = [
   {
     id: '1',
-    key: 'nickname',
+    key: 'site_code',
     header: 'Peaje',
   },
 
   {
     id: '2',
-    key: 'model',
+    key: 'count',
     header: 'Tránsitos',
   },
 ];
@@ -211,9 +189,9 @@ const Home = () => {
           data={dataPieChart?.data?.data}
           isLoading={isLoadingPieChart}
           errorMessage={'No hay data disponible.'}
-          countPage={countPage}
-          pageParam={pageParam}
-          setPageParam={setPageParam}
+          // countPage={countPage}
+          // pageParam={pageParam}
+          // setPageParam={setPageParam}
           />
             </div>
             <div className="col-span-2 grid">

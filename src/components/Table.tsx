@@ -223,6 +223,7 @@ const Table = ({
           ) : (
             <></>
           )}
+          {pageParam &&
           <nav
             className="mb-10 flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-white px-4 py-4 shadow-md sm:px-6"
             aria-label="Pagination"
@@ -251,7 +252,7 @@ const Table = ({
                 <ArrowNarrowRightIcon className="h-5 w-5" />
               </button>
             </div>
-          </nav>
+          </nav>}
         </div>
       </div>
 
