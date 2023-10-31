@@ -61,6 +61,11 @@ const ConfirmationSmsForm = ({
           dispatch(
             open({ text: data.data?.bdv_response?.message, type: 'error' })
           );
+        }else if(data.data?.bdv_response?.success === 0){
+          setOpenModal(false);
+          dispatch(
+            open({ text: data.data?.bdv_response?.message, type: 'error' })
+          );
         }else {
           setOpenModal(false);
           dispatch(

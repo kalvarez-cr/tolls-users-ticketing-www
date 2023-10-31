@@ -13,6 +13,7 @@ interface TInputProps {
   defaultValue?: string | number;
   icon?: any;
   onClick?: () => void;
+  onChange?: any;
 }
 
 const InputV2 = ({
@@ -25,6 +26,7 @@ const InputV2 = ({
   defaultValue,
   icon,
   onClick,
+  onChange,
 }: TInputProps) => {
   return (
     <div className="relative">
@@ -43,6 +45,10 @@ const InputV2 = ({
         autoComplete="off"
         ref={register}
         {...register(name)}
+        onChange={(e) =>{ 
+          register(name).onChange(e)
+          onChange && onChange(e)
+        }}
       />
       <label
         htmlFor={name}
