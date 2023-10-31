@@ -7,7 +7,7 @@ import React from 'react';
 interface TableProps {
   headers: any;
   data: any;
-  isLoading: any;
+  isLoading?: any;
   children?: React.ReactNode;
   countPage?: any;
   pageParam?: any;

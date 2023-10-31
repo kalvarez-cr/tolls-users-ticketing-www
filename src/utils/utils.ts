@@ -28,7 +28,7 @@ export function getStatusClassName(account_status){
     return 'bg-red-500'
   }else if(account_status === 'Suspendida'){
     return 'bg-yellow-400'
-  }else if(account_status === 'Activa'){
+  }else if(account_status === 'Activa' || account_status === 'Creada'){
   return 'bg-green-500'
   }else {
     return 'bg-white'

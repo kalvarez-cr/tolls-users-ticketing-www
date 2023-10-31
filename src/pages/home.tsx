@@ -35,6 +35,20 @@ const headers = [
   },
 ];
 
+const headersTable = [
+  {
+    id: '1',
+    key: 'nickname',
+    header: 'Peaje',
+  },
+
+  {
+    id: '2',
+    key: 'model',
+    header: 'Tránsitos',
+  },
+];
+
 const Home = () => {
   useGuard();
   const [pageParam, setPageParam] = useState(1);
@@ -176,7 +190,7 @@ const Home = () => {
               link="/transit"
             />
           </div>
-          { <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-1  md:grid-cols-3 md:gap-x-6">
+           <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-1  md:grid-cols-3 md:gap-x-6">
             <div className="">
               <div
                 className={` mb-6 flex h-auto rounded-md p-2 ${getStatusClassName(
@@ -188,28 +202,25 @@ const Home = () => {
                 </h4>
               </div>
 
-              <Chart
+              {/* <Chart
                 dataPieChart={dataPieChart}
                 isLoadingPieChart={isLoadingPieChart}
-              />
+              /> */}
+          <Table
+          headers={headersTable}
+          data={dataPieChart?.data?.data}
+          isLoading={isLoadingPieChart}
+          errorMessage={'No hay data disponible.'}
+          countPage={countPage}
+          pageParam={pageParam}
+          setPageParam={setPageParam}
+          />
             </div>
             <div className="col-span-2 grid">
               <BarChartComponent />
             </div>
-          </div> }
+          </div> 
         </div>
-
-        {/* <Table
-          headers={headers}
-          data={rows}
-          isLoading={isLoading}
-          errorMessage={
-            'No hay vehículos asociados. Por favor diríjase al peaje más cercano.'
-          }
-          countPage={countPage}
-          pageParam={pageParam}
-          setPageParam={setPageParam}
-        /> */}
       </div>
     </>
   );
