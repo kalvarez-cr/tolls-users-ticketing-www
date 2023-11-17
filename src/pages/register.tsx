@@ -48,8 +48,8 @@ const methodsP = [
 
 
 const Schema = yup.object().shape({
-  last_name: yup.string().required('Este campo es requerido'),
-  first_name: yup.string().required('Este campo es requerido'),
+  last_name: yup.string() .max(50, "Máximo 50 carácteres").required('Este campo es requerido'),
+  first_name: yup.string() .max(50, "Máximo 50 carácteres").required('Este campo es requerido'),
   
   phone_number: yup
   .string()
