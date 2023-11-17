@@ -25,6 +25,8 @@ interface Inputs {
   doc_number:string 
   phone_number: string 
   doc_type: string
+  last_name: string 
+  first_name: string 
 }
 
 const methodsP = [
@@ -46,6 +48,9 @@ const methodsP = [
 
 
 const Schema = yup.object().shape({
+  last_name: yup.string().required('Este campo es requerido'),
+  first_name: yup.string().required('Este campo es requerido'),
+  
   phone_number: yup
   .string()
   .matches(/[0-9]\d*$/, "Debe ser un número válido ")
@@ -113,13 +118,15 @@ const Register = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { email, password, doc_number, phone_number, doc_type } = data;
+    const { email, password, doc_number, phone_number, doc_type, last_name, first_name } = data;
     //@ts-ignore
     mutate({
       email, 
       password, 
       doc_number: `${doc_type}${doc_number} `,
-      phone_number
+      phone_number,
+      last_name,
+      first_name,
     });
   };
 
@@ -142,12 +149,33 @@ const Register = () => {
           <div className="left-column"></div>
           <div className="right-column"></div>
           <div>
-            <div className="">
+            <div className="-mt-9">
               <img src="/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
-              <div className='flex justify-between'>
+           
+            <div className="mt-2">
+                <InputV2
+                  label="Nombre"
+                  name="first_name"
+                  type="text"
+                  errorMessage={errors.first_name?.message}
+                  register={register}
+                />
+              </div>
+           
+            <div className="mt-2">
+                <InputV2
+                  label="Apellido"
+                  name="last_name"
+                  type="text"
+                  errorMessage={errors.last_name?.message}
+                  register={register}
+                />
+              </div>
+             
+              <div className='flex justify-between' >
             <div className=" ">
             <Select
                 label="Tipo"
@@ -158,7 +186,7 @@ const Register = () => {
               />
               </div>
               
-              <div className="mt-4">
+              <div className="mt-3">
                 <InputV2
                   label="Documento"
                   name="doc_number"
@@ -168,7 +196,7 @@ const Register = () => {
                 />
               </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <InputV2
                   label="Correo "
                   name="email"
@@ -178,7 +206,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className="mt-8">
+              <div className="mt-4">
                 <InputV2
                   label="Número de teléfono"
                   name="phone_number"

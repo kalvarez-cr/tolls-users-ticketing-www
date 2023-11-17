@@ -180,7 +180,7 @@
     position: absolute;
     width: 380px;
     height: 65px;
-    margin-top: -75px;
+    margin-top: -105px;
     margin-left: -35px;
 }
 
@@ -188,7 +188,7 @@
     width: 380px;
     height: 102px;
     margin-left: -35px;
-    margin-top: 20px;
+    margin-top: 10px;
 
     background-size: 380px 66px;
     /*noinspection CssUnknownTarget*/
@@ -197,7 +197,7 @@
 }
 
 .login-form .left-column, .login-form .right-column {
-    margin-top: -10px;
+    margin-top: -60px;
     width: 17px;
     height: 496px;
 
@@ -221,8 +221,8 @@
     background: url("/movil-diagrama-col-der.png") repeat-y;
 }
 
-.login-form img.logo {
-    width: 300px;
+.login-form img.logo {  
+  width: 300px;
     margin-left: auto;
     margin-right: auto;
 }

@@ -113,12 +113,12 @@ const Index = () => {
           <div className="left-column"></div>
           <div className="right-column"></div>
           <div>
-            <div className="">
+            <div className="mb-14">
               <img src="/logo-login.png" alt="logo" className="logo" />
             </div>
             <h1 className="motto-line">Un TAG, todas las vías</h1>
-            <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-10">
+            <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-14">
                 <InputV2
                   label="Documento de identidad"
                   name="usernameOrEmail"
@@ -128,7 +128,7 @@ const Index = () => {
                   defaultValue={items.name}
                 />
               </div>
-              <div className="mt-10">
+              <div className="mt-12">
                 <InputV2
                   label="Contraseña"
                   name="password"
