@@ -115,6 +115,7 @@ const Register = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(Schema),
+    
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
