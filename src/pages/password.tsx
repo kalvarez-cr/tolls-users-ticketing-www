@@ -126,14 +126,18 @@ const Index = () => {
   handleAccept={handleSubmitCode(onSubmitCode)}
   title='Confirmación'
   >
-     <InputV2
+    <p className='-mt-2'>El código de confirmación fue enviado a su correo registrado</p>
+    <div className='mt-2'>
+    <InputV2
                   label="Código de confirmación"
                   name="code"
                   type='text'
                   errorMessage={formStateCode?.errors?.code?.message}
                   register={registerCode}
+                
                   
                 />
+    </div>
 
     </ModalForm>
 
