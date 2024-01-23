@@ -14,6 +14,7 @@ import Button from '@components/Button';
 import { EyeIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import Select from '@components/inputs/Select';
+import FooterLayout from '@layouts/FooterLayout';
 // import Link from 'next/link';
 // import Captcha from 'demos-react-captcha';
 
@@ -136,24 +137,14 @@ const Register = () => {
   // };
 
   return (
-    <div className="flex items-center bg-gradient-to-b from-cyan-100 to-cyan-500">
-      <div className="flex h-screen w-screen flex-col justify-between">
-        <div className="login-background">
-          <img className="nube-1" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-2" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-3" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-4" src="/movil-diagrama-nubes.png" alt="nubes" />
-          <img className="nube-5" src="/movil-diagrama-nubes.png" alt="nubes" />
-        </div>
-        <div className="login-form mx-auto my-auto items-center justify-center">
-          <div className="header"></div>
-          <div className="left-column"></div>
-          <div className="right-column"></div>
-          <div>
-            <div className="-mt-9">
-              <img src="/logo-login.png" alt="logo" className="logo" />
-            </div>
-            <h1 className="motto-line">Un TAG, todas las vías</h1>
+    <div className="flex items-center bg-gradient-to-r from-sky-50 to-sky-200">
+    <FooterLayout>
+      <div className="mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-white/70 p-10 shadow-2xl">
+        <div>
+          <div className=" w-full">
+            <img src="/logo-login.png" alt="logo" className="h-24 ml-8" />
+          </div>
+          <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
            
             <div className="mt-2">
@@ -246,25 +237,15 @@ const Register = () => {
                 </p>
               </Link>
             }
-          </div>
-          <div className="footer"></div>
+
+
         </div>
-
-        <div className="bottom-space-reserved"></div>
       </div>
-
-      <div className="login-right-panel hidden w-full lg:block">
-        <img src="/login-carro-peaje-2.svg" alt="peaje" />
-      </div>
-
-      <div className="login-right-panel-md lg:hidden">
-        <img src="/login-carro-peaje-3.svg" alt="peaje" />
-      </div>
-
-      <div className="login-logo-box-md lg:hidden">
-        <img src="/login-logo-box.svg" alt="logos" />
-      </div>
+    </FooterLayout>
+    <div className=" hidden w-full lg:block">
+      <img className="aspect-1 max-h-screen" src="/login.svg" alt="login" />
     </div>
+  </div>
   );
 };
 
