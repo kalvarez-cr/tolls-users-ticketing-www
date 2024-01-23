@@ -178,7 +178,7 @@ const Register = () => {
               />
               </div>
               
-              <div className="mt-3">
+              <div className="mt-4">
                 <InputV2
                   label="Documento"
                   name="doc_number"
