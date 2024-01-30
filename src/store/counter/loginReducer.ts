@@ -32,19 +32,31 @@ interface TLoginPayload {
     name: string;
   }[];
   user_info: {
-    id: string;
-    account_number: string;
-    account_holder: string;
-    first_name: string;
-    last_name: string;
-    nif: string;
-    phone_number: string;
-    address: string;
-    email: string;
-    status: boolean;
-    state: string;
-    vehicles: Array<string>;
-  };
+    id: string,
+    holder_id_doc_type: string,
+    holder_id_number: string,
+    account_type: string,
+    holder_full_name: string,
+    state: {
+        id: string,
+        name: string,
+        alpha_code: string
+    },
+    municipality: {
+        id: string,
+        name: string,
+        alpha_code: string
+    },
+    last_login: string | null,
+    first_name: string | null,
+    middle_name: string |null,
+    last_name: string | null,
+    second_last_name: null,
+    phone_number:string | null,
+    email: string | null
+}
+
+
 }
 
 export const counterSlice = createSlice({

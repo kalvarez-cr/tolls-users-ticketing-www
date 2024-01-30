@@ -101,13 +101,13 @@ const Index = () => {
 
   return (
     <div className="flex items-center bg-gradient-to-r from-sky-50 to-sky-200">
-    <FooterLayout>
-      <div className="mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-white/70 p-10 shadow-2xl">
-        <div>
-          <div className=" w-full">
-            <img src="/logo-login.png" alt="logo" className="h-24 ml-8" />
-          </div>
-          <h1 className="motto-line">Un TAG, todas las vías</h1>
+      <FooterLayout>
+        <div className="mx-auto my-auto flex flex-col items-center justify-center rounded-2xl bg-white/70 p-10 shadow-2xl">
+          <div>
+            <div className=" w-full">
+              <img src="/logo-login.png" alt="logo" className="ml-8 h-24" />
+            </div>
+            <h1 className="motto-line">Un TAG, todas las vías</h1>
             <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-14">
                 <InputV2
@@ -142,15 +142,6 @@ const Index = () => {
             </form>
             {
               <>
-                <Link href="register">
-                  <p className="mt-5 cursor-pointer text-center text-sm">
-                    ¿No tienes una cuenta?{' '}
-                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
-                      Registrate
-                    </span>
-                  </p>
-                </Link>
-
                 <Link href="password">
                   <p className="mt-4 cursor-pointer text-center text-sm">
                     ¿Olvidaste tu contraseña?{' '}
@@ -159,16 +150,24 @@ const Index = () => {
                     </span>
                   </p>
                 </Link>
+
+                <Link href="register">
+                  <p className="mt-5 cursor-pointer text-center text-sm">
+                    ¿No tienes una cuenta?{' '}
+                    <span className="font-bold text-blue-800 decoration-2 hover:text-blue-600">
+                      Registrate
+                    </span>
+                  </p>
+                </Link>
               </>
             }
-
+          </div>
         </div>
+      </FooterLayout>
+      <div className=" hidden w-full lg:block">
+        <img className="aspect-1 max-h-screen" src="/login.svg" alt="login" />
       </div>
-    </FooterLayout>
-    <div className=" hidden w-full lg:block">
-      <img className="aspect-1 max-h-screen" src="/login.svg" alt="login" />
     </div>
-  </div>
   );
 };
 
