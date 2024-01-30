@@ -27,6 +27,7 @@ interface Inputs {
   fare_category: string;
   tag_serial: string;
   tag_serial_w?: string;
+  color:string 
 }
 
 interface TCodeInputs {
@@ -50,6 +51,7 @@ const Schema = yup.object().shape({
   tag_serial_w: yup
     .string()
     .oneOf([yup.ref('tag_serial')], 'Los seriales no coinciden'),
+  color: yup.string().required('Este campo es requerido'), 
 });
 
 const codeFormSchema = yup.object().shape({
@@ -64,6 +66,8 @@ const VehicleCreate = () => {
   const category = useSelector(
     (state: any) => state.loginUser?.app_setting?.fare_product
   );
+
+  const colors = useSelector((state: any) => state.loginUser?.app_setting?.color);
   const [openModal, setOpenModal] = React.useState(false);
   const [modal, setModal] = React.useState('');
 
@@ -150,6 +154,7 @@ const VehicleCreate = () => {
       vehicle_weight,
       fare_category,
       tag_serial,
+      color,
     } = data;
 
     mutate({
@@ -160,6 +165,7 @@ const VehicleCreate = () => {
       vehicle_weight,
       fare_category,
       tag_serial,
+      color
     });
   };
 
@@ -261,6 +267,15 @@ const VehicleCreate = () => {
                 name="fare_category"
                 options={renamedCategories}
                 errorMessage={errors.fare_category?.message}
+                register={register}
+              />
+            </div>
+            <div className="mt-10 w-full md:w-1/2 md:pl-4">
+              <Select
+                label="Color"
+                name="color"
+                options={colors}
+                errorMessage={errors.color?.message}
                 register={register}
               />
             </div>
