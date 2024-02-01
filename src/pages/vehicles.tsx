@@ -31,7 +31,7 @@ const headers = [
 
   {
     id: '2',
-    key: 'model',
+    key: 'maker',
     header: 'Modelo',
   },
   {
@@ -41,7 +41,7 @@ const headers = [
   },
   {
     id: '4',
-    key: 'category_title',
+    key: 'fare_category_code',
     header: 'Categoría',
   },
 
@@ -154,19 +154,19 @@ const Vehicles = () => {
       const rows = responseData?.data?.map(
         ({
           id,
-          make,
+          maker,
           model,
           plate,
-          vehicle_category,
+          fare_category_code,
           vin,
           status,
           nickname,
         }) => {
           return {
-            make,
+            maker,
             model,
             license_plate: plate,
-            category_title: vehicle_category,
+            fare_category_code,
             tag_serial: vin,
             enabled: true,
             nickname,

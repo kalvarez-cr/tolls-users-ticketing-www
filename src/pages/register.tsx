@@ -22,7 +22,7 @@ import FooterLayout from '@layouts/FooterLayout';
 
 interface Inputs {
   email: string;
-  password: string;
+  // password: string;
   doc_number:string 
   phone_number: string 
   doc_type: string
@@ -66,11 +66,11 @@ const Schema = yup.object().shape({
   .max(12, "Debe tener máximo 12 caracteres")
   .required("Este campo es requerido"),
   email: yup.string().email('Debe ser un email').required('Este campo es requerido'),
-  password: yup
-    .string()
-    .min(6, 'Mínimo 6 caracteres')
-    .max(20, 'Máximo 20 caracteres')
-    .required('Este campo es requerido'),
+  // password: yup
+  //   .string()
+  //   .min(6, 'Mínimo 6 caracteres')
+  //   .max(20, 'Máximo 20 caracteres')
+  //   .required('Este campo es requerido'),
   // captcha: yup.boolean().required('Este c'),
 });
 
@@ -79,10 +79,10 @@ const Register = () => {
   const { requester } = useAxios();
   const dispatch = useAppDispatch();
   // const [captcha, setCaptcha] = useState(false);
-  const [showPassword, setShowPassword] = React.useState<boolean>(false);
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  // const handleShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   const { mutate, isLoading } = useMutation(
     (formData: Inputs) => {
@@ -120,11 +120,11 @@ const Register = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { email, password, doc_number, phone_number, doc_type, last_name, first_name } = data;
+    const { email, doc_number, phone_number, doc_type, last_name, first_name } = data;
     //@ts-ignore
     mutate({
       email, 
-      password, 
+      
       doc_number: `${doc_type}${doc_number} `,
       phone_number,
       last_name,
@@ -207,7 +207,7 @@ const Register = () => {
                   register={register}
                 />
               </div>
-              <div className="mt-8">
+              {/* <div className="mt-8">
                 <InputV2
                   label="Contraseña"
                   name="password"
@@ -221,7 +221,7 @@ const Register = () => {
                     />
                   }
                 />
-              </div>
+              </div> */}
              
               <div className="mt-6">
                 <Button loading={isLoading} type="submit" text="Registrarse" />
