@@ -28,6 +28,7 @@ interface Inputs {
   tag_serial: string;
   tag_serial_w?: string;
   color:string 
+  maker:string 
 }
 
 interface TCodeInputs {
@@ -36,6 +37,7 @@ interface TCodeInputs {
 
 const Schema = yup.object().shape({
   model: yup.string().required('Este campo es requerido'),
+  maker: yup.string().required('Este campo es requerido'),
   vehicle_weight: yup.string() .min(1, 'Debe tener 1 dígito')
   .max(7, 'Debe tener 7 digitos').required('Este campo es requerido'),
   year: yup.string() .min(4, 'Debe tener 4 digitos')
@@ -155,6 +157,7 @@ const VehicleCreate = () => {
       fare_category,
       tag_serial,
       color,
+      maker,
     } = data;
 
     mutate({
@@ -165,7 +168,8 @@ const VehicleCreate = () => {
       vehicle_weight,
       fare_category,
       tag_serial,
-      color
+      color,
+      maker
     });
   };
 
@@ -227,6 +231,17 @@ const VehicleCreate = () => {
                 register={register}
                 // defaultValue={responseData?.data?.model}
                 errorMessage={errors.model?.message}
+              />
+            </div>
+
+            <div className="mt-14 w-full md:w-1/2 md:pl-4">
+              <InputV2
+                label="Marca"
+                name="maker"
+                type="text"
+                register={register}
+                // defaultValue={responseData?.data?.model}
+                errorMessage={errors.maker?.message}
               />
             </div>
 

@@ -125,7 +125,7 @@ const Register = () => {
     mutate({
       email, 
       
-      doc_number: `${doc_type}${doc_number} `,
+      doc_number: `${doc_type}${doc_number}`,
       phone_number,
       last_name,
       first_name,

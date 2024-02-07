@@ -122,11 +122,12 @@ const VehicleDetail = () => {
   });
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    const { nickname } = data;
+    const { nickname, model } = data;
     mutateNick({
       id,
       data: {
         nickname,
+        maker:model,
       },
     });
   };
@@ -177,11 +178,11 @@ const VehicleDetail = () => {
           <div className="flex w-full flex-wrap">
             <div className="mt-14 w-full md:w-1/2 md:pl-4">
               <InputV2
-                label="Modelo"
+                label="Marca"
                 name="model"
                 type="text"
-                defaultValue={response?.data?.model}
-                disabled={true}
+                defaultValue={response?.data?.maker}
+                disabled={!isEditable}
                 register={register}
                 errorMessage={errors.model?.message}
               />
@@ -202,7 +203,7 @@ const VehicleDetail = () => {
                 label="Categoría"
                 name="vehicle_category"
                 type="text"
-                defaultValue={response?.data?.vehicle_category}
+                defaultValue={response?.data?.fare_category}
                 disabled={true}
                 register={register}
                 errorMessage={errors.vehicle_category?.message}
@@ -235,7 +236,7 @@ const VehicleDetail = () => {
             {isEditable ? (
               <div className="mt-14 ml-2 w-1/3">
                 <Button
-                  text="Actualizar alias"
+                  text="Actualizar"
                   type="button"
                   loading={false}
                   onClick={handleSubmit(onSubmit)}

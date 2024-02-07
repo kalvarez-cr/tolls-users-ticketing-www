@@ -32,7 +32,7 @@ const headers = [
   {
     id: '2',
     key: 'maker',
-    header: 'Modelo',
+    header: 'Marca',
   },
   {
     id: '3',
@@ -41,7 +41,7 @@ const headers = [
   },
   {
     id: '4',
-    key: 'fare_category_code',
+    key: 'fare_category',
     header: 'Categoría',
   },
 
@@ -157,7 +157,7 @@ const Vehicles = () => {
           maker,
           model,
           plate,
-          fare_category_code,
+          fare_category,
           vin,
           status,
           nickname,
@@ -166,7 +166,7 @@ const Vehicles = () => {
             maker,
             model,
             license_plate: plate,
-            fare_category_code,
+            fare_category,
             tag_serial: vin,
             enabled: true,
             nickname,
