@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FooterLayout from '@layouts/FooterLayout';
 import InputV2 from '@components/inputs/InputV2';
 import { useAppDispatch } from '@store/hooks';
@@ -35,6 +35,7 @@ const Schema = yup.object().shape({
 const newPassword = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [block, setBlock ] = useState(false)
   const { mutate , isLoading } = useMutation(
     (formData: Inputs) => {
       return requester({
@@ -45,7 +46,7 @@ const newPassword = () => {
     },
     {
       onSuccess: (response) => {
-        const { data } = response;
+        const { data  } = response;
         if (data) {
           
           dispatch(
@@ -54,8 +55,8 @@ const newPassword = () => {
               type: 'success',
             })
           );
+          setBlock(true)
           setTimeout(() => {
-            
             router.push('/');
           }, 3000);
          
@@ -126,7 +127,7 @@ const newPassword = () => {
             </div>
 
             <div className="mt-8 w-full">
-                <Button loading={isLoading} type="submit" text="Cambiar contraseña" />
+                <Button loading={isLoading} disabled={block} type="submit" text="Cambiar contraseña" />
               </div>
           </div>
         </form>
