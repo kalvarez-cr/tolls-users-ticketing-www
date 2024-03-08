@@ -288,8 +288,11 @@ const Table = ({
         </div>
       </div>
 
+        {pageParam &&
+        <>
       <div className="flex justify-between bg-white px-4 py-8  md:hidden">
-        <button
+          
+          <button
           onClick={handlePreviousPage}
           disabled={pageParam === 1}
           className=""
@@ -307,7 +310,9 @@ const Table = ({
         >
           <ArrowNarrowRightIcon className="h-5 w-5" />
         </button>
-      </div>
+        </div>
+        </>
+        }
     </>
   );
 };
