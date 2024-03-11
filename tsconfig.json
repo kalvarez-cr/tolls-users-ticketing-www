@@ -30,6 +30,6 @@
     "next.config.js",
     ".eslintrc.js",
     "prettier.config.js"
-  ],
+, "src/components/modalForms/ModalFormInfo.tsx"  ],
   "exclude": ["node_modules"]
 }
