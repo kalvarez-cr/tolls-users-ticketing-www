@@ -17,10 +17,10 @@ const Button = ({ loading, text, type, onClick, disabled }: ButtonProps) => {
 
       onClick={onClick}
       className={`focus:ring-blueLight relative inline-flex h-10 w-full items-center justify-center rounded-md 
-      bg-red-600 py-1 px-4 align-middle text-white  shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+      bg-blue-500 py-1 px-4 align-middle text-white  shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
         loading || disabled
           ? 'cursor-wait'
-          : ' font-bold transition-all delay-100 duration-200 hover:bg-red-500 hover:text-white hover:shadow-lg '
+          : ' font-bold transition-all delay-100 duration-200 hover:bg-blue-500/50 hover:text-white hover:shadow-lg '
       }`}
     >
       {loading ? (

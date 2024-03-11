@@ -62,7 +62,7 @@ export default function FilterVehiclesForm({
           register={register}
         /> */}
         <Select
-          label="Status"
+          label="Estatus"
           name="status"
           options={status}
           //   errorMessage={errors.nif?.message}

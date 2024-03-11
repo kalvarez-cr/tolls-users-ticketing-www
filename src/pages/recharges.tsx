@@ -115,9 +115,9 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-wallet.png"
+                    src="/icon-wallet.svg"
                     alt="saldo"
-                    className="card-icon"
+                    className=""
                   />
                 </div>
               }
@@ -137,9 +137,9 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-car.png"
+                    src="/icon-cal-car.svg"
                     alt="saldo"
-                    className="card-icon"
+                    className=""
                   />
                 </div>
               }
@@ -159,9 +159,9 @@ const Recharges = () => {
               icon={
                 <div className="flex h-10 w-10 items-center">
                   <img
-                    src="/icon-cal-recharge.png"
+                    src="/icon-cal-recharge.svg"
                     alt="saldo"
-                    className="card-icon"
+                    className=""
                   />
                 </div>
               }

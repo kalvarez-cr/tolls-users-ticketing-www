@@ -198,7 +198,7 @@ const VehicleCreate = () => {
 
       <div className="m-10 mt-24 rounded-xl bg-gray-100 p-12 shadow-xl">
         <div className="mt-4 flex items-start justify-start md:px-16">
-          <h1 className="w-full border-grey  text-xl font-bold tracking-wide text-red-700">
+          <h1 className="w-full border-grey  text-xl font-bold tracking-wide text-blue-700">
             Datos del vehículo
           </h1>
         </div>
@@ -324,7 +324,7 @@ const VehicleCreate = () => {
             </div>
 
             <div className="mt-8 flex items-start justify-start md:px-14">
-              <h1 className=" w-full border-grey p-8 text-start text-xl font-bold tracking-wide text-red-700">
+              <h1 className=" w-full border-grey p-8 text-start text-xl font-bold tracking-wide text-blue-700">
                 Información del tag{' '}
               </h1>
 
