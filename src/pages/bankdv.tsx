@@ -219,9 +219,9 @@ const MobilePay = () => {
         </div>
         <div className="flex items-center justify-between md:px-16">
           <div className="border-r-2">
-            <UserCircleIcon className="mr-16 h-10 text-red-700" />
+            <UserCircleIcon className="mr-16 h-10 text-blue-700" />
           </div>
-          <h1 className="ml-16 w-full border-grey text-xl font-bold tracking-wide text-red-700">
+          <h1 className="ml-16 w-full border-grey text-xl font-bold tracking-wide text-blue-700">
             Usuario
           </h1>
         </div>
@@ -284,9 +284,9 @@ const MobilePay = () => {
         </div>
         <div className="mt-4 flex items-center justify-between md:px-16">
           <div className="border-r-2">
-            <CreditCardIcon className="mr-16 h-10 text-red-700" />
+            <CreditCardIcon className="mr-16 h-10 text-blue-700" />
           </div>
-          <h1 className="ml-16 w-full border-grey text-xl font-bold tracking-wide text-red-700">
+          <h1 className="ml-16 w-full border-grey text-xl font-bold tracking-wide text-blue-700">
             Recarga
           </h1>
         </div>
@@ -340,11 +340,11 @@ const MobilePay = () => {
             type="button"
             value="Confirmar"
             onClick={handleSubmit(onSubmit, onInvalid)}
-            className={`mt-14 cursor-pointer rounded bg-emerald-600/70 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-emerald-600/50  
+            className={`mt-14 cursor-pointer rounded bg-blue-600/80 px-4 py-2 text-center font-semibold text-white shadow-md hover:bg-blue-600/50  
           ${
             isLoading
               ? 'animate-pulse bg-slate-400 '
-              : ' font-bold transition-all delay-100 duration-200 hover:bg-emerald-600/70 hover:text-white  '
+              : ' font-bold transition-all delay-100 duration-200 hover:bg-blue-600/70 hover:text-white  '
           }`}
           />
           <input

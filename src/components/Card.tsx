@@ -28,7 +28,11 @@ const Card = ({ title, data, icon, moreInfo, link, isLoading  }: TCardProps) => 
             {title}
           </h2>
           {isLoading ? (
-            <h2 className={` h-5 w-5 animate-spin bg-red-300 `}></h2>
+            <div className='flex '>
+            <svg className={` h-5 w-5 m-2 animate-spin rounded-lg bg-blue-400 `}></svg>
+            <svg className={` h-5 w-5 m-2 animate-spin rounded-lg bg-blue-400 `}></svg>
+            <svg className={` h-5 w-5 m-2 animate-spin rounded-lg bg-blue-400 `}></svg>
+            </div>
           ) : (
           
             <h2 className={`card-data ${moreInfo ? 'text-xl' : 'text-2xl'}`}>

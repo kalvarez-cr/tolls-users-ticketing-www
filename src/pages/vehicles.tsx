@@ -152,16 +152,7 @@ const Vehicles = () => {
       setCountPage(responseData?.pagination?.count);
 
       const rows = responseData?.data?.map(
-        ({
-          id,
-          maker,
-          model,
-          plate,
-          fare_category,
-          vin,
-          status,
-          nickname,
-        }) => {
+        ({ id, maker, model, plate, fare_category, vin, status, nickname }) => {
           return {
             maker,
             model,
@@ -315,17 +306,15 @@ const Vehicles = () => {
           />
         </SimpleContainer>
         <div className="fixed bottom-10 right-12 z-20">
-  <div className="relative">
-    <button
-      className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 p-4"
-      onClick={handleCreateVehicle}
-    >
-      <PlusIcon className="w-10 text-white" />
-    </button>
-    
-  </div>
-</div>
-
+          <div className="relative">
+            <button
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 p-4"
+              onClick={handleCreateVehicle}
+            >
+              <PlusIcon className="w-10 text-white" />
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -33,7 +33,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
   const navigation = [
     { name: 'Inicio', href: '/home' },
     { name: 'Recargas', href: '/recharges' },
-    { name: 'Vehículos', href: '/vehicles' },
+    // { name: 'Vehículos', href: '/vehicles' },
     { name: 'Tránsitos', href: '/transit' },
     // { name: 'Calendar', href: '#' },
   ];
@@ -44,7 +44,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
         <OutForm open={open} setOpen={setOpen} />
         <Disclosure
           as="nav"
-          className="fixed z-10 w-full bg-red-700 bg-gradient-to-l"
+          className="fixed z-10 w-full bg-gradient-to-r from-blue-400 to-blue-700"
         >
           {({ open, close }) => (
             <>
@@ -55,7 +55,7 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                   </div>
                   <div className="absolute inset-y-0 left-0 flex items-center lg:hidden">
                     {/* Mobile menu button*/}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -78,8 +78,8 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                             <button
                               className={classNames(
                                 item.href === router.asPath
-                                  ? 'pointer-events-none bg-red-400/40'
-                                  : 'hover:bg-red-500/40 hover:text-white hover:shadow-xl',
+                                  ? 'pointer-events-none bg-blue-400/40'
+                                  : 'hover:bg-blue-500/40 hover:text-white hover:shadow-xl',
                                 ' p-5 font-bold uppercase tracking-wider text-white antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
                               )}
                               aria-current={
@@ -117,8 +117,8 @@ const LandingLayout = ({ children }: TLandingLayout) => {
                       <button
                         className={classNames(
                           item.href === router.asPath
-                            ? 'pointer-events-none bg-red-400/40'
-                            : 'hover:bg-red-500/40 hover:text-white hover:shadow-xl',
+                            ? 'pointer-events-none bg-blue-400/40'
+                            : 'hover:bg-blue-500/40 hover:text-white hover:shadow-xl',
                           ' p-5 font-bold uppercase tracking-wider text-white antialiased transition-all delay-100 duration-200 focus:ring-opacity-80'
                         )}
                         aria-current={

@@ -127,9 +127,9 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/icon-toll.png"
+                  src="/presentation-chart.svg"
                   alt="Tránsitos"
-                  className="card-icon"
+                  className=""
                 />
               </div>
             }
@@ -147,9 +147,9 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/icon-receipt.png"
+                  src="/icon-wallet.svg"
                   alt="Total consumido"
-                  className="card-icon"
+                  className=""
                 />
               </div>
             }
@@ -167,9 +167,9 @@ const Transit = () => {
             icon={
               <div className="flex h-10 w-10 items-center">
                 <img
-                  src="/icon-cal-toll.png"
+                  src="/last-site.svg"
                   alt="Último peaje"
-                  className="card-icon"
+                  className=""
                 />
               </div>
             }
